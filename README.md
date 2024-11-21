@@ -199,3 +199,4 @@ Fill the .env file with the correct values.
  - [] Discord bot commands to activate / deactivate releasers
  - [] Working API for TheSportsDB
  - [] Option to reload a stream when proxying has been requested
+ - [] Script for versioning & automated changelog generation with the releases
