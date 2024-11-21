@@ -1,7 +1,7 @@
 # Broadcastarr
 Broadcastarr is a service that allows you to broadcast media content retrieved from web pages.
 
-## Fonctionnalités
+## Features
 
 ### AgendaTS
 The different actions are split into tasks that are handled by the AgendaTS service.
