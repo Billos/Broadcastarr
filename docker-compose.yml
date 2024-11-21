@@ -1,0 +1,115 @@
+services:
+  server:
+    container_name: server
+    build:
+      context: .
+      args:
+        - UID=1001
+    command: ["yarn", "dev:server"]
+    volumes:
+      - ./src:/app/src
+      - ${M3U8_FOLDER}:${M3U8_FOLDER}:rw
+      - ./package.json:/app/package.json
+      - ./tsconfig.json:/app/tsconfig.json
+    network_mode: "service:wireguard"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: development
+      LOG_LEVEL: 2
+      MONGO_URL: mongodb://mongo:27017
+      MONGO_AGENDA_DB: agenda
+      MONGO_DB: broadcastarr
+    deploy:
+      resources:
+        limits:
+          memory: 4g
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+      wireguard:
+        condition: service_started
+
+  worker:
+    extends:
+      service: server
+    container_name: worker
+    command: ["yarn", "dev:worker"]
+    depends_on:
+      - mongo-express
+
+  init:
+    extends:
+      service: server
+    env_file:
+      - .env
+      - .env.init
+    container_name: init
+    command: ["yarn", "dev:init"]
+
+  mongo:
+    image: docker.io/library/mongo:7.0
+    container_name: mongo
+    restart: unless-stopped
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh mongo:27017/test --quiet
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      default:
+        ipv4_address: 172.30.30.8
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: unless-stopped
+    networks:
+      - default
+      - applications
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_BASICAUTH_USERNAME: root
+      ME_CONFIG_BASICAUTH_PASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+      ME_CONFIG_DOCUMENTS_PER_PAGE: 100
+
+  wireguard:
+    image: linuxserver/wireguard:version-v1.0.20210914
+    container_name: broadcastarr-wg
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv4.conf.all.src_valid_mark=1
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Europe/Paris
+    networks:
+      - applications
+      - default
+    volumes:
+      - ./wg0.conf:/config/wg_confs/wg0.conf
+      - /lib/modules:/lib/modules
+    extra_hosts:
+      - "mongo:172.30.30.8"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s https://ipinfo.io/ip | grep -v '${MY_IP}' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.30.0/24
+          gateway: 172.30.30.1
+  applications:
+    external: true

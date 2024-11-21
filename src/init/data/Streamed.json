@@ -1,0 +1,54 @@
+{
+  "name": "Streamed",
+  "url": "https://streamed.su/",
+  "active": true,
+  "data": {
+    "broadcastSets": {
+      "selector": [ { "path": "div.flex-row" } ],
+      "day": [{
+        "path": "div.flex-col",
+        "format": "ccc d LLL",
+        "dateReplacement": {
+          "regex": "TODAY",
+          "format": "ccc"
+        }
+      }]
+    },
+    "category": {
+      "links": [
+        { "path": "div.w-full div.flex a" }
+      ],
+      "lookups": null
+    },
+    "loadPageElement": "div.flex-row",
+    "broadcast": {
+      "selector": [ { "path": "div.pb-1" } ],
+      "startTime": [
+        { "path": "span.left-2", "format": "h:mm a", "attribute": null },
+        { "path": "div.py-4 p span:nth-child(2)", "format": "| h:mm a", "attribute": null }
+      ],
+      "link": [
+        { "path": "a", "attribute": "href" }
+      ],
+      "name": [
+        { 
+          "path": "h1",
+          "replacement": {
+            "regex": " (vs|v) ",
+            "replace": " 🆚 "
+          }
+        }
+      ],
+      "group": []
+    },
+    "nextPage": null
+  },
+  "interceptorData": {
+    "loadPageElement": "body",
+    "streamItems": [{ "path": "div.w-full a.bg-secondary" }],
+    "positiveScores": [],
+    "link": [],
+    "referer": null,
+    "clickButton": []
+  }
+}

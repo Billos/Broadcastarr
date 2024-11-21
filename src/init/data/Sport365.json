@@ -1,0 +1,49 @@
+{
+  "name": "Sport365",
+  "url": "https://live.sport365.stream/",
+  "active": true,
+  "data": {
+    "broadcastSets": null,
+    "category": {
+      "links": [
+        { "path": "a.sidebar__nav-link" }
+      ],
+      "lookups": {
+        "Football": ["Soccer"],
+        "Rugby": ["Rugby Union", "Rugby League"]
+      }
+    },
+    "loadPageElement": "body",
+    "broadcast": {
+      "selector": [
+        { "path": "div.schedule__item:not(.promo)" }
+      ],
+      "startTime": [
+        { "path": "div.schedule__time", "format": "yyyy-MM-dd HH:mm:ss", "attribute": "data-timestamp" }
+      ],
+      "link": [
+        { "path": "div.schedule__match a", "attribute": "href" }
+      ],
+      "name": [
+        { "path": "div.schedule__match h3", 
+          "replacement": {
+            "regex": "( - )",
+            "replace": " 🆚 "
+          }
+        }
+      ],
+      "group": [
+        { "path": "div.schedule__match span.competition-text", "regex": "((?<country>.+)\\. )?(?<group>.+)" }
+      ]
+    },
+    "nextPage": [{ "path": "li.paginator__item--next:not(.disabled) a" }]
+  },
+  "interceptorData": {
+    "loadPageElement": "body",
+    "streamItems": [{ "path": "a:has(div.stream__item)" }],
+    "positiveScores": [{ "path": "div.stream__rating svg:not(.gray)" }],
+    "link": [],
+    "referer": "https://live.sport365.stream/",
+    "clickButton": []
+  }
+}
