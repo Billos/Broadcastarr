@@ -35,6 +35,7 @@ Available commands:
  - togglegroup
  - toggleindexer
  - togglepublisher
+ - togglereleaser
 
 ### Releaser
 A releaser is a service that can read the broadcasts.
