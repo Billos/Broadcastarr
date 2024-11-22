@@ -94,6 +94,14 @@ GROUPS="Football:France*Ligue 1,Spain*La Liga|Basketball:USA*NBA"
 ```.env
 DISCORD_WEBHOOKS="Football:id:token,Rugby:id:token"
 ```
+
+ - Set the publishers to activate.
+
+```.env
+CREATE_PUBLISHER_DISCORD=true
+CREATE_PUBLISHER_MATRIX=false
+```
+
 Add the definitions of the indexers as json files in the ./src/init/data
 ```typescript
 type Replacement = {
@@ -193,7 +201,7 @@ Fill the .env file with the correct values.
 ## Roadmap
 
  - [x] Configuration to activate / deactivate the Discord Bot 
- - [ ] Configuration to activate / deactivate publishers
+ - [x] Configuration to activate / deactivate publishers
  - [ ] Discord bot commands to activate / deactivate publishers
  - [ ] Configuration to activate / deactivate releasers
  - [ ] Discord bot commands to activate / deactivate releasers
@@ -205,3 +213,4 @@ Fill the .env file with the correct values.
  - [ ] Unit tests
  - [ ] Option to reload a stream when proxying has been requested
  - [ ] Working API for TheSportsDB
+ - [ ] Refactor the publishers configuration to store everything in the database
