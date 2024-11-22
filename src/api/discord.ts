@@ -7,10 +7,10 @@ import mainLogger from "../utils/logger"
 import sleep from "../utils/sleep"
 
 const botInstance = axios.create({
-  baseURL: env.discord.webhook.url,
+  baseURL: "https://discord.com/api/webhooks/",
 })
 const userInstance = axios.create({
-  baseURL: env.discord.channelsUrl,
+  baseURL: "https://discord.com/api/channels/",
   headers: { Authorization: env.discord.token },
 })
 
@@ -49,8 +49,8 @@ async function sendDiscordMessage(webhookId: string, webhookToken: string, conte
   logger.trace("Sending message")
   const { data: { id } } = await botInstance.post(url, {
     content,
-    username: env.discord.webhook.botName,
-    avatar_url: env.discord.webhook.botAvatar,
+    username: env.discord.botName,
+    avatar_url: env.discord.botAvatar,
   })
   return id
 }

@@ -16,13 +16,9 @@ export default {
     userAgent: process.env.USER_AGENT,
   },
   discord: {
-    channelsUrl: process.env.DISCORD_CHANNELS_URL,
     token: process.env.DISCORD_USER_TOKEN,
-    webhook: {
-      url: process.env.DISCORD_WEBHOOK_URL,
-      botAvatar: process.env.DISCORD_WEBHOOK_AVATAR,
-      botName: process.env.DISCORD_WEBHOOK_USERNAME,
-    },
+    botAvatar: process.env.DISCORD_WEBHOOK_AVATAR,
+    botName: process.env.DISCORD_WEBHOOK_USERNAME,
   },
   filters: {
     channels: (process.env.CHANNELS || "").split(","),
