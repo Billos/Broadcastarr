@@ -80,5 +80,4 @@ class JellyfinReleaser implements IReleaser {
   }
 }
 
-const releaser = new JellyfinReleaser()
-export default releaser
+export default JellyfinReleaser

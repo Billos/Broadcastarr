@@ -3,7 +3,7 @@
  - [x] Configuration to activate / deactivate the Discord Bot 
  - [x] Configuration to activate / deactivate publishers
  - [x] Discord bot commands to activate / deactivate publishers
- - [ ] Configuration to activate / deactivate releasers
+ - [x] Configuration to activate / deactivate releasers
  - [ ] Discord bot commands to activate / deactivate releasers
  - [ ] Improve doc with screenshots
  - [ ] Better doc for the configuration
@@ -15,3 +15,4 @@
  - [ ] Option to reload a stream when proxying has been requested
  - [ ] Working API for TheSportsDB
  - [ ] Refactor the publishers configuration to store everything in the database
+ - [ ] Refactor the releasers configuration to store everything in the database
