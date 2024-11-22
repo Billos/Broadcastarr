@@ -41,10 +41,10 @@ const commandGenerator: CommandGenerator = {
         .setChoices(choices))
       .addStringOption((option) => option
         .setName("action")
-        .setDescription("Action to perform on the indexer")
+        .setDescription("Action to perform on the publisher")
         .setRequired(true)
         .setChoices(actions))
-      .setDescription("Activate or deactivate an indexer")
+      .setDescription("Activate or deactivate a publisher")
 
     return {
       data,
