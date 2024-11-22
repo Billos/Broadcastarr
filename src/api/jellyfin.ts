@@ -1,3 +1,5 @@
+import { join } from "path"
+
 import axios from "axios"
 
 import env from "../config/env"
@@ -191,15 +193,17 @@ async function createTunerHost(Url: string): Promise<string> {
   return tunerHost.data.Id
 }
 
+const collectionUrl = join(env.jellyfin.url, "web/index.html#!/details")
+
 async function getContentUrl(jellyfinId: string): Promise<string> {
   const serverId = await getServerId()
-  return `${env.jellyfin.collectionUrl}?id=${jellyfinId}&serverId=${serverId}`
+  return `${collectionUrl}?id=${jellyfinId}&serverId=${serverId}`
 }
 
 async function getCollectionUrl(collectionName: string): Promise<string> {
   const { Id: collectionId } = await getCollection(collectionName)
   const serverId = `serverId=${await getServerId()}`
-  return `${env.jellyfin.collectionUrl}?id=${collectionId}&${serverId}`
+  return `${collectionUrl}?id=${collectionId}&${serverId}`
 }
 
 const JellyfinAPI = {
