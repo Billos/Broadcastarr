@@ -4,7 +4,7 @@
  - [x] Configuration to activate / deactivate publishers
  - [x] Discord bot commands to activate / deactivate publishers
  - [x] Configuration to activate / deactivate releasers
- - [ ] Discord bot commands to activate / deactivate releasers
+ - [x] Discord bot commands to activate / deactivate releasers
  - [ ] Improve doc with screenshots
  - [ ] Better doc for the configuration
  - [ ] Use Prettier for code formatting
