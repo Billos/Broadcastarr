@@ -11,7 +11,7 @@ const botInstance = axios.create({
 })
 const userInstance = axios.create({
   baseURL: "https://discord.com/api/channels/",
-  headers: { Authorization: env.discord.token },
+  headers: { Authorization: env.publishers.discord.token },
 })
 
 // axios capture error
@@ -49,8 +49,8 @@ async function sendDiscordMessage(webhookId: string, webhookToken: string, conte
   logger.trace("Sending message")
   const { data: { id } } = await botInstance.post(url, {
     content,
-    username: env.discord.botName,
-    avatar_url: env.discord.botAvatar,
+    username: env.publishers.discord.botName,
+    avatar_url: env.publishers.discord.botAvatar,
   })
   return id
 }

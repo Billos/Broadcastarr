@@ -15,10 +15,19 @@ export default {
   browser: {
     userAgent: process.env.USER_AGENT,
   },
-  discord: {
-    token: process.env.DISCORD_USER_TOKEN,
-    botAvatar: process.env.DISCORD_WEBHOOK_AVATAR,
-    botName: process.env.DISCORD_WEBHOOK_USERNAME,
+  publishers: {
+    discord: {
+      token: process.env.DISCORD_USER_TOKEN,
+      botAvatar: process.env.DISCORD_WEBHOOK_AVATAR,
+      botName: process.env.DISCORD_WEBHOOK_USERNAME,
+    },
+    matrix: {
+      url: process.env.MATRIX_URL,
+      user: process.env.MATRIX_USER,
+      serverName: process.env.MATRIX_SERVER_NAME,
+      accessToken: process.env.MATRIX_ACCESS_TOKEN,
+      additionalAdmins: process.env.MATRIX_ADDITIONAL_ADMINS.split(","),
+    },
   },
   filters: {
     channels: (process.env.CHANNELS || "").split(","),
@@ -31,13 +40,6 @@ export default {
   theSportsDb: {
     url: process.env.THE_SPORTS_DB_URL,
     apiKey: process.env.THE_SPORTS_DB_API_KEY,
-  },
-  matrix: {
-    url: process.env.MATRIX_URL,
-    user: process.env.MATRIX_USER,
-    serverName: process.env.MATRIX_SERVER_NAME,
-    accessToken: process.env.MATRIX_ACCESS_TOKEN,
-    additionalAdmins: process.env.MATRIX_ADDITIONAL_ADMINS.split(","),
   },
   discordBot: {
     active: process.env.DISCORD_BOT_ACTIVE === "true",

@@ -29,9 +29,9 @@ class MatrixPublisher extends MarkdownPublisher {
     matrixLogger.disableAll()
     logger.info("Syncing the client")
     this.client = createClient({
-      baseUrl: env.matrix.url,
-      userId: env.matrix.user,
-      accessToken: env.matrix.accessToken,
+      baseUrl: env.publishers.matrix.url,
+      userId: env.publishers.matrix.user,
+      accessToken: env.publishers.matrix.accessToken,
     })
     await this.client.startClient({ initialSyncLimit: 100 })
     await this.awaitSync()
@@ -150,8 +150,8 @@ class MatrixPublisher extends MarkdownPublisher {
     const logger = mainLogger.getSubLogger({ name: "MatrixPublisher", prefix: ["setPowerLevels", `room ${roomName}`] })
     logger.info("Setting power levels")
     const roomId = this.rooms[roomName]
-    const users: { [userId: string]: number } = { [env.matrix.user]: 100 }
-    for (const admin of env.matrix.additionalAdmins) {
+    const users: { [userId: string]: number } = { [env.publishers.matrix.user]: 100 }
+    for (const admin of env.publishers.matrix.additionalAdmins) {
       users[admin] = 100
     }
 
@@ -183,7 +183,7 @@ class MatrixPublisher extends MarkdownPublisher {
   }
 
   private async createRoom(category: CategoryDocument): Promise<void> {
-    const roomAlias = `#scrapper-${category.name}:${env.matrix.serverName}`
+    const roomAlias = `#scrapper-${category.name}:${env.publishers.matrix.serverName}`
     const logger = mainLogger.getSubLogger({ name: "MatrixPublisher", prefix: ["createRoom", `alias ${roomAlias}`] })
     // Checking if the room already exists
     logger.info("Checking if the room already exists")
