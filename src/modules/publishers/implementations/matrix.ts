@@ -212,5 +212,4 @@ class MatrixPublisher extends MarkdownPublisher {
   }
 }
 
-const publisher = new MatrixPublisher()
-export default publisher
+export default MatrixPublisher

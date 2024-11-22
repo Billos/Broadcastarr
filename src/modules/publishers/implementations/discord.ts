@@ -96,5 +96,4 @@ class DiscordPublisher extends MarkdownPublisher {
   }
 }
 
-const publisher = new DiscordPublisher()
-export default publisher
+export default DiscordPublisher
