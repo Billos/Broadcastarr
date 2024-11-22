@@ -192,13 +192,16 @@ Fill the .env file with the correct values.
 
 ## Roadmap
 
- - [] Unit tests
- - [] Configuration to activate / deactivate publishers
- - [] Discord bot commands to activate / deactivate publishers
- - [] Configuration to activate / deactivate releasers
- - [] Discord bot commands to activate / deactivate releasers
- - [] Working API for TheSportsDB
- - [] Option to reload a stream when proxying has been requested
- - [] Script for versioning & automated changelog generation with the releases
- - [] Create docker image that does not mount the src folder
- - [] Improve doc with screenshots
+ - [ ] Configuration to activate / deactivate the Discord Bot 
+ - [ ] Configuration to activate / deactivate publishers
+ - [ ] Discord bot commands to activate / deactivate publishers
+ - [ ] Configuration to activate / deactivate releasers
+ - [ ] Discord bot commands to activate / deactivate releasers
+ - [ ] Improve doc with screenshots
+ - [ ] Better doc for the configuration
+ - [ ] Script for versioning & automated changelog generation with the releases
+ - [ ] Create docker image that does not mount the src folder
+ - [ ] Implement a Gotify publisher
+ - [ ] Unit tests
+ - [ ] Option to reload a stream when proxying has been requested
+ - [ ] Working API for TheSportsDB
