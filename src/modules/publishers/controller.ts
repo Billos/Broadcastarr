@@ -24,8 +24,16 @@ export async function createPublisher(name: string, active: boolean): Promise<Pu
   return Service.createPublisher(name, active)
 }
 
+export async function updateActive(name: string, active: boolean): Promise<PublisherDocument> {
+  return Service.updatePublisher(name, { active })
+}
+
 export async function getActivePublishers(): Promise<PublisherDocument[]> {
   return Service.getPublishers({ active: true })
+}
+
+export async function getAllPublishers(): Promise<PublisherDocument[]> {
+  return Service.getPublishers({})
 }
 
 export async function deletePublisher(name: string): Promise<void> {

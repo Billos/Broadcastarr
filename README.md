@@ -34,6 +34,7 @@ Available commands:
  - setgroupemoji
  - togglegroup
  - toggleindexer
+ - togglepublisher
 
 ### Releaser
 A releaser is a service that can read the broadcasts.
@@ -202,7 +203,7 @@ Fill the .env file with the correct values.
 
  - [x] Configuration to activate / deactivate the Discord Bot 
  - [x] Configuration to activate / deactivate publishers
- - [ ] Discord bot commands to activate / deactivate publishers
+ - [x] Discord bot commands to activate / deactivate publishers
  - [ ] Configuration to activate / deactivate releasers
  - [ ] Discord bot commands to activate / deactivate releasers
  - [ ] Improve doc with screenshots
