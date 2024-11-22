@@ -208,6 +208,7 @@ Fill the .env file with the correct values.
  - [ ] Discord bot commands to activate / deactivate releasers
  - [ ] Improve doc with screenshots
  - [ ] Better doc for the configuration
+ - [ ] Use Prettier for code formatting
  - [ ] Script for versioning & automated changelog generation with the releases
  - [ ] Create docker image that does not mount the src folder
  - [ ] Implement a Gotify publisher
