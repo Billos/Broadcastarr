@@ -20,7 +20,7 @@ router.listen(env.port, async () => {
   const mongo = await mongoose.connect(`${env.mongo.url}/${env.mongo.db}`, {})
   logger.info(`Mongo is up on ${mongo.connection.host}:${mongo.connection.port}`)
 
-  if (env.discord.bot.token) {
+  if (env.discordBot.active) {
     const bot = new DiscordBot()
     bot.start()
   }

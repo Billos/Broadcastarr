@@ -13,7 +13,7 @@ import { AuthController } from "../modules/auth"
 import { RoleController } from "../modules/role"
 import mainLogger from "../utils/logger"
 
-const rest = new REST({ version: "10" }).setToken(env.discord.bot.token)
+const rest = new REST({ version: "10" }).setToken(env.discordBot.token)
 
 class DiscordBot {
   private client: Client
@@ -32,7 +32,7 @@ class DiscordBot {
     this.client.on("guildCreate", this.onGuildCreate.bind(this))
     this.client.on("guildAvailable", this.onGuildAvailable.bind(this))
     this.client.on("interactionCreate", this.onInteractionCreate.bind(this))
-    await this.client.login(env.discord.bot.token)
+    await this.client.login(env.discordBot.token)
 
     // Every 5 minutes, redeploy the commands
     setInterval(async () => {
@@ -60,7 +60,7 @@ class DiscordBot {
     const body = this.commands.map(({ data }) => data.toJSON())
     try {
       logger.info("Started refreshing application (/) commands.")
-      await rest.put(Routes.applicationGuildCommands(env.discord.bot.clientId, guildId), { body })
+      await rest.put(Routes.applicationGuildCommands(env.discordBot.clientId, guildId), { body })
 
       logger.debug("Successfully reloaded application (/) commands.")
     } catch (error) {

@@ -192,7 +192,7 @@ Fill the .env file with the correct values.
 
 ## Roadmap
 
- - [ ] Configuration to activate / deactivate the Discord Bot 
+ - [x] Configuration to activate / deactivate the Discord Bot 
  - [ ] Configuration to activate / deactivate publishers
  - [ ] Discord bot commands to activate / deactivate publishers
  - [ ] Configuration to activate / deactivate releasers

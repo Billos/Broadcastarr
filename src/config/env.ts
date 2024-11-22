@@ -23,10 +23,6 @@ export default {
       botAvatar: process.env.DISCORD_WEBHOOK_AVATAR,
       botName: process.env.DISCORD_WEBHOOK_USERNAME,
     },
-    bot: {
-      token: process.env.DISCORD_TOKEN,
-      clientId: process.env.DISCORD_CLIENT_ID,
-    },
   },
   filters: {
     channels: (process.env.CHANNELS || "").split(","),
@@ -46,5 +42,10 @@ export default {
     serverName: process.env.MATRIX_SERVER_NAME,
     accessToken: process.env.MATRIX_ACCESS_TOKEN,
     additionalAdmins: process.env.MATRIX_ADDITIONAL_ADMINS.split(","),
+  },
+  discordBot: {
+    active: process.env.DISCORD_BOT_ACTIVE === "true",
+    clientId: process.env.DISCORD_BOT_CLIENT_ID,
+    token: process.env.DISCORD_BOT_TOKEN,
   },
 }
