@@ -7,6 +7,9 @@ export default class ReleasersInitiator extends Initiator {
     const logger = mainLogger.getSubLogger({ name: "ReleasersInitiator", prefix: ["init"] })
     logger.info("Initializing Releasers")
 
+    await ReleasersController.deleteReleaser("Jellyfin")
+    await ReleasersController.createReleaser("Jellyfin", process.env.CREATE_RELEASER_JELLYFIN === "true")
+
     await ReleasersController.initReleasers()
   }
 }

@@ -103,6 +103,12 @@ CREATE_PUBLISHER_DISCORD=true
 CREATE_PUBLISHER_MATRIX=false
 ```
 
+  - Set the releasers to activate.
+  
+```.env
+CREATE_RELEASER_JELLYFIN=true
+```
+
 Add the definitions of the indexers as json files in the ./src/init/data
 ```typescript
 type Replacement = {
