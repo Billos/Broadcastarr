@@ -10,7 +10,7 @@ export default {
     db: process.env.MONGO_DB,
     agendaDb: process.env.MONGO_AGENDA_DB,
   },
-  remoteUrl: process.env.REMOTE_URL,
+  remoteUrl: process.env.BROADCASTARR_REMOTE_URL,
   m3u8Destination: process.env.DESTINATION,
   browser: {
     userAgent: process.env.USER_AGENT,
@@ -38,8 +38,8 @@ export default {
     collectionUrl: process.env.JELLYFIN_COLLECTION_URL,
   },
   theSportsDb: {
-    url: process.env.THE_SPORTS_DB_URL,
-    apiKey: process.env.THE_SPORTS_DB_API_KEY,
+    url: "https://www.thesportsdb.com/api/v1/json/",
+    apiKey: "3",
   },
   discordBot: {
     active: process.env.DISCORD_BOT_ACTIVE === "true",
