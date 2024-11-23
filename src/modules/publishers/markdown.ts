@@ -83,6 +83,9 @@ abstract class MarkdownPublisher extends Publisher {
 
   private getMaxTeamLength(broadcasts: BroadcastDocument[]): number {
     const maxTeamLength = broadcasts.reduce((acc, broadcast) => {
+      if (!broadcast.name.includes("🆚")) {
+        return acc
+      }
       const [team1, team2] = broadcast.name.split("🆚")
       return Math.max(acc, team1.length, team2.length)
     }, 0)
