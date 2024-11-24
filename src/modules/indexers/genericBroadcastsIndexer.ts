@@ -194,7 +194,7 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
       // If the group does not exist, we create it in the DB as inactive and raise an error
       const created = await this.assertGroupExists(group, false)
       if (created) {
-        throw new SilentError(`Creating group ${group} and set it to inactive groups`)
+        throw new SilentError(`Creating group ${group.country} ${group.name} and set it to inactive groups`)
       }
       throw new SilentError(`Group ${group} is not in filters`)
     }
