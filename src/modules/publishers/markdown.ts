@@ -104,6 +104,9 @@ abstract class MarkdownPublisher extends Publisher {
       const padding = " ".repeat(Math.max(maxTeamLength - team1.length, 0))
       const padding2 = " ".repeat(Math.max(maxTeamLength - team2.length, 0))
       displayContent = `${team1}${padding}${teamSeparator}${team2}${padding2}`
+    } else {
+      const padding = " ".repeat(Math.max(maxTeamLength - displayContent.length, 0))
+      displayContent = `${displayContent}${padding}`
     }
 
     const { uuid: apiKey } = await UUIDController.getUUID()
