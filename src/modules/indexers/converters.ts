@@ -37,7 +37,7 @@ const convertDateSelector = (item: DBDateSelector): DateSelector => ({
 const convertRegexSelector = (item: DBRegexSelector): RegexSelector<any> => ({
   ...(convertTextSelector(item)),
   regex: new RegExp(item.regex),
-  default: item.default,
+  default: Object.fromEntries(Array.from(item.default.entries())),
 })
 
 export {

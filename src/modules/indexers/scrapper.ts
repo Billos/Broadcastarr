@@ -245,6 +245,8 @@ export default abstract class PageScrapper {
         for (const key of keys) {
           result[key] = groups[key] as T[keyof T]
         }
+
+        return result
       } catch (error) {
         // Do nothing
       }
