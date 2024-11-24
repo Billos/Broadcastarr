@@ -62,4 +62,4 @@ jspm_packages/
 *.m3u8
 
 # Ignore the data files
-./src/init/data/*.json
+*.json
