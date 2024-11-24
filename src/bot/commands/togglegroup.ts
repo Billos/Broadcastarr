@@ -24,6 +24,9 @@ async function execute(interaction: CommandInteraction) {
     groups = groups.filter(({ country, name }) => (`${country}:${name}`).toLowerCase().includes(filter.toLowerCase()))
   }
 
+  if (groups.length === 0) {
+    return interaction.reply({ content: "No group found", ephemeral: true })
+  }
   const moreThan25 = groups.length > 25
 
   const groupInteraction = await interaction.reply({
