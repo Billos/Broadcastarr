@@ -200,3 +200,5 @@ Fill the .env file with the correct values.
  - [] Working API for TheSportsDB
  - [] Option to reload a stream when proxying has been requested
  - [] Script for versioning & automated changelog generation with the releases
+ - [] Create docker image that does not mount the src folder
+ - [] Improve doc with screenshots
