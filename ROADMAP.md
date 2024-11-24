@@ -5,7 +5,7 @@
  - [x] Discord bot commands to activate / deactivate publishers
  - [x] Configuration to activate / deactivate releasers
  - [x] Discord bot commands to activate / deactivate releasers
- - [ ] Improve doc with screenshots
+ - [x] Improve doc with screenshots
  - [ ] Better doc for the configuration
  - [ ] Use Prettier for code formatting
  - [ ] Script for versioning & automated changelog generation with the releases

@@ -205,3 +205,18 @@ type RegexSelector<T extends Record<string, string>> = TextContentSelector & {
 ### Server & Workers
 
 Fill the .env file with the correct values.
+
+
+## Screenshots
+
+### Discord publish
+![alt text](./screenshots/CategoryPublishDiscord.png)
+
+### Matrix publish
+![alt text](./screenshots/CategoryPublishMatrix.png)
+
+### Broadcast page on Jellyfin
+![alt text](./screenshots/BroadcastLinkJellyfin.png)
+
+### Collection page on Jellyfin
+![alt text](./screenshots/CollectionViewJellyfin.png)
