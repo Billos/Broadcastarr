@@ -13,6 +13,6 @@ export async function publishGroup(group: string, category: string, country: str
     return
   }
   logger.info(`Rescheduling the one time PublishGroup for category ${category} and group ${group} in ${delay} seconds`)
-  existingJob.schedule(`In ${delay} seconds`)
+  await existingJob.schedule(`In ${delay} seconds`)
   await existingJob.save()
 }
