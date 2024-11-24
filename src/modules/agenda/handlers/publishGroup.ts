@@ -10,6 +10,7 @@ import { Triggers } from "../triggers"
 export async function handler(job: Job<PublishGroupOptions>): Promise<void> {
   const { group, category, country } = job.attrs.data
   const logger = mainLogger.getSubLogger({ name: "PublishGroupHandler", prefix: ["handler", `groub ${group}`, `category ${category}`] })
+  logger.info("Publishing group")
 
   // Get the group and the broadcasts
   const groupDocument = await GroupController.getGroup({ name: group, category, country })
@@ -25,12 +26,15 @@ export async function handler(job: Job<PublishGroupOptions>): Promise<void> {
   // Publish the group
   logger.debug("Republishing the group")
   const res = await PublishersController.unpublishGroup(groupDocument)
+  logger.debug("Unsetting the publications")
   for (const publisher of Object.keys(res)) {
     await GroupController.setPublications(groupDocument, publisher, [])
   }
 
   if (groupDocument.active) {
+    logger.debug("Publishing the group")
     const result = await PublishersController.publishGroup(groupDocument, broadcasts)
+    logger.debug("Setting the publications")
     for (const publisher of Object.keys(result)) {
       await GroupController.setPublications(groupDocument, publisher, result[publisher])
     }
@@ -38,5 +42,6 @@ export async function handler(job: Job<PublishGroupOptions>): Promise<void> {
 
   // schedule now the UpdateDiscordChannelName task
   // Check if the task is already scheduled
+  logger.debug("Scheduling the UpdateCategoryChannelName task")
   await Triggers.updateCategoryChannelName(category)
 }
