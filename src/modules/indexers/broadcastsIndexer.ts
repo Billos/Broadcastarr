@@ -104,7 +104,7 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
 
     try {
       const group = await GroupController.getGroup({ name: data.group, category: this.category, country: data.country })
-      if (group) {
+      if (group && group.emoji) {
         groupEmoji = group.emoji
       }
     } catch (error) {
