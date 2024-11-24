@@ -125,7 +125,7 @@ type RegexSelector<T extends Record<string, string>> = TextContentSelector & {
   default?: T;
 }
 ```
-```json
+```jsonc
 {
   "name": string,
   "url": string,
