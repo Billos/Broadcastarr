@@ -105,7 +105,9 @@ abstract class MarkdownPublisher extends Publisher {
       const padding2 = " ".repeat(Math.max(maxTeamLength - team2.length, 0))
       displayContent = `${team1}${padding}${teamSeparator}${team2}${padding2}`
     } else {
-      const padding = " ".repeat(Math.max(maxTeamLength - displayContent.length, 0))
+      // Full length should be 2x maxTeamLength + 1
+      const maxSize = 2 * maxTeamLength + 1
+      const padding = " ".repeat(maxSize - displayContent.length)
       displayContent = `${displayContent}${padding}`
     }
 
