@@ -1,10 +1,7 @@
 services:
   server:
+    image: docker.io/billos/broadcastarr:latest
     container_name: server
-    build:
-      context: .
-      args:
-        - UID=${UID:-1000}
     command: "dev:server"
     volumes:
       - ./src:/app/src
