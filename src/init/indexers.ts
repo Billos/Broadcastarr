@@ -10,7 +10,7 @@ export default class IndexersInitiator extends Initiator {
     const logger = mainLogger.getSubLogger({ name: "IndexersInitiator", prefix: ["init"] })
     logger.info("Initializing indexers")
 
-    const folder = join(__dirname, "data")
+    const folder = process.env.DATA_FOLDER
     const files = await readdirSync(folder)
     for (const file of files) {
       try {

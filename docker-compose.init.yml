@@ -11,11 +11,14 @@ services:
       MONGO_URL: mongodb://mongo:27017
       MONGO_AGENDA_DB: agenda
       MONGO_DB: broadcastarr
+      DATA_FOLDER: /data
     deploy:
       resources:
         limits:
           memory: 4g
     restart: unless-stopped
+    volumes:
+      - ./data:/data
     depends_on:
       mongo:
         condition: service_healthy

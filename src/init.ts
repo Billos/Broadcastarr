@@ -18,7 +18,6 @@ async function init() {
   }
 
   logger.info("Init done")
-  process.exit(0)
 }
 
 init()

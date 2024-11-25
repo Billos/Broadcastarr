@@ -29,6 +29,7 @@ coverage
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
+build/
 
 # Dependency directories
 node_modules/
@@ -62,4 +63,4 @@ jspm_packages/
 *.m3u8
 
 # Ignore the data files
-src/init/data/*.json
+./data/*.json
