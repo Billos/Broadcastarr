@@ -46,10 +46,7 @@
     "dev:server": "yarn dev src/server.ts",
     "dev:worker": "sleep 1; yarn dev src/worker.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Billos/Broadcastarr.git"
-  },
+  "repository": "git@github.com:Billos/Broadcastarr.git",
   "author": "Billos",
   "license": "BSD-2-Clause",
   "bugs": {
