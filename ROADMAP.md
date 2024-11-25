@@ -8,8 +8,8 @@
  - [x] Improve doc with screenshots
  - [ ] Better doc for the configuration
  - [ ] Use Prettier for code formatting
- - [ ] Script for versioning & automated changelog generation with the releases
- - [ ] Create docker image that does not mount the src folder
+ - [x] Script for versioning & automated changelog generation with the releases
+ - [x] Create docker image that does not mount the src folder
  - [ ] Implement a Gotify publisher
  - [ ] Unit tests
  - [ ] Option to reload a stream when proxying has been requested
