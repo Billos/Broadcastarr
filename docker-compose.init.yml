@@ -1,11 +1,10 @@
 services:
-  server:
+  init:
     image: docker.io/billos/broadcastarr:latest
-    command: ["yarn", "dev:server"]
-    volumes:
-      - ${M3U8_FOLDER}:${M3U8_FOLDER}:rw
+    command: ["yarn", "dev:init"]
     env_file:
       - .env
+      - .env.init
     environment:
       NODE_ENV: development
       LOG_LEVEL: 2
@@ -20,21 +19,6 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
-
-  worker:
-    extends:
-      service: server
-    container_name: worker
-    command: ["yarn", "dev:worker"]
-
-  init:
-    extends:
-      service: server
-    env_file:
-      - .env
-      - .env.init
-    container_name: init
-    command: ["yarn", "dev:init"]
 
   mongo:
     image: docker.io/library/mongo:7.0
