@@ -59,21 +59,26 @@ The used configuration file is ./wg0.conf.
 
 ## Installation
 
-First you need to create the env files and fill them with the correct values.
+Ensure the DB volume is created.
+```sh
+docker volume create broadcastarr_data
 ```
+
+Then you need to create the env files and fill them with the correct values.
+```sh
 cp .env.default .env
 cp .env.init.default .env.init
 ```
 
 Then you need to initialize the database and shut it down.
-```
-docker compose up init
-docker compose down init
+```sh
+docker compose -f ./docker-compose.init.yml up init
+docker compose -f ./docker-compose.init.yml down
 ```
 
 Finally you can start the service.
-```
-docker compose up -d server worker
+```sh
+docker compose up -d
 ```
 
 Additionally you can have multiple workers in the compose file to handle more tasks at the same time.
