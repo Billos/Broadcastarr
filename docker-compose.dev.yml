@@ -5,7 +5,7 @@ services:
       context: .
       args:
         - UID=${UID:-1000}
-    command: ["yarn", "dev:server"]
+    command: "dev:server"
     volumes:
       - ./src:/app/src
       - ${M3U8_FOLDER}:${M3U8_FOLDER}:rw
@@ -32,16 +32,7 @@ services:
     extends:
       service: server
     container_name: worker
-    command: ["yarn", "dev:worker"]
-
-  init:
-    extends:
-      service: server
-    env_file:
-      - .env
-      - .env.init
-    container_name: init
-    command: ["yarn", "dev:init"]
+    command: "dev:worker"
 
   mongo:
     image: docker.io/library/mongo:7.0

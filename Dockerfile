@@ -51,3 +51,5 @@ RUN yarn add puppeteer
 RUN yarn puppeteer browsers install firefox
 
 RUN yarn build
+
+ENTRYPOINT [ "yarn", "run" ]

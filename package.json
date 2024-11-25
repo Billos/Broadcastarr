@@ -45,8 +45,11 @@
     "lint": "eslint --ext .ts src",
     "build": "tsc",
     "release": "semantic-release",
-    "dev": "tsx watch --clear-screen",
-    "dev:init": "yarn dev src/init.ts",
+    "start": "tsx",
+    "dev": "yarn start -- watch --clear-screen",
+    "init": "yarn start build/init.js",
+    "server": "yarn start build/server.js",
+    "worker": "sleep 1; yarn start build/worker.js",
     "dev:server": "yarn dev src/server.ts",
     "dev:worker": "sleep 1; yarn dev src/worker.ts"
   },

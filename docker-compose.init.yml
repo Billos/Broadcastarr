@@ -1,7 +1,7 @@
 services:
   init:
     image: docker.io/billos/broadcastarr:latest
-    command: ["yarn", "dev:init"]
+    command: "init"
     env_file:
       - .env
       - .env.init
