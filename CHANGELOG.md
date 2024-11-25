@@ -1,3 +1,17 @@
+## [1.0.1](https://github.com/Billos/Broadcastarr/compare/1.0.0...1.0.1) (2024-11-25)
+
+
+### Bug Fixes
+
+* **build:** Add build script and update Dockerfile to run build process ([05556ab](https://github.com/Billos/Broadcastarr/commit/05556ab8b61d4d1e3643793796b682dc67fc2ee9))
+* **changelog:** Add initial changelog for version 1.0.0 with bug fixes and features ([6c8dd0b](https://github.com/Billos/Broadcastarr/commit/6c8dd0be054a0b86e760e2687454da2f7135f3dd))
+* **dockerignore:** Add wg0.conf to .dockerignore to prevent it from being included in Docker builds ([09e0711](https://github.com/Billos/Broadcastarr/commit/09e07114e9bad94760ea8dfeab3ffa8afd69002a))
+* **docker:** Simplify command syntax in Docker Compose files and update entry point in Dockerfile ([5221bc3](https://github.com/Billos/Broadcastarr/commit/5221bc3b2a6612d54c295ff3476b9a0c212b01d4))
+* **gitignore:** Update data file path in .gitignore to improve clarity ([57fa74f](https://github.com/Billos/Broadcastarr/commit/57fa74f9c0818952b91813fca53bbe94be6ba5c6))
+* **init:** Update data folder handling and improve Docker Compose configuration ([5c2d2f4](https://github.com/Billos/Broadcastarr/commit/5c2d2f4d1edf43a7fb982b3844f4223aeebed87d))
+* **matrix:** Change Matrix room name to use category.name ([a9ecbf0](https://github.com/Billos/Broadcastarr/commit/a9ecbf01daa50ad90d9582937056efef58599ff7))
+* **readme:** Update installation instructions to include DB volume creation and specify init compose file ([03037b7](https://github.com/Billos/Broadcastarr/commit/03037b783b0489c3ec31e11446f7062fc448a56c))
+
 # 1.0.0 (2024-11-25)
 
 
