@@ -3,3 +3,4 @@
 *Dockerfile*
 *docker-compose*
 node_modules
+wg0.conf
