@@ -196,7 +196,7 @@ class MatrixPublisher extends MarkdownPublisher {
       logger.info("Room does not exist")
       // Create the room
       logger.info(`Creating the room - name ${roomAlias} - alias ${roomAlias}`)
-      const name = `scrapper-${category}`
+      const name = `scrapper-${category.name}`
       const { room_id: roomId } = await this.client.createRoom({
         name,
         topic: ` for ${category}`,
