@@ -50,7 +50,4 @@ RUN yarn add puppeteer
 # RUN yarn puppeteer browsers install chrome
 RUN yarn puppeteer browsers install firefox
 
-# Copy the rest of the application code to the container
-
-# Default command to run when starting the container
-CMD [ "yarn", "serve" ]
+RUN yarn build

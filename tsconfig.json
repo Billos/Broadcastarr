@@ -19,10 +19,10 @@
 
 	// Use correct ESM import behavior
 	"esModuleInterop": true,
-    "noEmit": true,
 	// Disallow features that require cross-file awareness
 	"isolatedModules": false,
 	"noImplicitOverride": true,
+	"outDir": "build",
   },
   "include": [
     "src/**/*"

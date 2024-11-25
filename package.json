@@ -43,6 +43,7 @@
   "scripts": {
     "types": "tsc --noEmit",
     "lint": "eslint --ext .ts src",
+    "build": "tsc",
     "release": "semantic-release",
     "dev": "tsx watch --clear-screen",
     "dev:init": "yarn dev src/init.ts",
