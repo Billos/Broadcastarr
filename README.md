@@ -107,6 +107,7 @@ DISCORD_WEBHOOKS="Football:id:token,Rugby:id:token"
 ```.env
 CREATE_PUBLISHER_DISCORD=true
 CREATE_PUBLISHER_MATRIX=false
+CREATE_PUBLISHER_GOTIFY=false
 ```
 
   - Set the releasers to activate.

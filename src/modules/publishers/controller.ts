@@ -1,4 +1,5 @@
 import Discord from "./implementations/discord"
+import Gotify from "./implementations/gotify"
 import Matrix from "./implementations/matrix"
 import { PublisherDocument } from "./model"
 import * as Service from "./service"
@@ -11,6 +12,7 @@ import { GroupDocument } from "../group"
 const implementations: Record<string, new () => IPublisher> = {
   Discord,
   Matrix,
+  Gotify,
 }
 
 const publishers: Record<string, IPublisher> = {}

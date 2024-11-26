@@ -28,6 +28,10 @@ export default {
       accessToken: process.env.MATRIX_ACCESS_TOKEN,
       additionalAdmins: process.env.MATRIX_ADDITIONAL_ADMINS.split(","),
     },
+    gotify: {
+      url: process.env.GOTIFY_URL,
+      token: process.env.GOTIFY_TOKEN,
+    },
   },
   filters: {
     channels: (process.env.CHANNELS || "").split(","),
