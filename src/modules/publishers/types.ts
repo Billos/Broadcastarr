@@ -68,7 +68,7 @@ export abstract class Publisher implements IPublisher {
 
   public abstract listMessages(category: CategoryDocument): Promise<string[]>
 
-  protected abstract sendCategoryMessages(category: string): Promise<string[]>
+  protected abstract sendCategoryMessages(category: CategoryDocument): Promise<string[]>
 
   protected abstract sendGroupMessages(Group: GroupDocument, docs: BroadcastDocument[]): Promise<string[]>
 
@@ -107,7 +107,7 @@ export abstract class Publisher implements IPublisher {
         logger.warn(`Failed to remove message with ID ${publication}. Error: ${error}`)
       }
     }
-    return this.sendCategoryMessages(category.name)
+    return this.sendCategoryMessages(category)
   }
 
   public async clearUnlistedMessages(category: CategoryDocument): Promise<void> {

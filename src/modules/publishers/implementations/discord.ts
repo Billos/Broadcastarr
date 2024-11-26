@@ -61,9 +61,9 @@ class DiscordPublisher extends MarkdownPublisher {
     return messages
   }
 
-  protected override async sendMessage(category: string, content: string): Promise<string[]> {
-    const logger = mainLogger.getSubLogger({ name: "DiscordPublisher", prefix: ["sendMessages", `category ${category}`] })
-    const { webhookId, webhookToken } = await this.getWebhook(category)
+  protected override async sendMessage(category: CategoryDocument, content: string): Promise<string[]> {
+    const logger = mainLogger.getSubLogger({ name: "DiscordPublisher", prefix: ["sendMessages", `category ${category.name}`] })
+    const { webhookId, webhookToken } = await this.getWebhook(category.name)
 
     const messages = splitMessage(content.split("\n"), 1950)
     const ids = []

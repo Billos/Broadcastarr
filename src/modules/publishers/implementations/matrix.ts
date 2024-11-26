@@ -113,9 +113,9 @@ class MatrixPublisher extends MarkdownPublisher {
     return room
   }
 
-  protected async sendMessage(category: string, content: string): Promise<string[]> {
-    const roomId = this.rooms[category]
-    const logger = mainLogger.getSubLogger({ name: "MatrixPublisher", prefix: ["sendMessage", `category ${category}`, `room ${roomId}`] })
+  protected async sendMessage(category: CategoryDocument, content: string): Promise<string[]> {
+    const roomId = this.rooms[category.name]
+    const logger = mainLogger.getSubLogger({ name: "MatrixPublisher", prefix: ["sendMessage", `category ${category.name}`, `room ${roomId}`] })
     logger.info("Sending the message")
     // Send the message as markdown
     const htmlMessage = new Converter().makeHtml(content)

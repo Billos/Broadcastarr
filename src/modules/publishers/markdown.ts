@@ -4,37 +4,36 @@ import convertTimeToEmoji from "../../utils/formatter"
 import mainLogger from "../../utils/logger"
 import urlJoin from "../../utils/urlJoin"
 import { BroadcastDocument } from "../broadcast/model"
-import { CategoryController } from "../category"
+import { CategoryController, CategoryDocument } from "../category"
 import { GroupDocument } from "../group"
 import { IndexerController } from "../indexer"
 import { UUIDController } from "../uuid"
 
 abstract class MarkdownPublisher extends Publisher {
-  protected abstract sendMessage(category: string, content: string): Promise<string[]>
+  protected abstract sendMessage(category: CategoryDocument, content: string): Promise<string[]>
 
-  protected async sendCategoryMessages(category: string): Promise<string[]> {
+  protected async sendCategoryMessages(category: CategoryDocument): Promise<string[]> {
     const { uuid: apiKey } = await UUIDController.getUUID()
-    const logger = mainLogger.getSubLogger({ name: "MarkdownPublisher", prefix: ["sendCategoryMessages", `category ${category}`] })
+    const logger = mainLogger.getSubLogger({ name: "MarkdownPublisher", prefix: ["sendCategoryMessages", `category ${category.name}`] })
     logger.debug("Sending category messages")
     const indexers = await IndexerController.getIndexers(true)
 
     // Create the new message for the category and store it in the
-    const categoryDocument = await CategoryController.getCategory(category)
-    const channelEmoji = categoryDocument.emoji ?? ""
-    const collectionUrl = await JellyfinAPI.getCollectionUrl(category)
+    const channelEmoji = category.emoji ?? ""
+    const collectionUrl = await JellyfinAPI.getCollectionUrl(category.name)
     // OpenedUrl link
     const apiLinks = [
       // Collection
       `[${channelEmoji}](<${collectionUrl}>)`,
       // `${channelEmoji}`,
       // Reload
-      indexers.map(({ name }) => `[\`🔄 ${name}\`](<${urlJoin(apiKey, "indexer", name, "category", category, "reload")}>)`).join("  "),
+      indexers.map(({ name }) => `[\`🔄 ${name}\`](<${urlJoin(apiKey, "indexer", name, "category", category.name, "reload")}>)`).join("  "),
       // Pages
       `[\`📃 Pages\`](<${urlJoin(apiKey, "monitor", "openedUrl")}>)`,
       // Kill
       // `[\`❌ Kill\`](<${urlJoin(apiKey, "monitor", "killBrowsers")}>)`,
       // Refresh all groups for this category
-      `[\`🔄 Refresh groups\`](<${urlJoin(apiKey, "category", category, "reload")})`,
+      `[\`🔄 Refresh groups\`](<${urlJoin(apiKey, "category", category.name, "reload")}>)`,
       // Add a link to the page of each indexer
     ]
 
@@ -78,7 +77,8 @@ abstract class MarkdownPublisher extends Publisher {
     }
 
     const groupMessages = groupLines.join("\n")
-    return this.sendMessage(category, groupMessages)
+    const categoryDocument = await CategoryController.getCategory(category)
+    return this.sendMessage(categoryDocument, groupMessages)
   }
 
   private getMaxTeamLength(broadcasts: BroadcastDocument[]): number {
