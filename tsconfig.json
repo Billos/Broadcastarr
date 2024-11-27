@@ -1,30 +1,29 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "moduleResolution": "node",
-    "skipLibCheck": true,
-    "noImplicitAny": true,
-
-	// Treat files as modules even if it doesn't use import/export
+	"compilerOptions": {
+	"sourceMap": true,
+    "outDir": "build",
+    "target": "ES2023",
+    "module": "Preserve",
+	"moduleResolution": "bundler",
 	"moduleDetection": "force",
-
-	// Ignore module structure
-	"module": "Preserve",
-
-	// Allow JSON modules to be imported
-	"resolveJsonModule": true,
-
-	// Allow JS files to be imported from TS and vice versa
+    "esModuleInterop": true,
+    // "strict": true,
 	"allowJs": true,
-
-	// Use correct ESM import behavior
-	"esModuleInterop": true,
-	// Disallow features that require cross-file awareness
-	"isolatedModules": false,
+    "lib": ["ES2023", "DOM"],
+	"skipLibCheck": true,
+	"noImplicitAny": true,
+	"noUnusedLocals": true,
+	"noUnusedParameters": true,
+	"resolveJsonModule": true,
+	"noImplicitReturns": true,
+	"noImplicitThis": true,
 	"noImplicitOverride": true,
-	"outDir": "build",
+	"allowSyntheticDefaultImports": true,
   },
   "include": [
     "src/**/*"
   ],
+  "exclude": [
+	"node_modules"
+  ]
 }
