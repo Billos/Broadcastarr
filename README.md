@@ -81,14 +81,14 @@ Then you need to create the env files and fill them with the correct values.
 
 ```sh
 cp .env.default .env
-cp .env.init.default .env.init
+cp .env.bootstrap.default .env.bootstrap
 ```
 
-Then you need to initialize the database and shut it down.
+Then you need to bootstrap the database and shut it down.
 
 ```sh
-docker compose -f ./docker-compose.init.yml up init
-docker compose -f ./docker-compose.init.yml down
+docker compose -f ./docker-compose.bootstrap.yml up bootstrap
+docker compose -f ./docker-compose.bootstrap.yml down
 ```
 
 Finally you can start the service.
@@ -101,9 +101,9 @@ Additionally you can have multiple workers in the compose file to handle more ta
 
 ## Configuration
 
-### Initialization
+### Bootstrap
 
-In the .env.init file:
+In the .env.bootstrap file:
 
 - Set the different delay values (in second).
 - Set the limit values (in minutes).
@@ -139,7 +139,7 @@ CREATE_PUBLISHER_GOTIFY=false
 CREATE_RELEASER_JELLYFIN=true
 ```
 
-Add the definitions of the indexers as json files in the ./src/init/data
+Add the definitions of the indexers as json files in the folder ./data
 
 ```typescript
 type Replacement = {

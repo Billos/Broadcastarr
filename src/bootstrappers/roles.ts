@@ -1,11 +1,11 @@
 import { commandGenerators } from "../bot/commands"
 import { RoleController } from "../modules/role"
 import mainLogger from "../utils/logger"
-import Initiator from "./initiator"
+import { Bootstrapper } from "./bootstrapper"
 
-export default class RolesInitiator extends Initiator {
-  public async init(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "RolesInitiator", prefix: ["init"] })
+export class RolesBootstrapper extends Bootstrapper {
+  public async bootstrap(): Promise<void> {
+    const logger = mainLogger.getSubLogger({ name: "RolesBootstrapper", prefix: ["bootstrap"] })
 
     // Mandatory roles
     const roles = [
@@ -13,7 +13,7 @@ export default class RolesInitiator extends Initiator {
       "moderator",
       "user",
     ]
-    logger.info("Initializing Roles")
+    logger.info("Bootstrapping Roles")
 
     for (const role of roles) {
       try {

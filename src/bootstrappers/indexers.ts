@@ -3,12 +3,12 @@ import { join } from "path"
 
 import { IndexerController, IndexerDocument } from "../modules/indexer"
 import mainLogger from "../utils/logger"
-import Initiator from "./initiator"
+import { Bootstrapper } from "./bootstrapper"
 
-export default class IndexersInitiator extends Initiator {
-  public async init(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "IndexersInitiator", prefix: ["init"] })
-    logger.info("Initializing indexers")
+export class IndexersBootstrapper extends Bootstrapper {
+  public async bootstrap(): Promise<void> {
+    const logger = mainLogger.getSubLogger({ name: "IndexersBootstrapper", prefix: ["bootstrap"] })
+    logger.info("Bootstrapping indexers")
 
     const folder = process.env.DATA_FOLDER
     const files = await readdirSync(folder)
@@ -37,7 +37,7 @@ export default class IndexersInitiator extends Initiator {
   }
 
   private async generateData(raw: string): Promise<IndexerDocument> {
-    const logger = mainLogger.getSubLogger({ name: "IndexersInitiator", prefix: ["generateData"] })
+    const logger = mainLogger.getSubLogger({ name: "IndexersBootstrapper", prefix: ["generateData"] })
     logger.info("Generating data for indexer")
     const data = JSON.parse(raw) as IndexerDocument
     return {

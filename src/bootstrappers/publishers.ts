@@ -1,10 +1,10 @@
 import { PublishersController } from "../modules/publishers"
 import mainLogger from "../utils/logger"
-import Initiator from "./initiator"
+import { Bootstrapper } from "./bootstrapper"
 
-export default class PublishersInitiator extends Initiator {
-  public async init(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "PublishersInitiator", prefix: ["init"] })
+export class PublishersBootstrapper extends Bootstrapper {
+  public async bootstrap(): Promise<void> {
+    const logger = mainLogger.getSubLogger({ name: "PublishersBootstrapper", prefix: ["bootstrap"] })
 
     logger.info("Creating Publishers")
     // check CREATE_PUBLISHER_DISCORD and  CREATE_PUBLISHER_MATRIX
@@ -15,7 +15,7 @@ export default class PublishersInitiator extends Initiator {
     await PublishersController.deletePublisher("Gotify")
     await PublishersController.createPublisher("Gotify", process.env.CREATE_PUBLISHER_GOTIFY === "true")
 
-    logger.info("Initializing Publishers")
-    await PublishersController.initPublishers()
+    logger.info("Bootstrapping Publishers")
+    await PublishersController.bootstrapPublishers()
   }
 }

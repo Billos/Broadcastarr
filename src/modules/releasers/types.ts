@@ -1,14 +1,14 @@
 import { BroadcastDocument } from "../broadcast/model"
 
 export interface IReleaser {
-  init(): Promise<void>
+  bootstrap(): Promise<void>
   releaseBroadcast(broadcast: BroadcastDocument): Promise<void>
   unreleaseBroadcast(broadcast: BroadcastDocument): Promise<void>
 }
 
 export function isReleaser(instance: any): instance is IReleaser {
-  if (typeof instance.init !== "function") {
-    throw new Error("Missing or invalid 'init': must be a function.")
+  if (typeof instance.bootstrap !== "function") {
+    throw new Error("Missing or invalid 'bootstrap': must be a function.")
   }
 
   if (typeof instance.releaseBroadcast !== "function") {

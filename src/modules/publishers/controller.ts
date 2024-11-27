@@ -58,13 +58,13 @@ async function getPublisherInstance(name: string): Promise<IPublisher> {
   return publishers[name]
 }
 
-export async function initPublishers(): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "PublisherController", prefix: ["initPublishers"] })
-  logger.info("Initializing publishers")
+export async function bootstrapPublishers(): Promise<void> {
+  const logger = mainLogger.getSubLogger({ name: "PublisherController", prefix: ["bootstrapPublishers"] })
+  logger.info("Bootstrapping publishers")
   const activePublishers = await getActivePublishers()
   for (const doc of activePublishers) {
     const publisher = await getPublisherInstance(doc.name)
-    await publisher.init()
+    await publisher.bootstrap()
   }
 }
 

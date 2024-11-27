@@ -51,11 +51,11 @@ async function getReleaserInstance(name: string): Promise<IReleaser> {
   return publishers[name]
 }
 
-export async function initReleasers(): Promise<void> {
+export async function bootstrapReleasers(): Promise<void> {
   const releasers = await getAllReleasers()
   for (const doc of releasers) {
     const releaser = await getReleaserInstance(doc.name)
-    await releaser.init()
+    await releaser.bootstrap()
   }
 }
 

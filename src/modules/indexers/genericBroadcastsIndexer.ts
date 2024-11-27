@@ -44,8 +44,6 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
   protected abstract teamSplitterRegex: RegExp
 
   async getBroadcastsData(url: string): Promise<BroadcastData[]> {
-    // Initialisation et Préparation :
-    //     Initialiser le logger avec les informations de la catégorie et de l'URL.
     const logger = mainLogger.getSubLogger({
       name: "GenericBroadcastsIndexer",
       prefix: [

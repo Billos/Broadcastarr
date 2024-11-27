@@ -53,7 +53,7 @@ jspm_packages/
 
 # environment variables file
 .env
-.env.init
+.env.bootstrap
 .env.test
 
 # parcel-bundler cache (https://parceljs.org/)

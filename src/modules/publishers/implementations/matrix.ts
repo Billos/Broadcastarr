@@ -30,9 +30,9 @@ class MatrixPublisher extends MarkdownPublisher {
     logger.info("Matrix is synced")
   }
 
-  public async init(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "MatrixPublisher", prefix: ["init"] })
-    logger.info("Initializing Matrix bot")
+  public async bootstrap(): Promise<void> {
+    const logger = mainLogger.getSubLogger({ name: "MatrixPublisher", prefix: ["bootstrap"] })
+    logger.info("Bootstrapping Matrix bot")
     await this.syncClient()
 
     // Get the existing categories

@@ -1,12 +1,12 @@
 import { ConfigController } from "../modules/config"
 import mainLogger from "../utils/logger"
-import Initiator from "./initiator"
+import { Bootstrapper } from "./bootstrapper"
 
-export default class ConfigInitiator extends Initiator {
-  public async init(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "ConfigInitiator", prefix: ["init"] })
+export class ConfigBootstrapper extends Bootstrapper {
+  public async bootstrap(): Promise<void> {
+    const logger = mainLogger.getSubLogger({ name: "ConfigBootstrapper", prefix: ["bootstrap"] })
 
-    logger.info("Initializing config for Discord webhooks")
+    logger.info("Bootstrapping config for Discord webhooks")
     // discordWebhooks will be set as "CategoryA:id:token,CategoryB:id:token"
     const raw = process.env.DISCORD_WEBHOOKS
     const discordWebhooks = (raw ? raw.split(",") : []).filter((webhook) => webhook.trim() !== "")
@@ -27,7 +27,7 @@ export default class ConfigInitiator extends Initiator {
     }
 
     // Reading all the delays
-    logger.info("Initializing delays")
+    logger.info("Bootstrapping delays")
     const allDelays: Record<string, Record<string, string>> = {
       regular: {
         IndexCategory: process.env.DELAY_REGULAR_INDEX_CATEGORY,
@@ -63,7 +63,7 @@ export default class ConfigInitiator extends Initiator {
     }
 
     // Reading all the limits
-    logger.info("Initializing limits")
+    logger.info("Bootstrapping limits")
     await ConfigController.setConfig("filter-limit-future", process.env.FUTURE_LIMIT)
     await ConfigController.setConfig("filter-limit-past", process.env.PAST_LIMIT)
   }

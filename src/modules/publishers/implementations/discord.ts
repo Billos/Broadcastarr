@@ -31,8 +31,8 @@ class DiscordPublisher extends MarkdownPublisher {
     return { webhookId: id.value, webhookToken: token.value }
   }
 
-  public async init(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "DiscordPublisher", prefix: ["init"] })
+  public async bootstrap(): Promise<void> {
+    const logger = mainLogger.getSubLogger({ name: "DiscordPublisher", prefix: ["bootstrap"] })
     logger.debug("Nothing to do here")
   }
 

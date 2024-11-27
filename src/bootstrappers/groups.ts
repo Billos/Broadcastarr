@@ -1,17 +1,17 @@
 import { CategoryController } from "../modules/category"
 import { GroupController } from "../modules/group"
 import mainLogger from "../utils/logger"
-import Initiator from "./initiator"
+import { Bootstrapper } from "./bootstrapper"
 
 type Group = {
   country?: string
   name: string
 }
 
-export default class GroupsInitiator extends Initiator {
-  public async init(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "GroupsInitiator", prefix: ["init"] })
-    logger.info("Initializing groups")
+export class GroupsBootstrapper extends Bootstrapper {
+  public async bootstrap(): Promise<void> {
+    const logger = mainLogger.getSubLogger({ name: "GroupsBootstrapper", prefix: ["bootstrap"] })
+    logger.info("Bootstrapping groups")
     // group will be set as "CategoryA:groupA,countryB*groupB,groupC|CategoryB:countryD*groupD,groupE|CategoryA:groupF"
     const envGroups: Record<string, Set<Group>> = {}
     // const envGroups: Record<string, Set<string>> = {}

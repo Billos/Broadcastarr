@@ -9,8 +9,8 @@ import { IReleaser } from "../types"
 class JellyfinReleaser implements IReleaser {
   private timeout: NodeJS.Timeout | null = null
 
-  async init(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "JellyfinReleaser", prefix: ["init"] })
+  async bootstrap(): Promise<void> {
+    const logger = mainLogger.getSubLogger({ name: "JellyfinReleaser", prefix: ["bootstrap"] })
     const categories = await CategoryController.getCategories()
 
     for (const category of categories) {

@@ -19,7 +19,7 @@
     "docker:build": "docker build . -t billos/broadcastarr:latest",
     "format": "prettier . --write",
     "format-check": "prettier . --check",
-    "init": "yarn start build/init.js",
+    "bootstrap": "yarn start build/bootstrap.js",
     "lint": "eslint src",
     "release": "semantic-release",
     "server": "yarn start build/server.js",

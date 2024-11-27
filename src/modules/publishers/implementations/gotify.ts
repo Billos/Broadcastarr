@@ -10,7 +10,7 @@ class GotifyPublisher extends MarkdownPublisher {
     super()
   }
 
-  public async init(): Promise<void> {
+  public async bootstrap(): Promise<void> {
     // Nothing to do here
   }
 

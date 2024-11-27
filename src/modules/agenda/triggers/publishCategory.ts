@@ -5,12 +5,12 @@ import { Tasks } from "../tasks"
 export async function publishCategory(category: string): Promise<void> {
   const logger = mainLogger.getSubLogger({
     name: "PublishCategoryTrigger",
-    prefix: ["initCategory", `category ${category}`],
+    prefix: ["publishCategory", `category ${category}`],
   })
   // We create a job to list broadcasts
   logger.debug("Scheduling PublishCategory task")
 
-  // Cancel previous InitCategory task
+  // Cancel previous task
   const [existingJob] = await jobs(Tasks.PublishCategory, { data: { category } })
   if (existingJob) {
     logger.debug("Task already scheduled, removing it")

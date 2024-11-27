@@ -1,10 +1,10 @@
 services:
-  init:
+  bootstrap:
     image: docker.io/billos/broadcastarr:latest
-    command: "init"
+    command: "bootstrap"
     env_file:
       - .env
-      - .env.init
+      - .env.bootstrap
     environment:
       NODE_ENV: development
       LOG_LEVEL: 2

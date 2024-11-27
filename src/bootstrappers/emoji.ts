@@ -2,12 +2,12 @@ import { CategoryController } from "../modules/category"
 import { GroupController } from "../modules/group"
 import getGroupEmoji from "../utils/getEmoji"
 import mainLogger from "../utils/logger"
-import Initiator from "./initiator"
+import { Bootstrapper } from "./bootstrapper"
 
-export default class EmojiInitiator extends Initiator {
-  public async init(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "EmojiInitiator", prefix: ["init"] })
-    logger.info("Initializing emojis for categories")
+export class EmojiBootstrapper extends Bootstrapper {
+  public async bootstrap(): Promise<void> {
+    const logger = mainLogger.getSubLogger({ name: "EmojiBootstrapper", prefix: ["bootstrap"] })
+    logger.info("Bootstrapping emojis for categories")
     // Emojis are stored in process.env.CATEGORIES_EMOJIS as CategoryA:emoji,CategoryB:emoji...
     const emojis = process.env.CATEGORIES_EMOJIS.split(",")
     for (const item of emojis) {
@@ -20,7 +20,7 @@ export default class EmojiInitiator extends Initiator {
       }
     }
 
-    logger.info("Initializing emojis for groups")
+    logger.info("Bootstrapping emojis for groups")
     const groups = await GroupController.getAllGroups()
     logger.info(`Found ${groups.length} groups`)
     for (const group of groups) {

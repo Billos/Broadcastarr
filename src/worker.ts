@@ -21,7 +21,6 @@ async function worker() {
   // Await UUID generation
   await UUIDController.awaitUUID()
 
-  // Init the publishers initiator
   await PublishersController.startPublishers()
   // Start agenda
   await agenda.start()

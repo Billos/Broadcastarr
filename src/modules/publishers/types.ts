@@ -7,7 +7,7 @@ import { GroupDocument } from "../group/model"
 export interface IPublisher {
   name: string
   // Defined in the implementation
-  init(): Promise<void>
+  bootstrap(): Promise<void>
   start(): Promise<void>
   clear(category: CategoryDocument): Promise<void>
   listMessages(category: CategoryDocument): Promise<string[]>
@@ -24,8 +24,8 @@ export function isPublisher(instance: any): instance is IPublisher {
     throw new Error("Missing or invalid 'name': must be a string")
   }
 
-  if (typeof instance.init !== "function") {
-    throw new Error("Missing or invalid 'init': must be a function.")
+  if (typeof instance.bootstrap !== "function") {
+    throw new Error("Missing or invalid 'bootstrap': must be a function.")
   }
 
   if (typeof instance.start !== "function") {
@@ -59,7 +59,7 @@ export abstract class Publisher implements IPublisher {
   public abstract name: string
 
   // Defined in the implementation
-  public abstract init(): Promise<void>
+  public abstract bootstrap(): Promise<void>
 
   public abstract start(): Promise<void>
 
