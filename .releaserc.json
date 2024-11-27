@@ -6,7 +6,19 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
-    "@semantic-release/npm",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "sed -i 's/docker.io\\/billos\\/broadcastarr:.*/docker.io\\/billos\\/broadcastarr:${nextRelease.version}/g' docker-compose*.yml"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["docker-compose*.yml, package.json, CHANGELOG.md"],
+        "message": "chore(release): Bump version to ${nextRelease.version}"
+      }
+    ],
     "@semantic-release/github",
     [
       "@codedependant/semantic-release-docker",
@@ -14,7 +26,6 @@
         "dockerProject": "billos"
       }
     ]
-
   ],
   "tagFormat": "${version}"
 }
