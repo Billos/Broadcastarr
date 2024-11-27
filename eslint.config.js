@@ -20,41 +20,45 @@ export default [
     },
     settings: {
       "import/resolver": {
-        "node": {
-          "extensions": [".js", ".jsx", ".ts", ".tsx"]
-        }
-      }
+        node: {
+          extensions: [".js", ".jsx", ".ts", ".tsx"],
+        },
+      },
     },
-    // extends: [
-    //   "eslint:recommended",
-    //   "plugin:@typescript-eslint/recommended",
-    //   "plugin:import/recommended",
-    //   "plugin:import/typescript",
-    //   "airbnb-base",
-    //   "airbnb-typescript/base",
-    // ],
     rules: {
-      "object-curly-spacing": ["error", "always"],
-      "prefer-destructuring": ["error", {
-        "array": true,
-        "object": true
-      }, {}],
+      "prefer-destructuring": [
+        "error",
+        {
+          array: true,
+          object: true,
+        },
+        {},
+      ],
       "consistent-return": "off",
-      "no-param-reassign": ["error", {
-        props: true,
-        ignorePropertyModificationsForRegex: [".*"],
-      }],
+      "no-param-reassign": [
+        "error",
+        {
+          props: true,
+          ignorePropertyModificationsForRegex: [".*"],
+        },
+      ],
       "@stylistic/js/lines-between-class-members": ["error", "always"],
-      "@stylistic/js/padding-line-between-statements": ["error", {
-        blankLine: "always",
-        prev: ["export", "class", "default", "function"],
-        next: ["export", "class", "default", "function"],
-      }],
+      "@stylistic/js/padding-line-between-statements": [
+        "error",
+        {
+          blankLine: "always",
+          prev: ["export", "class", "default", "function"],
+          next: ["export", "class", "default", "function"],
+        },
+      ],
       // Linebreaks
-      "no-underscore-dangle": ["error", {
-        allowAfterThis: true,
-        allow: ["_id"],
-      }],
-    }
-  }
+      "no-underscore-dangle": [
+        "error",
+        {
+          allowAfterThis: true,
+          allow: ["_id"],
+        },
+      ],
+    },
+  },
 ]

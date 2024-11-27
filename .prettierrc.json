@@ -1,14 +1,14 @@
 {
   "semi": false,
   "singleQuote": false,
-  "printWidth": 150,
+  "printWidth": 120,
   "trailingComma": "all",
-  "plugins": ["@ianvs/prettier-plugin-sort-imports"],
-  "importOrder": [
-    "<BUILTIN_MODULES>",
-    "",
-    "<THIRD_PARTY_MODULES>",
-    "",
-    "^[.]"
-  ]
+  "plugins": [
+    "prettier-plugin-packagejson",
+    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-organize-imports",
+    "prettier-plugin-multiline-arrays"
+  ],
+  "importOrder": ["<BUILTIN_MODULES>", "", "<THIRD_PARTY_MODULES>", "", "^[.]"],
+  "multilineArraysWrapThreshold": 2
 }
