@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/Billos/Broadcastarr/compare/1.1.3...1.1.4) (2024-11-27)
+
+
+### Bug Fixes
+
+* **releaserc:** update assets for semantic release configuration ([f01ee8d](https://github.com/Billos/Broadcastarr/commit/f01ee8d1f287cae4d5479734cfd93c2b327872b3))
+
 ## [1.1.2](https://github.com/Billos/Broadcastarr/compare/1.1.2...1.1.3) (2024-11-27)
 
 ### Bug Fixes
