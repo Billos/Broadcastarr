@@ -6,7 +6,7 @@ import { BroadcastController, BroadcastDocument } from "../modules/broadcast"
 
 const router = express.Router()
 
-router.get("/test", async (req, res) => {
+router.get("/test", async (_req, res) => {
   res.send("Test")
 })
 
@@ -55,7 +55,7 @@ router.use("/broadcast/:broadcastId/", async (req, res, next) => {
       proxyReqOpts.headers.referer = referer
       return proxyReqOpts
     },
-    userResDecorator: (proxyRes, proxyResData, userReq) => {
+    userResDecorator: (_proxyRes, proxyResData, userReq) => {
       // Only store .ts queries
       if (userReq.url.includes(".ts")) {
         const key = `${req.params.broadcastId}${userReq.url}`

@@ -1,83 +1,98 @@
 # Broadcastarr
+
 Broadcastarr is a service that allows you to broadcast media content retrieved from web pages.
 
 ## Features
 
 ### AgendaTS
+
 The different actions are split into tasks that are handled by the AgendaTS service.
 The tasks are:
- - Publish category
-Ensures that the active categories are published, and starts indexing the categories for each active indexer.
- - Index category
-Indexes the category for each a given indexer, schedules the next indexation and the grabbing of the broadcast stream.
- - Grab broadcast stream
-Grabs the broadcast stream for each broadcast in the category, schedules the release of the broadcast.
- - Release broadcast
-Releases the broadcast to the active releasers, schedules the publishing of associated group.
- - Publish group
-Publishes the group to the active publishers.
- - Update category channel name
-Updates the category channel name on the active publishers.
- - Delete broadcast
-Deletes the broadcast.
+
+- Publish category
+  Ensures that the active categories are published, and starts indexing the categories for each active indexer.
+- Index category
+  Indexes the category for each a given indexer, schedules the next indexation and the grabbing of the broadcast stream.
+- Grab broadcast stream
+  Grabs the broadcast stream for each broadcast in the category, schedules the release of the broadcast.
+- Release broadcast
+  Releases the broadcast to the active releasers, schedules the publishing of associated group.
+- Publish group
+  Publishes the group to the active publishers.
+- Update category channel name
+  Updates the category channel name on the active publishers.
+- Delete broadcast
+  Deletes the broadcast.
 
 ### Discord Bot
-Handles interactions and commands via Discord. 
+
+Handles interactions and commands via Discord.
 If no authorization was set, the bot will be available to everyone.
-Available commands: 
- - addcategory
- - addrole
- - indexcategory
- - removecategory
- - setcategoryemoji
- - setconfig
- - setgroupemoji
- - togglegroup
- - toggleindexer
- - togglepublisher
- - togglereleaser
+Available commands:
+
+- addcategory
+- addrole
+- indexcategory
+- removecategory
+- setcategoryemoji
+- setconfig
+- setgroupemoji
+- togglegroup
+- toggleindexer
+- togglepublisher
+- togglereleaser
 
 ### Releaser
+
 A releaser is a service that can read the broadcasts.
 
 Implemented releasers:
- - Jellyfin
+
+- Jellyfin
 
 ### Publisher
+
 A publisher is a service that can publish the categories, groups and broadcasts to different platforms.
 
 Implemented publishers:
- - Discord
- - Matrix
- - Gotify
+
+- Discord
+- Matrix
+- Gotify
 
 ### Scalability
+
 The service is designed to be scalable and can be deployed on multiple instances.
 
 ### VPN
+
 The docker compose includes a Wireguard client that allows the workers to scrape and grab the broadcasts from the web pages through a VPN.
 The used configuration file is ./wg0.conf.
 
 ## Installation
 
 Ensure the DB volume is created.
+
 ```sh
 docker volume create broadcastarr_data
 ```
 
 Then you need to create the env files and fill them with the correct values.
+
 ```sh
 cp .env.default .env
 cp .env.init.default .env.init
 ```
 
 Then you need to initialize the database and shut it down.
+
 ```sh
 docker compose -f ./docker-compose.init.yml up init
 docker compose -f ./docker-compose.init.yml down
 ```
 
 Finally you can start the service.
+
 ```sh
 docker compose up -d
 ```
@@ -87,23 +102,30 @@ Additionally you can have multiple workers in the compose file to handle more ta
 ## Configuration
 
 ### Initialization
+
 In the .env.init file:
- - Set the different delay values (in second).
- - Set the limit values (in minutes).
- - Set the Categories to create with their respective emoji.
+
+- Set the different delay values (in second).
+- Set the limit values (in minutes).
+- Set the Categories to create with their respective emoji.
+
 ```.env
 CATEGORIES_EMOJI=Football:⚽,Basketball:🏀
 ```
- - Set the groups to create with their respective category and country.
+
+- Set the groups to create with their respective category and country.
+
 ```.env
 GROUPS="Football:France*Ligue 1,Spain*La Liga|Basketball:USA*NBA"
 ```
- - Set the discord webhookks to activate.
+
+- Set the discord webhookks to activate.
+
 ```.env
 DISCORD_WEBHOOKS="Football:id:token,Rugby:id:token"
 ```
 
- - Set the publishers to activate.
+- Set the publishers to activate.
 
 ```.env
 CREATE_PUBLISHER_DISCORD=true
@@ -111,43 +133,45 @@ CREATE_PUBLISHER_MATRIX=false
 CREATE_PUBLISHER_GOTIFY=false
 ```
 
-  - Set the releasers to activate.
-  
+- Set the releasers to activate.
+
 ```.env
 CREATE_RELEASER_JELLYFIN=true
 ```
 
 Add the definitions of the indexers as json files in the ./src/init/data
+
 ```typescript
 type Replacement = {
-  regex: RegExp;
-  replace: string;
+  regex: RegExp
+  replace: string
 }
 
 type DateReplacement = {
-  regex: RegExp;
-  format: string;
+  regex: RegExp
+  format: string
 }
 
 type Selector = {
-  path: string;
+  path: string
 }
 
 type TextContentSelector = Selector & {
-  attribute?: string;
-  replacement?: Replacement;
+  attribute?: string
+  replacement?: Replacement
 }
 
 type DateSelector = TextContentSelector & {
-  format?: string;
-  dateReplacement?: DateReplacement;
+  format?: string
+  dateReplacement?: DateReplacement
 }
 
 type RegexSelector<T extends Record<string, string>> = TextContentSelector & {
-  regex: RegExp;
-  default?: T;
+  regex: RegExp
+  default?: T
 }
 ```
+
 ```jsonc
 {
   "name": string,
@@ -213,17 +237,20 @@ type RegexSelector<T extends Record<string, string>> = TextContentSelector & {
 
 Fill the .env file with the correct values.
 
-
 ## Screenshots
 
 ### Discord publish
+
 ![alt text](./screenshots/CategoryPublishDiscord.png)
 
 ### Matrix publish
+
 ![alt text](./screenshots/CategoryPublishMatrix.png)
 
 ### Broadcast page on Jellyfin
+
 ![alt text](./screenshots/BroadcastLinkJellyfin.png)
 
 ### Collection page on Jellyfin
+
 ![alt text](./screenshots/CollectionViewJellyfin.png)

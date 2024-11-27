@@ -5,21 +5,20 @@ import { GroupController } from "../group"
 import { GroupDocument } from "../group/model"
 
 export interface IPublisher {
-  name: string;
+  name: string
   // Defined in the implementation
-  init(): Promise<void>;
-  start(): Promise<void>;
-  clear(category: CategoryDocument): Promise<void>;
-  listMessages(category: CategoryDocument): Promise<string[]>;
+  init(): Promise<void>
+  start(): Promise<void>
+  clear(category: CategoryDocument): Promise<void>
+  listMessages(category: CategoryDocument): Promise<string[]>
   // Defined in the abstract class
-  publishCategory(category: CategoryDocument): Promise<string[]>;
-  publishGroup(Group: GroupDocument, docs: BroadcastDocument[]): Promise<string[]>;
-  unpublishGroup(Group: GroupDocument): Promise<void>;
-  updateChannelName(category: CategoryDocument): Promise<void>;
-  clearUnlistedMessages(category: CategoryDocument): Promise<void>;
+  publishCategory(category: CategoryDocument): Promise<string[]>
+  publishGroup(Group: GroupDocument, docs: BroadcastDocument[]): Promise<string[]>
+  unpublishGroup(Group: GroupDocument): Promise<void>
+  updateChannelName(category: CategoryDocument): Promise<void>
+  clearUnlistedMessages(category: CategoryDocument): Promise<void>
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isPublisher(instance: any): instance is IPublisher {
   if (typeof instance.name !== "string") {
     throw new Error("Missing or invalid 'name': must be a string")

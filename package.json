@@ -40,7 +40,8 @@
   },
   "scripts": {
     "type-check": "tsc --noEmit",
-    "format": "prettier . --check",
+    "format-check": "prettier . --check",
+    "format": "prettier . --write",
     "lint": "eslint src",
     "build": "tsc -p tsconfig.json",
     "release": "semantic-release",

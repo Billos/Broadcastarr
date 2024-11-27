@@ -1,4 +1,5 @@
 export * as IndexerController from "./controller"
+
 export {
   IndexerDocument,
   Selector as DBSelector,

@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { join } from "path"
 
 import axios from "axios"
@@ -10,19 +9,22 @@ const instance = axios.create({
 })
 
 type Event = {
-  strEvent: string;
-  strHomeTeam: string;
-  strAwayTeam: string;
-  strLeague: string;
+  strEvent: string
+  strHomeTeam: string
+  strAwayTeam: string
+  strLeague: string
 }
 
 type EventQuery = {
-  event: Event[];
+  event: Event[]
 }
 
 export async function searchGame(teamA: string, teamB: string): Promise<Event | null> {
   // First we will retrieve the events for the first team
-  const { data: { event: events }, status } = await instance.get<EventQuery>(`/searchevents.php?e=${encodeURIComponent(teamA)}`)
+  const {
+    data: { event: events },
+    status,
+  } = await instance.get<EventQuery>(`/searchevents.php?e=${encodeURIComponent(teamA)}`)
   if (status === 200 && events !== null && events?.length >= 0) {
     // If we find an event with the second team, we return it
     // The teamB may include FC, SC, AJ, RC, OGC... We want a regex that will check if strAwayTeam includes teamB
@@ -33,7 +35,10 @@ export async function searchGame(teamA: string, teamB: string): Promise<Event | 
   }
 
   // If we don't find it, we will retrieve the events for the second team
-  const { data: { event: events2 }, status: status2 } = await instance.get<EventQuery>(`/searchevents.php?e=${encodeURIComponent(teamB)}`)
+  const {
+    data: { event: events2 },
+    status: status2,
+  } = await instance.get<EventQuery>(`/searchevents.php?e=${encodeURIComponent(teamB)}`)
   if (status2 === 200 && events !== null && events2?.length >= 0) {
     // If we find an event with the first team, we return it
     const event = events2.find((game) => game.strAwayTeam === teamA)

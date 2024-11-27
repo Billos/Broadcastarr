@@ -1,11 +1,11 @@
 import express from "express"
 
+import mainLogger from "../utils/logger"
 import apiRouter from "./api"
 import streamRouter from "./stream"
-import mainLogger from "../utils/logger"
 
 const app = express()
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   const logger = mainLogger.getSubLogger({ name: "Server", prefix: [""] })
   logger.info("Hello World")
   res.send("Hello World!")

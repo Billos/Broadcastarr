@@ -21,7 +21,7 @@ router.use("/:broadcastId", async (req: Request<Pick<Params, "broadcastId">>, re
     return
   }
   res.locals.broadcastJob = existingJob
-  return next()
+  next()
 })
 
 router.get("/:broadcastId/nextStream", async (req: Request<Pick<Params, "broadcastId">>, res) => {

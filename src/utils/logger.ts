@@ -1,7 +1,7 @@
-import { ILogObj, ISettingsParam, Logger } from "tslog"
+import { Logger } from "tslog"
 
-import SilentError from "./silentError"
 import env from "../config/env"
+import SilentError from "./silentError"
 
 export const colors: Record<string, string> = {
   bold: "\x1b[1m",
@@ -50,7 +50,7 @@ class ScrapperLogger<T> extends Logger<T> {
     return super[level](...args)
   }
 
-  override getSubLogger(settings?: ISettingsParam<T>, logObj?: T) {
+  override getSubLogger(settings?: any, logObj?: T) {
     if (settings?.name) {
       settings.name = size(settings.name, 23)
     }
@@ -88,7 +88,7 @@ class ScrapperLogger<T> extends Logger<T> {
   }
 }
 
-const logger = new ScrapperLogger<ILogObj>({
+const logger = new ScrapperLogger({
   name: "log",
   type: "pretty",
   minLevel: env.logLevel,

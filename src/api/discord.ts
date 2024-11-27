@@ -35,8 +35,14 @@ async function retry(error: AxiosError) {
   logger.error(`Error for url ${error.config.url}`, error.response.data)
   return Promise.reject(error)
 }
-botInstance.interceptors.response.use((response) => response, (err) => retry(err))
-userInstance.interceptors.response.use((response) => response, (err) => retry(err))
+botInstance.interceptors.response.use(
+  (response) => response,
+  (err) => retry(err),
+)
+userInstance.interceptors.response.use(
+  (response) => response,
+  (err) => retry(err),
+)
 
 // Send a message to Discord
 // Different errors may occur (see https://discord.com/developers/docs/topics/opcodes-and-status-codes#http)
@@ -47,7 +53,9 @@ async function sendDiscordMessage(webhookId: string, webhookToken: string, conte
   }
   const url = join(webhookId, `${webhookToken}?wait=true`)
   logger.trace("Sending message")
-  const { data: { id } } = await botInstance.post(url, {
+  const {
+    data: { id },
+  } = await botInstance.post(url, {
     content,
     username: env.publishers.discord.botName,
     avatar_url: env.publishers.discord.botAvatar,
@@ -66,8 +74,9 @@ async function getChannelIdWebhook(webhookId: string, webhookToken: string): Pro
   const logger = mainLogger.getSubLogger({ name: "Discord", prefix: ["getChannelIdWebhook", `webhookId ${webhookId}`] })
   logger.trace("Getting channel id")
   const url = join(webhookId, webhookToken)
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  const { data: { channel_id } } = await botInstance.get<{ channel_id: string }>(url)
+  const {
+    data: { channel_id },
+  } = await botInstance.get<{ channel_id: string }>(url)
   return channel_id
 }
 
@@ -120,5 +129,4 @@ const DiscordAPI = {
   emptyChannel,
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export { DiscordAPI }

@@ -4,7 +4,7 @@ import { HTTPResponse, Page } from "puppeteer"
 import PageScrapper from "./scrapper"
 import mainLogger from "../../utils/logger"
 
-export type StreamData = { url: string, referer?: string, expiresAt?: Date }
+export type StreamData = { url: string; referer?: string; expiresAt?: Date }
 
 export type StreamDataCallback = (page: Page, index: number) => Promise<void>
 
@@ -23,7 +23,13 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
 
   abstract getStream(): Promise<StreamData>
 
-  private async interceptResponse(link: string, search: string, timeout: number = 0, accessReferer?: string, cb?: (page: Page, index: number) => Promise<void>): Promise<HTTPResponse> {
+  private async interceptResponse(
+    link: string,
+    search: string,
+    timeout: number = 0,
+    accessReferer?: string,
+    cb?: (page: Page, index: number) => Promise<void>,
+  ): Promise<HTTPResponse> {
     const logger = mainLogger.getSubLogger({ name: "BroadcastInterceptor", prefix: ["interceptResponse", `link ${link}`, `search ${search}`] })
     logger.debug(`Hitting url ${link} with search ${search} and timeout ${timeout} and accessReferer ${accessReferer}`)
     const browser = await this.getBrowser()
@@ -91,11 +97,7 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
     const referer = headers.referer ?? "www.google.fr"
     const url = response.url()
 
-    const expirationRegex = [
-      /e=(\d+)/,
-      /expire=(\d+)/,
-      /expires=(\d+)/,
-    ]
+    const expirationRegex = [/e=(\d+)/, /expire=(\d+)/, /expires=(\d+)/]
     // Find the expires parameter in the stream url
     // If the url does not contain an expiration parameter, we set the expiration to 1 hour
     const matchingRegex = expirationRegex.find((reg) => reg.test(response.url()))
@@ -120,19 +122,24 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
     }
   }
 
-  protected async getStreamData(allStreamsLinks: string[], accessReferer?: string, cb?: (page: Page, index: number) => Promise<void>): Promise<StreamData> {
+  protected async getStreamData(
+    allStreamsLinks: string[],
+    accessReferer?: string,
+    cb?: (page: Page, index: number) => Promise<void>,
+  ): Promise<StreamData> {
     const logger = mainLogger.getSubLogger({ name: "BroadcastInterceptor", prefix: ["getStreamData", `name ${this.broadcastName}`] })
 
     // Filter the links that are valid URL
-    const streamPages = allStreamsLinks.map((streamLink) => `${streamLink}`).filter((link) => {
-      try {
-        // eslint-disable-next-line no-new
-        new URL(link)
-        return true
-      } catch (error) {
-        return false
-      }
-    })
+    const streamPages = allStreamsLinks
+      .map((streamLink) => `${streamLink}`)
+      .filter((link) => {
+        try {
+          new URL(link)
+          return true
+        } catch (error) {
+          return false
+        }
+      })
 
     logger.debug(`Found ${streamPages.length} streams links to try, starting with the link number ${this.streamIndex}`)
     while (this.streamIndex <= streamPages.length - 1) {

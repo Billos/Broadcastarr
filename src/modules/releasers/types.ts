@@ -1,12 +1,11 @@
 import { BroadcastDocument } from "../broadcast/model"
 
 export interface IReleaser {
-  init(): Promise<void>;
-  releaseBroadcast(broadcast: BroadcastDocument): Promise<void>;
-  unreleaseBroadcast(broadcast: BroadcastDocument): Promise<void>;
+  init(): Promise<void>
+  releaseBroadcast(broadcast: BroadcastDocument): Promise<void>
+  unreleaseBroadcast(broadcast: BroadcastDocument): Promise<void>
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isReleaser(instance: any): instance is IReleaser {
   if (typeof instance.init !== "function") {
     throw new Error("Missing or invalid 'init': must be a function.")

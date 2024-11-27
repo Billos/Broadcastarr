@@ -1,14 +1,14 @@
 import express, { Request } from "express"
 
+import { CategoryController } from "../../modules/category"
+import { IndexerController } from "../../modules/indexer"
+import { UUIDController } from "../../modules/uuid"
+import Params from "../types"
 import broadcastRouter from "./broadcast"
 import categoryRouter from "./category"
 import groupRouter from "./group"
 import indexerRouter from "./indexer"
 import monitorRouter from "./monitor"
-import { CategoryController } from "../../modules/category"
-import { IndexerController } from "../../modules/indexer"
-import { UUIDController } from "../../modules/uuid"
-import Params from "../types"
 
 const router = express.Router()
 
@@ -23,7 +23,7 @@ router.use("/", async (req, res, next) => {
 })
 
 // Quick middleware to check that indexer param is valid and category param is valid
-router.use("/", async (req: Request<Partial<Params>>, res, next) => {
+router.use("/", async (req: Request<Partial<Params>>, _res, next) => {
   if (req.params.indexer) {
     await IndexerController.getIndexer(req.params.indexer)
   }

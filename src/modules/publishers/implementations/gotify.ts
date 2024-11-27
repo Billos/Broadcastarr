@@ -1,8 +1,7 @@
 import { Application, GotifyAPI } from "../../../api/gotify"
 import mainLogger from "../../../utils/logger"
-import {  CategoryDocument } from "../../category"
+import { CategoryDocument } from "../../category"
 import MarkdownPublisher from "../markdown"
-
 
 class GotifyPublisher extends MarkdownPublisher {
   public name = "Gotify"
@@ -32,11 +31,10 @@ class GotifyPublisher extends MarkdownPublisher {
     return GotifyAPI.createApplication({ name: this.generateApplicationName(category) })
   }
 
-
   public async clear(category: CategoryDocument): Promise<void> {
     const logger = mainLogger.getSubLogger({ name: "GotifyPublisher", prefix: ["clear", `category ${category.name}`] })
     const applications = await GotifyAPI.getApplications()
-    const allApplicationsOfCategory = applications.filter(({ name }) => name === this.generateApplicationName(category)) 
+    const allApplicationsOfCategory = applications.filter(({ name }) => name === this.generateApplicationName(category))
     for (const application of allApplicationsOfCategory) {
       logger.info(`Deleting application ${application.name}`)
       await GotifyAPI.deleteApplication(application.id)
@@ -67,7 +65,6 @@ class GotifyPublisher extends MarkdownPublisher {
     }
     const msg = await GotifyAPI.createMessage(application, { message, extras })
     return [`${msg.id}`]
-
   }
 
   protected async removeMessages(category: string, ids: string[]): Promise<void> {
@@ -79,7 +76,8 @@ class GotifyPublisher extends MarkdownPublisher {
   }
 
   public async updateChannelName(category: CategoryDocument): Promise<void> {
-    // Nothing to do here
+    const logger = mainLogger.getSubLogger({ name: "GotifyPublisher", prefix: ["updateChannelName", `category ${category.name}`] })
+    logger.trace("Nothing to do here")
   }
 }
 

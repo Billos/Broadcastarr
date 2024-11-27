@@ -1,9 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  CommandInteraction,
-  SlashCommandBuilder,
-  SlashCommandOptionsOnlyBuilder,
-} from "discord.js"
+import { CommandInteraction, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder } from "discord.js"
 
 export function isCommand(instance: any): instance is Command {
   if (!instance.data) {
@@ -22,9 +17,9 @@ export function isCommand(instance: any): instance is Command {
 }
 
 export type Command = {
-  data: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder;
-  execute: (interaction: CommandInteraction) => Promise<any>;
-  roles: string[];
+  data: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder
+  execute: (interaction: CommandInteraction) => Promise<any>
+  roles: string[]
 }
 
 export function isCommandGenerator(instance: any): instance is CommandGenerator {
@@ -35,5 +30,5 @@ export function isCommandGenerator(instance: any): instance is CommandGenerator 
 }
 
 export type CommandGenerator = {
-  generate: () => Promise<Command>;
+  generate: () => Promise<Command>
 }

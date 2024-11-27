@@ -4,7 +4,7 @@ import { NodePropertiesController } from "../../modules/nodeProperties"
 
 const router = express.Router()
 
-router.get("/openedUrl", async (req, res) => {
+router.get("/openedUrl", async (_req, res) => {
   const properties = await NodePropertiesController.getNodePropertiesByType("pages")
 
   // Construction of the return object being Record<nodeUuid, Record<browserUuid, string[]>>

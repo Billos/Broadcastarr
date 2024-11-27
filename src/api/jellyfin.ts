@@ -8,18 +8,18 @@ import mainLogger from "../utils/logger"
 import sleep from "../utils/sleep"
 
 type ScheduledTasks = {
-  Id: string;
-  Key: string;
-  State: "Idle" | "Cancelling" | "Running";
+  Id: string
+  Key: string
+  State: "Idle" | "Cancelling" | "Running"
 }
 
 type ServerInfo = {
-  Id: string;
+  Id: string
 }
 
 type Item = {
-  Id: string;
-  Name: string;
+  Id: string
+  Name: string
 }
 
 type CollectionFolder = Item
@@ -27,16 +27,16 @@ type Collection = Item
 type TvChannel = Item
 
 type ItemSearch<T> = {
-  Items: T[];
-  TotalRecordCount: number;
-  StartIndex: number;
+  Items: T[]
+  TotalRecordCount: number
+  StartIndex: number
 }
 
 type LiveTVConfig = {
   TunerHosts: {
-    Id: string;
-    Url: string;
-  }[];
+    Id: string
+    Url: string
+  }[]
 }
 
 const instance = axios.create({ baseURL: env.jellyfin.url })
@@ -58,7 +58,9 @@ async function getServerId(): Promise<string> {
   if (!savedServerId) {
     const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["getServerId"] })
     logger.debug("getServerId")
-    const { data: { Id } } = await instance.get<ServerInfo>("/System/Info/Public")
+    const {
+      data: { Id },
+    } = await instance.get<ServerInfo>("/System/Info/Public")
     savedServerId = Id
   }
   return savedServerId
@@ -100,7 +102,9 @@ async function addItemToCollection(collectionId: string, itemId: string): Promis
 async function getCollectionsCollectionFolders(): Promise<CollectionFolder> {
   const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["getCollectionsCollectionFolders"] })
   logger.trace("getCollectionsCollectionFolders")
-  const { data: { Items: collectionFolders } } = await instance.get<ItemSearch<CollectionFolder>>("/Items?Recursive=true&IncludeItemTypes=CollectionFolder")
+  const {
+    data: { Items: collectionFolders },
+  } = await instance.get<ItemSearch<CollectionFolder>>("/Items?Recursive=true&IncludeItemTypes=CollectionFolder")
   return collectionFolders.find((folder) => folder.Name === "Collections")
 }
 
@@ -108,7 +112,11 @@ async function getCollection(collectionName: string): Promise<Collection> {
   const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["getCollection", `collectionName ${collectionName}`] })
   logger.trace("getCollection")
   const { Id } = await getCollectionsCollectionFolders()
-  const { data: { Items: [collection] } } = await instance.get<ItemSearch<Collection>>(`/Items?ParentId=${Id}&searchTerm=${collectionName}&Recursive=true`)
+  const {
+    data: {
+      Items: [collection],
+    },
+  } = await instance.get<ItemSearch<Collection>>(`/Items?ParentId=${Id}&searchTerm=${collectionName}&Recursive=true`)
   return collection
 }
 
@@ -140,7 +148,9 @@ async function setItemImage(collectionName: string): Promise<void> {
 async function getChannels(): Promise<TvChannel[]> {
   const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["getChannels"] })
   logger.trace("getChannels")
-  const { data: { Items: channels } } = await instance.get<ItemSearch<TvChannel>>("/LiveTv/Channels")
+  const {
+    data: { Items: channels },
+  } = await instance.get<ItemSearch<TvChannel>>("/LiveTv/Channels")
   return channels
 }
 
@@ -154,7 +164,9 @@ async function getChannelId(channelName: string): Promise<string> {
 async function getTvTunerHostsPaths(): Promise<string[]> {
   const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["getTvTunerHostsPaths"] })
   logger.debug("getTvTunerHostsPaths")
-  const { data: { TunerHosts } } = await instance.get<LiveTVConfig>("/System/Configuration/livetv")
+  const {
+    data: { TunerHosts },
+  } = await instance.get<LiveTVConfig>("/System/Configuration/livetv")
   return TunerHosts.map((tunerHost) => tunerHost.Url)
 }
 
@@ -167,7 +179,9 @@ async function removeTunerHost(tunerHostId: string): Promise<void> {
 async function clearTvTunerHosts(): Promise<void> {
   const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["clearTvTunerHosts"] })
   logger.debug("clearTvTunerHosts")
-  const { data: { TunerHosts } } = await instance.get<LiveTVConfig>("/System/Configuration/livetv")
+  const {
+    data: { TunerHosts },
+  } = await instance.get<LiveTVConfig>("/System/Configuration/livetv")
   for (const tunerHost of TunerHosts) {
     // Do not delete a tuner that has freebox in its Url
     if (!tunerHost.Url.includes("freebox")) {
@@ -221,5 +235,4 @@ const JellyfinAPI = {
   getCollectionUrl,
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export { JellyfinAPI }

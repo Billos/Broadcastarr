@@ -1,39 +1,33 @@
 import { DateTime } from "luxon"
 import { ElementHandle, Page } from "puppeteer"
 
-import BroadcastsIndexer, { BroadcastData } from "./broadcastsIndexer"
-import { ConfigController } from "../config"
-import { GroupController, GroupDocument } from "../group"
-import {
-  DateSelector,
-  RegexSelector,
-  Selector,
-  TextContentSelector,
-} from "./scrapper"
 import mainLogger from "../../utils/logger"
 import SilentError from "../../utils/silentError"
+import { ConfigController } from "../config"
+import { GroupController, GroupDocument } from "../group"
+import BroadcastsIndexer, { BroadcastData } from "./broadcastsIndexer"
+import { DateSelector, RegexSelector, Selector, TextContentSelector } from "./scrapper"
 
 export type GroupSelector = {
-  path?: string;
-  regex?: RegExp;
+  path?: string
+  regex?: RegExp
 }
 
 export type BroadcastSetDetails = {
-  day: DateSelector[];
-  selector: Selector[];
+  day: DateSelector[]
+  selector: Selector[]
 }
-
 type Group = {
-  country: string;
-  name: string;
+  country: string
+  name: string
 }
 
 export type BroadcastDetails = {
-  selector: Selector[];
-  startTime: DateSelector[];
-  link: TextContentSelector[];
-  name: TextContentSelector[];
-  group: RegexSelector<Group>[];
+  selector: Selector[]
+  startTime: DateSelector[]
+  link: TextContentSelector[]
+  name: TextContentSelector[]
+  group: RegexSelector<Group>[]
 }
 
 export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer {
@@ -52,7 +46,10 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
   async getBroadcastsData(url: string): Promise<BroadcastData[]> {
     // Initialisation et Préparation :
     //     Initialiser le logger avec les informations de la catégorie et de l'URL.
-    const logger = mainLogger.getSubLogger({ name: "GenericBroadcastsIndexer", prefix: ["getBroadcastsData", `category ${this.category}`, `url ${url}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "GenericBroadcastsIndexer",
+      prefix: ["getBroadcastsData", `category ${this.category}`, `url ${url}`],
+    })
     //     Charger la page à partir de l'URL donnée.
     const page = await this.getPage(url, this.loadPageElement)
     //     Initialiser un tableau pour stocker les données de diffusion (BroadcastData).
@@ -117,7 +114,11 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     return this.getElements(page, this.broadcastSets.selector)
   }
 
-  private async parseBroadcastSet(broadcastSet: ElementHandle<Element> | Page, activeGroups: GroupDocument[], inactiveGroups: GroupDocument[]): Promise<BroadcastData[]> {
+  private async parseBroadcastSet(
+    broadcastSet: ElementHandle<Element> | Page,
+    activeGroups: GroupDocument[],
+    inactiveGroups: GroupDocument[],
+  ): Promise<BroadcastData[]> {
     const logger = mainLogger.getSubLogger({ name: "GenericBroadcastsIndexer", prefix: ["parseBroadcastSet", `category ${this.category}`] })
     logger.debug("Parsing broadcast set")
     const day: DateTime = await this.getBroadcastSetDay(broadcastSet)
@@ -135,7 +136,12 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     return this.getDateTime(broadcastSet, this.broadcastSets.day)
   }
 
-  private async parseBroadcasts(broadcastBlocks: ElementHandle<Element>[], activeGroups: GroupDocument[], inactiveGroups: GroupDocument[], day?: DateTime): Promise<BroadcastData[]> {
+  private async parseBroadcasts(
+    broadcastBlocks: ElementHandle<Element>[],
+    activeGroups: GroupDocument[],
+    inactiveGroups: GroupDocument[],
+    day?: DateTime,
+  ): Promise<BroadcastData[]> {
     const logger = mainLogger.getSubLogger({ name: "GenericBroadcastsIndexer", prefix: ["parseBroadcasts", `category ${this.category}`] })
     logger.debug(`Parsing ${broadcastBlocks.length} blocks`)
     const data: BroadcastData[] = []
@@ -166,7 +172,7 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     }
 
     const elements = await this.getElements(page, this.nextPage)
-    return (elements.length === 0)
+    return elements.length === 0
   }
 
   protected async goToNextPage(page: Page): Promise<void> {
@@ -185,12 +191,22 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     }
 
     const group = await this.getRegexContent(broadcastBlock, this.broadcast.group)
-    if (inactiveGroups.find(({ country, name }) => name.toLocaleLowerCase() === group.name.toLocaleLowerCase() && group.country.toLocaleLowerCase() === country.toLocaleLowerCase())) {
+    if (
+      inactiveGroups.find(
+        ({ country, name }) =>
+          name.toLocaleLowerCase() === group.name.toLocaleLowerCase() && group.country.toLocaleLowerCase() === country.toLocaleLowerCase(),
+      )
+    ) {
       throw new SilentError(`Group ${group.name} of Country ${group.country} is inactive`)
     }
 
     // If group is not in the filters, we don't need to parse the Broadcast, and we save time
-    if (!activeGroups.find(({ country, name }) => name.toLocaleLowerCase() === group.name.toLocaleLowerCase() && group.country.toLocaleLowerCase() === country.toLocaleLowerCase())) {
+    if (
+      !activeGroups.find(
+        ({ country, name }) =>
+          name.toLocaleLowerCase() === group.name.toLocaleLowerCase() && group.country.toLocaleLowerCase() === country.toLocaleLowerCase(),
+      )
+    ) {
       // If the group does not exist, we create it in the DB as inactive and raise an error
       const created = await this.assertGroupExists(group, false)
       if (created) {
