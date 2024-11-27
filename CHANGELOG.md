@@ -1,3 +1,19 @@
+# [1.1.0](https://github.com/Billos/Broadcastarr/compare/1.0.1...1.1.0) (2024-11-27)
+
+
+### Bug Fixes
+
+* **docker:** Update server service to use pre-built image and simplify command ([eb33e07](https://github.com/Billos/Broadcastarr/commit/eb33e07ca2f411cabcb278112a1e5c91ce03e8b4))
+* **prettier:** Add Prettier configuration file and update package dependencies ([c5f6972](https://github.com/Billos/Broadcastarr/commit/c5f697287110238478928194e135f97515cf5b0f))
+* **publishers:** Refactor sendMessage and sendCategoryMessages to use CategoryDocument instead of string ([6ffbee9](https://github.com/Billos/Broadcastarr/commit/6ffbee9f9941301519500727ac35a02de9fef4e6))
+* **urlJoin:** Update urlJoin function to prepend remoteUrl to the constructed API path, avoids wrong url ([c2fe096](https://github.com/Billos/Broadcastarr/commit/c2fe0962a904965863f0807c514de87695074ac6))
+
+
+### Features
+
+* **gotify:** Implement Gotify publisher with API integration and environment variable configuration ([880c123](https://github.com/Billos/Broadcastarr/commit/880c123b26b047e232115217ba4240592c68b908))
+* **publishers:** Add Gotify publisher initialization and configuration to environment variables ([5ee037d](https://github.com/Billos/Broadcastarr/commit/5ee037d80cb9d8f53f1c0335bd08bec64c326e0a))
+
 ## [1.0.1](https://github.com/Billos/Broadcastarr/compare/1.0.0...1.0.1) (2024-11-25)
 
 ### Bug Fixes
