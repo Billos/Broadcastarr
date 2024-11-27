@@ -49,6 +49,7 @@ A publisher is a service that can publish the categories, groups and broadcasts 
 Implemented publishers:
  - Discord
  - Matrix
+ - Gotify
 
 ### Scalability
 The service is designed to be scalable and can be deployed on multiple instances.
