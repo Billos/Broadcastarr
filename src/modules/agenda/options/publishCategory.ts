@@ -1,3 +1,3 @@
 export type PublishCategoryOptions = {
-  category: string;
+  category: string
 }

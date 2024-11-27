@@ -8,7 +8,7 @@ import { Command, CommandGenerator } from "../type"
 
 async function execute(interaction: CommandInteraction): Promise<InteractionResponse> {
   const publisher = interaction.options.get("publisher", true).value as string
-  const active = interaction.options.get("action", true).value as string === "activate"
+  const active = (interaction.options.get("action", true).value as string) === "activate"
 
   await PublishersController.updateActive(publisher, active)
 
@@ -30,20 +30,23 @@ const commandGenerator: CommandGenerator = {
   generate: async (): Promise<Command> => {
     const publishers = await PublishersController.getAllPublishers()
     const choices = publishers.map(({ name }) => ({ name, value: name }))
-    const actions = [{ name: "Activate", value: "activate" }, { name: "Deactivate", value: "deactivate" }]
+    const actions = [
+      { name: "Activate", value: "activate" },
+      { name: "Deactivate", value: "deactivate" },
+    ]
 
     const data = new SlashCommandBuilder()
       .setName("togglepublisher")
-      .addStringOption((option) => option
-        .setName("publisher")
-        .setDescription("The publisher to toggle")
-        .setRequired(true)
-        .setChoices(choices))
-      .addStringOption((option) => option
-        .setName("action")
-        .setDescription("Action to perform on the publisher")
-        .setRequired(true)
-        .setChoices(actions))
+      .addStringOption((option) =>
+        option.setName("publisher").setDescription("The publisher to toggle").setRequired(true).setChoices(choices),
+      )
+      .addStringOption((option) =>
+        option
+          .setName("action")
+          .setDescription("Action to perform on the publisher")
+          .setRequired(true)
+          .setChoices(actions),
+      )
       .setDescription("Activate or deactivate a publisher")
 
     return {

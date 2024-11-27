@@ -29,7 +29,10 @@ export async function updateIndexerData(name: string, data: Partial<IndexerData>
   return IndexerService.updateIndexerData(name, data)
 }
 
-export async function updateIndexerInterceptorData(name: string, interceptorData: Partial<IndexerInterceptorData>): Promise<IndexerDocument> {
+export async function updateIndexerInterceptorData(
+  name: string,
+  interceptorData: Partial<IndexerInterceptorData>,
+): Promise<IndexerDocument> {
   return IndexerService.updateIndexerInterceptorData(name, interceptorData)
 }
 

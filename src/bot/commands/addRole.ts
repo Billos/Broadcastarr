@@ -53,19 +53,11 @@ const commandGenerator: CommandGenerator = {
 
     const data = new SlashCommandBuilder()
       .setName("addrole")
-      .addStringOption((option) => option
-        .setName("role")
-        .setRequired(true)
-        .addChoices(roleNames)
-        .setDescription("The role to add"))
-      .addUserOption((option) => option
-        .setName("user")
-        .setRequired(false)
-        .setDescription("The chosen user"))
-      .addChannelOption((option) => option
-        .setName("channel")
-        .setRequired(false)
-        .setDescription("The chosen channel"))
+      .addStringOption((option) =>
+        option.setName("role").setRequired(true).addChoices(roleNames).setDescription("The role to add"),
+      )
+      .addUserOption((option) => option.setName("user").setRequired(false).setDescription("The chosen user"))
+      .addChannelOption((option) => option.setName("channel").setRequired(false).setDescription("The chosen channel"))
       .setDescription("Add a role to an entity")
 
     return {

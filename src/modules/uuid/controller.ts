@@ -1,6 +1,6 @@
+import sleep from "../../utils/sleep"
 import { UuidDocument } from "./model"
 import * as UUIDService from "./service"
-import sleep from "../../utils/sleep"
 
 export async function getUUID(): Promise<UuidDocument> {
   return UUIDService.getUUID()

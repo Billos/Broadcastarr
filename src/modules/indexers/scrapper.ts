@@ -12,32 +12,32 @@ process.setMaxListeners(Infinity)
 const browsers: Map<PageScrapper, Browser> = new Map()
 
 type Replacement = {
-  regex: RegExp;
-  replace: string;
+  regex: RegExp
+  replace: string
 }
 
 type DateReplacement = {
-  regex: RegExp;
-  format: string;
+  regex: RegExp
+  format: string
 }
 
 export type Selector = {
-  path: string;
+  path: string
 }
 
 export type TextContentSelector = Selector & {
-  attribute?: string;
-  replacement?: Replacement;
+  attribute?: string
+  replacement?: Replacement
 }
 
 export type DateSelector = TextContentSelector & {
-  format?: string;
-  dateReplacement?: DateReplacement;
+  format?: string
+  dateReplacement?: DateReplacement
 }
 
 export type RegexSelector<T extends Record<string, string>> = TextContentSelector & {
-  regex: RegExp;
-  default?: T;
+  regex: RegExp
+  default?: T
 }
 
 export default abstract class PageScrapper {
@@ -125,7 +125,13 @@ export default abstract class PageScrapper {
     }, this.browserTimeoutDelay)
   }
 
-  protected async asyncGoto(browser: Browser, page: Page, url: string, cb: (page: Page) => Promise<void>, timeout: number): Promise<void> {
+  protected async asyncGoto(
+    browser: Browser,
+    page: Page,
+    url: string,
+    cb: (page: Page) => Promise<void>,
+    timeout: number,
+  ): Promise<void> {
     const logger = mainLogger.getSubLogger({ name: "Scrapper", prefix: ["asyncGoto", `url ${url}`] })
     logger.debug(`Hitting url ${url} with timeout ${timeout}`)
     try {
@@ -143,7 +149,14 @@ export default abstract class PageScrapper {
   }
 
   protected async getPage(url: string, elementToWait: string, timeout: number = 10000): Promise<Page> {
-    const logger = mainLogger.getSubLogger({ name: "Scrapper", prefix: ["getPage", `url ${url}`, `elementToWait ${elementToWait}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "Scrapper",
+      prefix: [
+        "getPage",
+        `url ${url}`,
+        `elementToWait ${elementToWait}`,
+      ],
+    })
     logger.trace("Hitting url")
     const browser = await this.getBrowser()
     const page = await browser.newPage()
@@ -174,7 +187,10 @@ export default abstract class PageScrapper {
     return root.$eval(selector, (item, attr) => item.getAttribute(attr), attribute)
   }
 
-  protected async getElements(root: ElementHandle<Element> | Page, selectors: Selector[]): Promise<ElementHandle<Element>[]> {
+  protected async getElements(
+    root: ElementHandle<Element> | Page,
+    selectors: Selector[],
+  ): Promise<ElementHandle<Element>[]> {
     const res: ElementHandle<Element>[] = []
     for (const { path } of selectors) {
       try {
@@ -187,11 +203,14 @@ export default abstract class PageScrapper {
     return res
   }
 
-  protected async getTextContent(root: ElementHandle<Element> | Page, selectors: TextContentSelector[]): Promise<string> {
+  protected async getTextContent(
+    root: ElementHandle<Element> | Page,
+    selectors: TextContentSelector[],
+  ): Promise<string> {
     for (const { path, attribute, replacement } of selectors) {
       try {
         if (attribute === "href") {
-          const elt = await root.$(path) as ElementHandle<HTMLAnchorElement>
+          const elt = (await root.$(path)) as ElementHandle<HTMLAnchorElement>
           const prop = await elt.getProperty(attribute)
           const value = await prop.jsonValue()
           return value
@@ -233,7 +252,10 @@ export default abstract class PageScrapper {
     throw new Error("No date found")
   }
 
-  protected async getRegexContent<T extends Record<string, string>>(root: ElementHandle<Element> | Page, selectors: RegexSelector<T>[]): Promise<T> {
+  protected async getRegexContent<T extends Record<string, string>>(
+    root: ElementHandle<Element> | Page,
+    selectors: RegexSelector<T>[],
+  ): Promise<T> {
     for (const { path, attribute, regex, default: defaultValue, replacement } of selectors) {
       try {
         const raw = await this.getTextContent(root, [{ path, attribute, replacement }])

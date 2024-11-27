@@ -10,7 +10,14 @@ import { Triggers } from "../triggers"
 export async function handler(job: Job<DeleteBroadcastOptions>): Promise<void> {
   const { broadcastId } = job.attrs.data
   const broadcast = await BroadcastController.getBroadcast(broadcastId)
-  const logger = mainLogger.getSubLogger({ name: "DeleteBroadcastHandler", prefix: ["handler", `broadcastId ${broadcast.id}`, `broadcastName ${broadcast.name}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "DeleteBroadcastHandler",
+    prefix: [
+      "handler",
+      `broadcastId ${broadcast.id}`,
+      `broadcastName ${broadcast.name}`,
+    ],
+  })
   const { category, group, country } = broadcast
 
   // Delete M3U8

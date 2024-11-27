@@ -4,44 +4,43 @@ import env from "../config/env"
 import mainLogger from "../utils/logger"
 
 export type Application = {
-  id: number;
-  token: string;
-  name: string;
-  description: string;
-  internal: boolean;
-  image: string;
-  defaultPriority?: number;
-  lastUsed?: string;
+  id: number
+  token: string
+  name: string
+  description: string
+  internal: boolean
+  image: string
+  defaultPriority?: number
+  lastUsed?: string
 }
 
 type ApplicationParams = {
-  name: string;
-  description?: string;
-  defaultPriority?: number;
+  name: string
+  description?: string
+  defaultPriority?: number
 }
 
 type Message = {
-  id: number;
-  appid: number;
-  message: string;
-  date: string;
-  extras?: Record<string, unknown>;
-  priority?: number;
-  title?: string;
+  id: number
+  appid: number
+  message: string
+  date: string
+  extras?: Record<string, unknown>
+  priority?: number
+  title?: string
 }
 
 type MessageParams = {
-  message: string;
-  priority?: number;
-  title?: string;
-  extras?: Record<string, unknown>;
+  message: string
+  priority?: number
+  title?: string
+  extras?: Record<string, unknown>
 }
 
 const instance = axios.create({
   baseURL: env.publishers.gotify.url,
   headers: { "X-Gotify-Key": env.publishers.gotify.token },
 })
-
 
 async function getApplications(): Promise<Application[]> {
   const logger = mainLogger.getSubLogger({ name: "Gotify", prefix: ["getApplications"] })

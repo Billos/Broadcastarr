@@ -1,3 +1,3 @@
 export type DeleteBroadcastOptions = {
-  broadcastId: string;
+  broadcastId: string
 }

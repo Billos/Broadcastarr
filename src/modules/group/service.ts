@@ -12,8 +12,16 @@ export async function getGroups(query: Partial<GroupDocument>): Promise<GroupDoc
   return GroupModel.find(query)
 }
 
-export async function setPublications({ category, name, country }: GroupIndex, publisher: string, publicationIds: string[]): Promise<void> {
-  await GroupModel.findOneAndUpdate({ name, country, category }, { $set: { [`publications.${publisher}`]: publicationIds } }, { upsert: true })
+export async function setPublications(
+  { category, name, country }: GroupIndex,
+  publisher: string,
+  publicationIds: string[],
+): Promise<void> {
+  await GroupModel.findOneAndUpdate(
+    { name, country, category },
+    { $set: { [`publications.${publisher}`]: publicationIds } },
+    { upsert: true },
+  )
 }
 
 export async function setEmoji({ category, name, country }: GroupIndex, emoji: string): Promise<void> {

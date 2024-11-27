@@ -1,8 +1,8 @@
 type PromiseListener = () => Promise<void>
 
 type ListenerWithPriority = {
-  listener: PromiseListener;
-  priority: number;
+  listener: PromiseListener
+  priority: number
 }
 
 const listeners: ListenerWithPriority[] = []

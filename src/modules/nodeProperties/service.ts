@@ -1,7 +1,12 @@
 import { NodePropertiesDocument, NodePropertiesModel } from "./model"
 
 // Create node data
-export async function setNodeProperty(uuid: string, type: string, key: string, value: string): Promise<NodePropertiesDocument> {
+export async function setNodeProperty(
+  uuid: string,
+  type: string,
+  key: string,
+  value: string,
+): Promise<NodePropertiesDocument> {
   return NodePropertiesModel.findOneAndUpdate({ uuid, key }, { $set: { type, value } }, { upsert: true, new: true })
 }
 

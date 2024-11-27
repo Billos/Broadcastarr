@@ -1,4 +1,4 @@
 export type IndexCategoryOptions = {
-  category: string;
-  indexerName: string;
+  category: string
+  indexerName: string
 }

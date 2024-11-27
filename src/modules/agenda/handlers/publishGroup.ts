@@ -9,7 +9,14 @@ import { Triggers } from "../triggers"
 
 export async function handler(job: Job<PublishGroupOptions>): Promise<void> {
   const { group, category, country } = job.attrs.data
-  const logger = mainLogger.getSubLogger({ name: "PublishGroupHandler", prefix: ["handler", `groub ${group}`, `category ${category}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "PublishGroupHandler",
+    prefix: [
+      "handler",
+      `groub ${group}`,
+      `category ${category}`,
+    ],
+  })
   logger.info("Publishing group")
 
   // Get the group and the broadcasts

@@ -3,7 +3,30 @@
   "version": "1.0.1",
   "private": true,
   "description": "",
+  "homepage": "https://github.com/Billos/Broadcastarr#readme",
+  "bugs": {
+    "url": "https://github.com/Billos/Broadcastarr/issues"
+  },
+  "repository": "git@github.com:Billos/Broadcastarr.git",
+  "license": "BSD-2-Clause",
+  "author": "Billos",
   "main": "./src/server.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch --clear-screen",
+    "dev:server": "yarn dev src/server.ts",
+    "dev:worker": "sleep 1; yarn dev src/worker.ts",
+    "docker:build": "docker build . -t billos/broadcastarr:latest",
+    "format": "prettier . --write",
+    "format-check": "prettier . --check",
+    "init": "yarn start build/init.js",
+    "lint": "eslint src",
+    "release": "semantic-release",
+    "server": "yarn start build/server.js",
+    "start": "node",
+    "type-check": "tsc --noEmit",
+    "worker": "sleep 1; yarn start build/worker.js"
+  },
   "dependencies": {
     "@hokify/agenda": "^6.3.0",
     "axios": "^1.7.8",
@@ -40,28 +63,5 @@
     "semantic-release": "^24.2.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
-  },
-  "scripts": {
-    "type-check": "tsc --noEmit",
-    "format-check": "prettier . --check",
-    "format": "prettier . --write",
-    "lint": "eslint src",
-    "build": "tsc -p tsconfig.json",
-    "release": "semantic-release",
-    "start": "node",
-    "dev": "tsx watch --clear-screen",
-    "init": "yarn start build/init.js",
-    "server": "yarn start build/server.js",
-    "worker": "sleep 1; yarn start build/worker.js",
-    "dev:server": "yarn dev src/server.ts",
-    "dev:worker": "sleep 1; yarn dev src/worker.ts",
-    "docker:build": "docker build . -t billos/broadcastarr:latest"
-  },
-  "repository": "git@github.com:Billos/Broadcastarr.git",
-  "author": "Billos",
-  "license": "BSD-2-Clause",
-  "bugs": {
-    "url": "https://github.com/Billos/Broadcastarr/issues"
-  },
-  "homepage": "https://github.com/Billos/Broadcastarr#readme"
+  }
 }

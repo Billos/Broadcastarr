@@ -83,7 +83,11 @@ const emojiGroup: Record<string, string[]> = {
   // Mexico
   "🇲🇽": ["Liga MX"],
   // Chile
-  "🇨🇱": ["Copa Chile", "Campeonato PlanVital", "Chile Campeonato PlanVital"],
+  "🇨🇱": [
+    "Copa Chile",
+    "Campeonato PlanVital",
+    "Chile Campeonato PlanVital",
+  ],
   // Peru
   "🇵🇪": ["Peru Liga 1 Movistar"],
   // Colombia
@@ -118,7 +122,12 @@ const emojiGroup: Record<string, string[]> = {
 }
 
 // to lowercase
-const groupsEmojis: Record<string, string> = Object.entries(emojiGroup)
-  .reduce((acc, [key, groups]) => ({ ...acc, ...groups.reduce((acc2, group) => ({ ...acc2, [group.toLocaleLowerCase()]: key }), {}) }), {})
+const groupsEmojis: Record<string, string> = Object.entries(emojiGroup).reduce(
+  (acc, [key, groups]) => ({
+    ...acc,
+    ...groups.reduce((acc2, group) => ({ ...acc2, [group.toLocaleLowerCase()]: key }), {}),
+  }),
+  {},
+)
 
 export default groupsEmojis

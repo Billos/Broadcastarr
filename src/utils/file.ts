@@ -1,10 +1,4 @@
-import {
-  existsSync,
-  readFileSync,
-  readdirSync,
-  unlinkSync,
-  writeFileSync,
-} from "fs"
+import { existsSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from "fs"
 import { join } from "path"
 
 import mainLogger from "./logger"
@@ -28,7 +22,14 @@ export async function fileExists(fileName: string): Promise<boolean> {
 }
 
 export async function emptyFolder(folder: string, filter: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "File", prefix: ["emptyFolder", `folder ${folder}`, `filter ${filter}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "File",
+    prefix: [
+      "emptyFolder",
+      `folder ${folder}`,
+      `filter ${filter}`,
+    ],
+  })
   logger.debug("Emptying folder")
   const files = readdirSync(folder).filter((file) => file.includes(filter))
   for (const file of files) {

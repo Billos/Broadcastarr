@@ -1,4 +1,3 @@
-import { Publisher } from "./types"
 import { JellyfinAPI } from "../../api/jellyfin"
 import convertTimeToEmoji from "../../utils/formatter"
 import mainLogger from "../../utils/logger"
@@ -8,13 +7,17 @@ import { CategoryController, CategoryDocument } from "../category"
 import { GroupDocument } from "../group"
 import { IndexerController } from "../indexer"
 import { UUIDController } from "../uuid"
+import { Publisher } from "./types"
 
 abstract class MarkdownPublisher extends Publisher {
   protected abstract sendMessage(category: CategoryDocument, content: string): Promise<string[]>
 
   protected async sendCategoryMessages(category: CategoryDocument): Promise<string[]> {
     const { uuid: apiKey } = await UUIDController.getUUID()
-    const logger = mainLogger.getSubLogger({ name: "MarkdownPublisher", prefix: ["sendCategoryMessages", `category ${category.name}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "MarkdownPublisher",
+      prefix: ["sendCategoryMessages", `category ${category.name}`],
+    })
     logger.debug("Sending category messages")
     const indexers = await IndexerController.getIndexers(true)
 
@@ -27,7 +30,11 @@ abstract class MarkdownPublisher extends Publisher {
       `[${channelEmoji}](<${collectionUrl}>)`,
       // `${channelEmoji}`,
       // Reload
-      indexers.map(({ name }) => `[\`🔄 ${name}\`](<${urlJoin(apiKey, "indexer", name, "category", category.name, "reload")}>)`).join("  "),
+      indexers
+        .map(
+          ({ name }) => `[\`🔄 ${name}\`](<${urlJoin(apiKey, "indexer", name, "category", category.name, "reload")}>)`,
+        )
+        .join("  "),
       // Pages
       `[\`📃 Pages\`](<${urlJoin(apiKey, "monitor", "openedUrl")}>)`,
       // Kill
@@ -49,7 +56,14 @@ abstract class MarkdownPublisher extends Publisher {
 
   protected async sendGroupMessages(groupDocument: GroupDocument, broadcasts: BroadcastDocument[]): Promise<string[]> {
     const { name: group, category, country } = groupDocument
-    const logger = mainLogger.getSubLogger({ name: "MarkdownPublisher", prefix: ["sendGroupMessages", `group ${group}`, `category ${category}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "MarkdownPublisher",
+      prefix: [
+        "sendGroupMessages",
+        `group ${group}`,
+        `category ${category}`,
+      ],
+    })
     logger.debug("Sending group messages")
 
     // Sorting the broadcasts by StartTime and by jellyfinId presence
@@ -69,7 +83,9 @@ abstract class MarkdownPublisher extends Publisher {
     const { uuid: apiKey } = await UUIDController.getUUID()
     const reloadLink = urlJoin(apiKey, "group", group, country, "category", category, "reload")
 
-    const groupLines = [`## ${groupDocument.emoji || "🌍"} **${groupDocument.name}**  [🔄 Reload 🔄](<${encodeURI(reloadLink)}>)`]
+    const groupLines = [
+      `## ${groupDocument.emoji || "🌍"} **${groupDocument.name}**  [🔄 Reload 🔄](<${encodeURI(reloadLink)}>)`,
+    ]
     const maxLength = this.getMaxTeamLength(broadcasts)
     for (const broadcast of broadcasts) {
       const messages = await this.generateBroadcastMessage(broadcast, maxLength)

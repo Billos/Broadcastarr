@@ -1,6 +1,6 @@
-import Initiator from "./initiator"
 import { ConfigController } from "../modules/config"
 import mainLogger from "../utils/logger"
+import Initiator from "./initiator"
 
 export default class ConfigInitiator extends Initiator {
   public async init(): Promise<void> {
@@ -12,7 +12,11 @@ export default class ConfigInitiator extends Initiator {
     const discordWebhooks = (raw ? raw.split(",") : []).filter((webhook) => webhook.trim() !== "")
 
     for (const webhook of discordWebhooks) {
-      const [key, id, token] = webhook.trim().split(":")
+      const [
+        key,
+        id,
+        token,
+      ] = webhook.trim().split(":")
       try {
         logger.info(`Setting config  for Category ${key}`)
         await ConfigController.setConfig(`discord-webhook-${key}-id`, id)

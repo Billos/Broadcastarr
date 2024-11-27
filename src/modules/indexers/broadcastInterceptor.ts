@@ -1,8 +1,8 @@
 import { DateTime } from "luxon"
 import { HTTPResponse, Page } from "puppeteer"
 
-import PageScrapper from "./scrapper"
 import mainLogger from "../../utils/logger"
+import PageScrapper from "./scrapper"
 
 export type StreamData = { url: string; referer?: string; expiresAt?: Date }
 
@@ -30,7 +30,14 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
     accessReferer?: string,
     cb?: (page: Page, index: number) => Promise<void>,
   ): Promise<HTTPResponse> {
-    const logger = mainLogger.getSubLogger({ name: "BroadcastInterceptor", prefix: ["interceptResponse", `link ${link}`, `search ${search}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "BroadcastInterceptor",
+      prefix: [
+        "interceptResponse",
+        `link ${link}`,
+        `search ${search}`,
+      ],
+    })
     logger.debug(`Hitting url ${link} with search ${search} and timeout ${timeout} and accessReferer ${accessReferer}`)
     const browser = await this.getBrowser()
     const page = await browser.newPage()
@@ -89,7 +96,14 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
   }
 
   private async interceptM3U8(link: string, accessReferer?: string, cb?: StreamDataCallback): Promise<StreamData> {
-    const logger = mainLogger.getSubLogger({ name: "BroadcastInterceptor", prefix: ["interceptM3U8", `name ${this.broadcastName}`, `link ${link}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "BroadcastInterceptor",
+      prefix: [
+        "interceptM3U8",
+        `name ${this.broadcastName}`,
+        `link ${link}`,
+      ],
+    })
     logger.debug("Intercepting")
     const response = await this.interceptResponse(link, "m3u8", 20000, accessReferer, cb)
     const headers = response.request().headers()
@@ -97,7 +111,11 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
     const referer = headers.referer ?? "www.google.fr"
     const url = response.url()
 
-    const expirationRegex = [/e=(\d+)/, /expire=(\d+)/, /expires=(\d+)/]
+    const expirationRegex = [
+      /e=(\d+)/,
+      /expire=(\d+)/,
+      /expires=(\d+)/,
+    ]
     // Find the expires parameter in the stream url
     // If the url does not contain an expiration parameter, we set the expiration to 1 hour
     const matchingRegex = expirationRegex.find((reg) => reg.test(response.url()))
@@ -127,7 +145,10 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
     accessReferer?: string,
     cb?: (page: Page, index: number) => Promise<void>,
   ): Promise<StreamData> {
-    const logger = mainLogger.getSubLogger({ name: "BroadcastInterceptor", prefix: ["getStreamData", `name ${this.broadcastName}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "BroadcastInterceptor",
+      prefix: ["getStreamData", `name ${this.broadcastName}`],
+    })
 
     // Filter the links that are valid URL
     const streamPages = allStreamsLinks

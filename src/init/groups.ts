@@ -1,11 +1,11 @@
-import Initiator from "./initiator"
 import { CategoryController } from "../modules/category"
 import { GroupController } from "../modules/group"
 import mainLogger from "../utils/logger"
+import Initiator from "./initiator"
 
 type Group = {
-  country?: string;
-  name: string;
+  country?: string
+  name: string
 }
 
 export default class GroupsInitiator extends Initiator {
@@ -18,7 +18,10 @@ export default class GroupsInitiator extends Initiator {
     for (const categoryStr of process.env.GROUPS.split("|")) {
       const [category, groupsStr] = categoryStr.split(":")
 
-      const elements = groupsStr.split(",").map((element) => element.trim()).filter((element) => element.length > 0)
+      const elements = groupsStr
+        .split(",")
+        .map((element) => element.trim())
+        .filter((element) => element.length > 0)
       if (!envGroups[category]) {
         envGroups[category] = new Set()
       }

@@ -1,9 +1,4 @@
-import {
-  IndexerData,
-  IndexerDocument,
-  IndexerInterceptorData,
-  IndexerModel,
-} from "./model"
+import { IndexerData, IndexerDocument, IndexerInterceptorData, IndexerModel } from "./model"
 
 export async function getIndexers(active?: boolean): Promise<IndexerDocument[]> {
   if (active !== undefined) {
@@ -36,7 +31,10 @@ export async function updateIndexerData(name: string, data: Partial<IndexerData>
   return IndexerModel.findOneAndUpdate({ name }, { $set: { data } }, { new: true })
 }
 
-export async function updateIndexerInterceptorData(name: string, interceptorData: Partial<IndexerInterceptorData>): Promise<IndexerDocument> {
+export async function updateIndexerInterceptorData(
+  name: string,
+  interceptorData: Partial<IndexerInterceptorData>,
+): Promise<IndexerDocument> {
   return IndexerModel.findOneAndUpdate({ name }, { $set: { interceptorData } }, { new: true })
 }
 

@@ -1,9 +1,9 @@
-import { GroupDocument, GroupIndex } from "./model"
-import * as GroupService from "./service"
 import mainLogger from "../../utils/logger"
 import { Triggers } from "../agenda/triggers"
 import { BroadcastController } from "../broadcast"
 import { IndexerController } from "../indexer"
+import { GroupDocument, GroupIndex } from "./model"
+import * as GroupService from "./service"
 
 export async function getAllGroups(): Promise<GroupDocument[]> {
   return GroupService.getGroups({})
@@ -66,7 +66,14 @@ export async function removeGroup(group: GroupIndex): Promise<void> {
 }
 
 export async function reload(group: GroupIndex): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "GroupController", prefix: ["reload", `name ${group.name}`, `category ${group.category}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "GroupController",
+    prefix: [
+      "reload",
+      `name ${group.name}`,
+      `category ${group.category}`,
+    ],
+  })
   logger.info("Reloading group")
   return Triggers.publishGroup(group.name, group.category, group.country)
 }

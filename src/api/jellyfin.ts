@@ -94,7 +94,14 @@ async function refreshJellyfinTV(): Promise<void> {
 }
 
 async function addItemToCollection(collectionId: string, itemId: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["addItemToCollection", `collectionId ${collectionId}`, `itemId ${itemId}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "Jellyfin",
+    prefix: [
+      "addItemToCollection",
+      `collectionId ${collectionId}`,
+      `itemId ${itemId}`,
+    ],
+  })
   logger.debug("Query")
   await instance.post(`/Collections/${collectionId}/Items?Ids=${itemId}`)
 }
@@ -109,7 +116,10 @@ async function getCollectionsCollectionFolders(): Promise<CollectionFolder> {
 }
 
 async function getCollection(collectionName: string): Promise<Collection> {
-  const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["getCollection", `collectionName ${collectionName}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "Jellyfin",
+    prefix: ["getCollection", `collectionName ${collectionName}`],
+  })
   logger.trace("getCollection")
   const { Id } = await getCollectionsCollectionFolders()
   const {
@@ -121,14 +131,20 @@ async function getCollection(collectionName: string): Promise<Collection> {
 }
 
 async function createCollection(collectionName: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["createCollection", `collectionName ${collectionName}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "Jellyfin",
+    prefix: ["createCollection", `collectionName ${collectionName}`],
+  })
   logger.info("createCollection")
   const { Id: parentId } = await getCollectionsCollectionFolders()
   await instance.post<Item>(`/Collections?ParentId=${parentId}&Name=${collectionName}`)
 }
 
 async function setItemImage(collectionName: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["setItemImage", `collectionName ${collectionName}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "Jellyfin",
+    prefix: ["setItemImage", `collectionName ${collectionName}`],
+  })
   logger.debug("setItemImage")
   // Check if the image exists
   if (!checkImageExists(collectionName)) {
@@ -171,7 +187,10 @@ async function getTvTunerHostsPaths(): Promise<string[]> {
 }
 
 async function removeTunerHost(tunerHostId: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["removeTunerHost", `tunerHostId ${tunerHostId}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "Jellyfin",
+    prefix: ["removeTunerHost", `tunerHostId ${tunerHostId}`],
+  })
   logger.debug("removeTunerHost")
   await instance.delete(`/LiveTv/TunerHosts?id=${tunerHostId}`)
 }

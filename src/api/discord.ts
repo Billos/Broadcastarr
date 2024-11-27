@@ -64,7 +64,10 @@ async function sendDiscordMessage(webhookId: string, webhookToken: string, conte
 }
 
 async function deleteWebhookMessage(webhookId: string, webhookToken: string, messageId: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "Discord", prefix: ["deleteWebhookMessage", `messageId ${messageId}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "Discord",
+    prefix: ["deleteWebhookMessage", `messageId ${messageId}`],
+  })
   logger.trace("Deleting webhook message")
   const url = join(webhookId, webhookToken, "messages", messageId)
   await botInstance.delete(url)
@@ -81,7 +84,14 @@ async function getChannelIdWebhook(webhookId: string, webhookToken: string): Pro
 }
 
 async function updateChannelName(channelId: string, name: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "Discord", prefix: ["updateChannelName", `channelId ${channelId}`, `name ${name}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "Discord",
+    prefix: [
+      "updateChannelName",
+      `channelId ${channelId}`,
+      `name ${name}`,
+    ],
+  })
   logger.trace("Updating channel name")
   try {
     await userInstance.patch(channelId, { name })
@@ -91,7 +101,14 @@ async function updateChannelName(channelId: string, name: string): Promise<void>
 }
 
 async function deleteMessage(channelId: string, messageId: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "Discord", prefix: ["deleteMessage", `channelId ${channelId}`, `messageId ${messageId}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "Discord",
+    prefix: [
+      "deleteMessage",
+      `channelId ${channelId}`,
+      `messageId ${messageId}`,
+    ],
+  })
   logger.trace("Deleting message")
   const url = join(channelId, "messages", messageId)
   await userInstance.delete(url)

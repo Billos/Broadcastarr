@@ -28,22 +28,12 @@ const commandGenerator: CommandGenerator = {
   generate: async (): Promise<Command> => {
     const data = new SlashCommandBuilder()
       .setName("addcategory")
-      .addStringOption((option) => option
-        .setName("name")
-        .setDescription("The category name")
-        .setRequired(true))
-      .addStringOption((option) => option
-        .setName("id")
-        .setDescription("The discord channel id")
-        .setRequired(true))
-      .addStringOption((option) => option
-        .setName("token")
-        .setDescription("The discord channel token")
-        .setRequired(true))
-      .addStringOption((option) => option
-        .setName("emoji")
-        .setDescription("The category emoji")
-        .setRequired(false))
+      .addStringOption((option) => option.setName("name").setDescription("The category name").setRequired(true))
+      .addStringOption((option) => option.setName("id").setDescription("The discord channel id").setRequired(true))
+      .addStringOption((option) =>
+        option.setName("token").setDescription("The discord channel token").setRequired(true),
+      )
+      .addStringOption((option) => option.setName("emoji").setDescription("The category emoji").setRequired(false))
       .setDescription("Add a category")
 
     return {

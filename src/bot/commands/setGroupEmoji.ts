@@ -18,7 +18,9 @@ async function execute(interaction: CommandInteraction) {
     content: "Choose a group",
     components: [selectGroup(groups)],
   })
-  const groupInteractionResponse = await groupInteraction.awaitMessageComponent({ componentType: ComponentType.StringSelect })
+  const groupInteractionResponse = await groupInteraction.awaitMessageComponent({
+    componentType: ComponentType.StringSelect,
+  })
   const [selectedValue] = groupInteractionResponse.values
   const [countryFound, selectedGroup] = selectedValue.split(":")
   // If country === "undefined" then it equals null
@@ -46,7 +48,10 @@ async function execute(interaction: CommandInteraction) {
 
   await GroupController.setEmoji({ name: selectedGroup, category, country }, emoji)
   await Triggers.publishGroup(selectedGroup, category, country)
-  return interaction.followUp({ content: `Group ${selectedGroup} of country ${country} emoji set to ${emoji}`, ephemeral: true })
+  return interaction.followUp({
+    content: `Group ${selectedGroup} of country ${country} emoji set to ${emoji}`,
+    ephemeral: true,
+  })
 }
 
 const commandGenerator: CommandGenerator = {
@@ -56,11 +61,13 @@ const commandGenerator: CommandGenerator = {
 
     const data = new SlashCommandBuilder()
       .setName("setgroupemoji")
-      .addStringOption((option) => option
-        .setName("category")
-        .setDescription("The category of the group")
-        .setRequired(true)
-        .setChoices(categoryChoices))
+      .addStringOption((option) =>
+        option
+          .setName("category")
+          .setDescription("The category of the group")
+          .setRequired(true)
+          .setChoices(categoryChoices),
+      )
       .setDescription("Change the emoji of a group")
 
     return {

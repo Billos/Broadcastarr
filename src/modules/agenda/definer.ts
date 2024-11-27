@@ -1,16 +1,16 @@
+import mainLogger from "../../utils/logger"
+import { ConfigController } from "../config"
 import agenda from "./agenda"
 import { ErrorHandlers, Handlers } from "./handlers"
 import { TaskOptions } from "./options"
 import { Tasks } from "./tasks"
-import mainLogger from "../../utils/logger"
-import { ConfigController } from "../config"
 
 // Auto reschedule failed jobs
 
 export async function defineAgendaTasks() {
   agenda.on("fail", async (error, job) => {
     const logger = mainLogger.getSubLogger({ name: "AgendaDefiner", prefix: ["onFail"] })
-    const { name, data } = job.attrs as { name: Tasks, data: TaskOptions<typeof name> }
+    const { name, data } = job.attrs as { name: Tasks; data: TaskOptions<typeof name> }
     logger.error(`Job "${name}" failed with error: ${error.message} - data: ${JSON.stringify(data)}`)
 
     // Find the task key from the job name
@@ -39,7 +39,7 @@ export async function defineAgendaTasks() {
 
   agenda.on("success", async (job) => {
     const logger = mainLogger.getSubLogger({ name: "AgendaDefiner", prefix: ["onSuccess"] })
-    const { name } = job.attrs as { name: Tasks, data: TaskOptions<typeof name> }
+    const { name } = job.attrs as { name: Tasks; data: TaskOptions<typeof name> }
     logger.debug(`Job "${name}" succeeded, removing it from the database`)
     await job.remove()
   })

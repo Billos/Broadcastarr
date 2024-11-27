@@ -1,6 +1,6 @@
-import Initiator from "./initiator"
 import { ReleasersController } from "../modules/releasers"
 import mainLogger from "../utils/logger"
+import Initiator from "./initiator"
 
 export default class ReleasersInitiator extends Initiator {
   public async init(): Promise<void> {

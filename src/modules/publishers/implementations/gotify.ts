@@ -47,7 +47,10 @@ class GotifyPublisher extends MarkdownPublisher {
   }
 
   public override async listMessages(category: CategoryDocument): Promise<string[]> {
-    const logger = mainLogger.getSubLogger({ name: "GotifyPublisher", prefix: ["listMessages", `category ${category.name}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "GotifyPublisher",
+      prefix: ["listMessages", `category ${category.name}`],
+    })
     const application = await this.getOrCreateApplication(category)
     logger.info(`Getting messages for application ${application.id}`)
     const messages = await GotifyAPI.getMessagesOfApplication(application.id)
@@ -55,7 +58,10 @@ class GotifyPublisher extends MarkdownPublisher {
   }
 
   protected override async sendMessage(category: CategoryDocument, message: string): Promise<string[]> {
-    const logger = mainLogger.getSubLogger({ name: "GotifyPublisher", prefix: ["sendMessages", `category ${category.name}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "GotifyPublisher",
+      prefix: ["sendMessages", `category ${category.name}`],
+    })
     const application = await this.getOrCreateApplication(category)
     logger.info(`Sending message to application ${application.name}`)
     const extras = {
@@ -68,7 +74,10 @@ class GotifyPublisher extends MarkdownPublisher {
   }
 
   protected async removeMessages(category: string, ids: string[]): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "GotifyPublisher", prefix: ["removeMessages", `category ${category}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "GotifyPublisher",
+      prefix: ["removeMessages", `category ${category}`],
+    })
     logger.info(`Removing messages from category ${category}`)
     for (const id of ids) {
       await GotifyAPI.deleteMessage(id)
@@ -76,7 +85,10 @@ class GotifyPublisher extends MarkdownPublisher {
   }
 
   public async updateChannelName(category: CategoryDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "GotifyPublisher", prefix: ["updateChannelName", `category ${category.name}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "GotifyPublisher",
+      prefix: ["updateChannelName", `category ${category.name}`],
+    })
     logger.trace("Nothing to do here")
   }
 }

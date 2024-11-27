@@ -1,29 +1,29 @@
 {
-	"compilerOptions": {
-	"sourceMap": true,
+  "compilerOptions": {
+    "sourceMap": true,
     "outDir": "build",
     "target": "ES2023",
     "module": "Preserve",
-	"moduleResolution": "bundler",
-	"moduleDetection": "force",
+    "moduleResolution": "bundler",
+    "moduleDetection": "force",
     "esModuleInterop": true,
     // "strict": true,
-	"allowJs": true,
+    "allowJs": true,
     "lib": ["ES2023", "DOM"],
-	"skipLibCheck": true,
-	"noImplicitAny": true,
-	"noUnusedLocals": true,
-	"noUnusedParameters": true,
-	"resolveJsonModule": true,
-	"noImplicitReturns": true,
-	"noImplicitThis": true,
-	"noImplicitOverride": true,
-	"allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitOverride": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src/**/*"
   ],
   "exclude": [
-	"node_modules"
+    "node_modules"
   ]
 }

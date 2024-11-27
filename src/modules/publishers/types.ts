@@ -76,20 +76,37 @@ export abstract class Publisher implements IPublisher {
   // Defined in the abstract class
   // Cannot be overridden
   public async publishGroup(group: GroupDocument, docs: BroadcastDocument[]): Promise<string[]> {
-    const logger = mainLogger.getSubLogger({ name: "Publisher", prefix: ["publishGroup", `group ${group.name}`, `category ${group.category}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "Publisher",
+      prefix: [
+        "publishGroup",
+        `group ${group.name}`,
+        `category ${group.category}`,
+      ],
+    })
     logger.debug("Publishing the group")
     const ids = await this.sendGroupMessages(group, docs)
     return ids
   }
 
   public async unpublishGroup(group: GroupDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "Publisher", prefix: ["unpublishGroup", `group ${group.name}`, `category ${group.category}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "Publisher",
+      prefix: [
+        "unpublishGroup",
+        `group ${group.name}`,
+        `category ${group.category}`,
+      ],
+    })
     logger.debug("Unpublishing the group")
     await this.removeMessages(group.category, group.publications.get(this.name) || [])
   }
 
   public async publishCategory(category: CategoryDocument): Promise<string[]> {
-    const logger = mainLogger.getSubLogger({ name: "Publisher", prefix: ["publishCategory", `category ${category.name}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "Publisher",
+      prefix: ["publishCategory", `category ${category.name}`],
+    })
     logger.debug("Publishing the category")
 
     // Publishing a category means that we send a message to the channel, but there could be previous messages existing.
@@ -110,7 +127,10 @@ export abstract class Publisher implements IPublisher {
   }
 
   public async clearUnlistedMessages(category: CategoryDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "Publisher", prefix: ["clearUnlistedMessages", `category ${category.name}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "Publisher",
+      prefix: ["clearUnlistedMessages", `category ${category.name}`],
+    })
     logger.debug("Clearing the unlisted messages")
     const categoryPublications = category.publications.get(this.name) || []
     const groups = await GroupController.getGroupsOfCategory(category.name)

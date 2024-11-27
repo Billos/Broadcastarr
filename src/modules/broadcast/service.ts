@@ -1,14 +1,19 @@
 import { BroadcastDocument, BroadcastModel, BroadcastStream } from "./model"
 
 type BroadcastsFilter = {
-  country?: string;
-  group?: string;
-  category?: string;
-  indexer?: string;
+  country?: string
+  group?: string
+  category?: string
+  indexer?: string
 }
 
 export async function createBroadcast(broadcast: BroadcastDocument): Promise<BroadcastDocument> {
-  const existing = await BroadcastModel.findOne({ name: broadcast.name, group: broadcast.group, country: broadcast.country, category: broadcast.category })
+  const existing = await BroadcastModel.findOne({
+    name: broadcast.name,
+    group: broadcast.group,
+    country: broadcast.country,
+    category: broadcast.category,
+  })
   if (existing) {
     return existing
   }

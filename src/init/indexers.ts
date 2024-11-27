@@ -1,9 +1,9 @@
-import { readFileSync, readdirSync } from "fs"
+import { readdirSync, readFileSync } from "fs"
 import { join } from "path"
 
-import Initiator from "./initiator"
 import { IndexerController, IndexerDocument } from "../modules/indexer"
 import mainLogger from "../utils/logger"
+import Initiator from "./initiator"
 
 export default class IndexersInitiator extends Initiator {
   public async init(): Promise<void> {

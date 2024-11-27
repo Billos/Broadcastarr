@@ -41,11 +41,13 @@ const commandGenerator: CommandGenerator = {
 
     const data = new SlashCommandBuilder()
       .setName("setcategoryemoji")
-      .addStringOption((option) => option
-        .setName("category")
-        .setDescription("The category of the group")
-        .setRequired(true)
-        .setChoices(categoryChoices))
+      .addStringOption((option) =>
+        option
+          .setName("category")
+          .setDescription("The category of the group")
+          .setRequired(true)
+          .setChoices(categoryChoices),
+      )
       .setDescription("Change the emoji of a group")
 
     return {

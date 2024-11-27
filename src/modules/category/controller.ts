@@ -1,8 +1,8 @@
-import { CategoryDocument } from "./model"
-import * as CategoryService from "./service"
 import { Triggers } from "../agenda/triggers"
 import { BroadcastController } from "../broadcast"
 import { GroupController } from "../group"
+import { CategoryDocument } from "./model"
+import * as CategoryService from "./service"
 
 export async function reloadCategoryGroups(category: string): Promise<void> {
   const groups = await GroupController.getActiveGroups(category)

@@ -10,7 +10,14 @@ import { Triggers } from "../triggers"
 export async function handler(job: Job<GrabBroadcastStreamOptions>): Promise<void> {
   const { broadcastId } = job.attrs.data
   const broadcast = await BroadcastController.getBroadcast(broadcastId)
-  const logger = mainLogger.getSubLogger({ name: "GrabBroadcastStreamHandler", prefix: ["handler", `broadcastId ${broadcast.id}`, `broadcastName ${broadcast.name}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "GrabBroadcastStreamHandler",
+    prefix: [
+      "handler",
+      `broadcastId ${broadcast.id}`,
+      `broadcastName ${broadcast.name}`,
+    ],
+  })
 
   const indexerDocument = await IndexerController.getIndexer(broadcast.indexer)
   const interceptor = new DynamicBroadcastInterceptor(indexerDocument, broadcast)
@@ -37,7 +44,7 @@ export async function handler(job: Job<GrabBroadcastStreamOptions>): Promise<voi
   const m3u8FileExists = await BroadcastController.m3u8FileExists(broadcastId)
   logger.debug(`M3U8 file exists: ${m3u8FileExists}`)
   if (!m3u8FileExists) {
-  // Writing the M3U8 file
+    // Writing the M3U8 file
     logger.debug("Writing the M3U8 file")
     await BroadcastController.generateM3U8File(broadcastId)
   }
@@ -46,7 +53,10 @@ export async function handler(job: Job<GrabBroadcastStreamOptions>): Promise<voi
 
 export async function onError(error: Error, job: Job<GrabBroadcastStreamOptions>): Promise<boolean> {
   const { broadcastId } = job.attrs.data
-  const logger = mainLogger.getSubLogger({ name: "GrabBroadcastStreamHandler", prefix: ["onError", `broadcastId ${broadcastId}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "GrabBroadcastStreamHandler",
+    prefix: ["onError", `broadcastId ${broadcastId}`],
+  })
   logger.error(`An error occurred while grabbing the broadcast stream: ${error.message}`)
   try {
     const broadcast = await BroadcastController.getBroadcast(broadcastId)

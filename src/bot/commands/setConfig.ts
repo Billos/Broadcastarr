@@ -14,7 +14,9 @@ async function execute(interaction: CommandInteraction) {
     components: [confirmRow],
     ephemeral: true,
   })
-  const confirmationResponse = await confirmationInteraction.awaitMessageComponent({ componentType: ComponentType.Button })
+  const confirmationResponse = await confirmationInteraction.awaitMessageComponent({
+    componentType: ComponentType.Button,
+  })
   const confirmed = confirmationResponse.customId === "confirm_yes"
   if (confirmed) {
     await ConfigController.setConfig(config, value)
@@ -30,15 +32,10 @@ const commandGenerator: CommandGenerator = {
 
     const data = new SlashCommandBuilder()
       .setName("setconfig")
-      .addStringOption((option) => option
-        .setName("config")
-        .setDescription("The config to update")
-        .setRequired(true)
-        .setChoices(choices))
-      .addStringOption((option) => option
-        .setName("value")
-        .setDescription("The value to set")
-        .setRequired(true))
+      .addStringOption((option) =>
+        option.setName("config").setDescription("The config to update").setRequired(true).setChoices(choices),
+      )
+      .addStringOption((option) => option.setName("value").setDescription("The value to set").setRequired(true))
       .setDescription("Update a config value")
 
     return {

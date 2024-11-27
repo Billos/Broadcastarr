@@ -25,17 +25,23 @@ const commandGenerator: CommandGenerator = {
 
     const data = new SlashCommandBuilder()
       .setName("indexcategory")
-      .addStringOption((option) => option
-        .setName("category")
-        .setDescription("The category to index")
-        .setRequired(true)
-        .setChoices(categoryChoices))
+      .addStringOption((option) =>
+        option
+          .setName("category")
+          .setDescription("The category to index")
+          .setRequired(true)
+          .setChoices(categoryChoices),
+      )
       .setDescription("List all broadcasts of a category")
 
     return {
       data,
       execute,
-      roles: ["admin", "moderator", "user"],
+      roles: [
+        "admin",
+        "moderator",
+        "user",
+      ],
     }
   },
 }

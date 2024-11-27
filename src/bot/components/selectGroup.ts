@@ -1,8 +1,4 @@
-import {
-  ActionRowBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
-} from "discord.js"
+import { ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js"
 
 import { GroupDocument } from "../../modules/group"
 import mainLogger from "../../utils/logger"

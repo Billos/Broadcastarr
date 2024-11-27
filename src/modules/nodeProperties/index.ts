@@ -1,7 +1,7 @@
-import * as NodePropertiesController from "./controller"
 import env from "../../config/env"
 import mainLogger from "../../utils/logger"
 import onExit from "../../utils/onExit"
+import * as NodePropertiesController from "./controller"
 
 export { NodePropertiesController }
 

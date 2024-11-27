@@ -1,8 +1,8 @@
-import Initiator from "./initiator"
 import { CategoryController } from "../modules/category"
 import { GroupController } from "../modules/group"
 import getGroupEmoji from "../utils/getEmoji"
 import mainLogger from "../utils/logger"
+import Initiator from "./initiator"
 
 export default class EmojiInitiator extends Initiator {
   public async init(): Promise<void> {

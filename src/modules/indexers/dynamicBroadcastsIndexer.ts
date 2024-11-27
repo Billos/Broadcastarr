@@ -1,10 +1,7 @@
+import { IndexerDocument } from "../indexer"
 import { CategoryDetails } from "./broadcastsIndexer"
 import { convertDateSelector, convertRegexSelector, convertTextSelector } from "./converters"
-import GenericBroadcastsIndexer, {
-  BroadcastDetails,
-  BroadcastSetDetails,
-} from "./genericBroadcastsIndexer"
-import { IndexerDocument } from "../indexer"
+import GenericBroadcastsIndexer, { BroadcastDetails, BroadcastSetDetails } from "./genericBroadcastsIndexer"
 import { Selector } from "./scrapper"
 
 export default class DynamicBroadcastsIndexer extends GenericBroadcastsIndexer {
@@ -20,7 +17,10 @@ export default class DynamicBroadcastsIndexer extends GenericBroadcastsIndexer {
 
   protected override teamSplitterRegex: RegExp
 
-  constructor(private indexer: IndexerDocument, category: string) {
+  constructor(
+    private indexer: IndexerDocument,
+    category: string,
+  ) {
     super(indexer.url, indexer.name, category)
     this.loadPageElement = this.indexer.data.loadPageElement
 

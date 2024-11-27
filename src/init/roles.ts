@@ -1,14 +1,18 @@
-import Initiator from "./initiator"
 import { commandGenerators } from "../bot/commands"
 import { RoleController } from "../modules/role"
 import mainLogger from "../utils/logger"
+import Initiator from "./initiator"
 
 export default class RolesInitiator extends Initiator {
   public async init(): Promise<void> {
     const logger = mainLogger.getSubLogger({ name: "RolesInitiator", prefix: ["init"] })
 
     // Mandatory roles
-    const roles = ["admin", "moderator", "user"]
+    const roles = [
+      "admin",
+      "moderator",
+      "user",
+    ]
     logger.info("Initializing Roles")
 
     for (const role of roles) {

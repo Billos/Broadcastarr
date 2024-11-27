@@ -28,7 +28,13 @@ const emojiTeams: Record<string, string[]> = {
 const femaleEmoji = "♀️"
 
 // to lowercase
-const teamEmojis: Record<string, string> = Object.entries(emojiTeams).reduce((acc, [key, groups]) => ({ ...acc, ...groups.reduce((acc2, group) => ({ ...acc2, [group.toLocaleLowerCase()]: key }), {}) }), {})
+const teamEmojis: Record<string, string> = Object.entries(emojiTeams).reduce(
+  (acc, [key, groups]) => ({
+    ...acc,
+    ...groups.reduce((acc2, group) => ({ ...acc2, [group.toLocaleLowerCase()]: key }), {}),
+  }),
+  {},
+)
 
 export default function convertBroadcastTitle(title: string) {
   if (!title.includes(" 🆚 ")) {

@@ -4,7 +4,14 @@ import { jobs, schedule } from "../agenda"
 import { Tasks } from "../tasks"
 
 export async function publishGroup(group: string, category: string, country: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "PublishGroupTrigger", prefix: ["publishGroup", `group ${group}`, `category ${category}`] })
+  const logger = mainLogger.getSubLogger({
+    name: "PublishGroupTrigger",
+    prefix: [
+      "publishGroup",
+      `group ${group}`,
+      `category ${category}`,
+    ],
+  })
   const [existingJob] = await jobs(Tasks.PublishGroup, { data: { category, group, country } })
   const delay = await ConfigController.getNumberConfig("delay-simple-PublishGroup")
   if (!existingJob) {

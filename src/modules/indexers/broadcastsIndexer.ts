@@ -3,17 +3,17 @@ import { Types } from "mongoose"
 
 import * as TheSportsDb from "../../api/theSportsDB"
 import getGroupEmoji from "../../utils/getEmoji"
+import mainLogger from "../../utils/logger"
 import { BroadcastDocument } from "../broadcast"
 import { CategoryController } from "../category"
 import { GroupController } from "../group"
 import PageScrapper, { Selector } from "./scrapper"
-import mainLogger from "../../utils/logger"
 
-export type BroadcastData = { link: string, textContent: string, group: string, country: string, startTime: DateTime }
+export type BroadcastData = { link: string; textContent: string; group: string; country: string; startTime: DateTime }
 
 export type CategoryDetails = {
-  links: Selector[];
-  lookups: Map<string, string[]>;
+  links: Selector[]
+  lookups: Map<string, string[]>
 }
 
 export default abstract class BroadcastsIndexer extends PageScrapper {
@@ -21,12 +21,24 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
 
   protected abstract categoryDetails: CategoryDetails
 
-  constructor(protected baseUrl: string, public name: string, public category: string) {
+  constructor(
+    protected baseUrl: string,
+    public name: string,
+    public category: string,
+  ) {
     super(`${name}-indexer-${category}`)
   }
 
   protected async getCategoryLink(url: string): Promise<string[]> {
-    const logger = mainLogger.getSubLogger({ name: "BroadcastsIndexer", prefix: ["getCategoryLink", `Indexer ${this.name}`, `category ${this.category}`, `url ${url}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "BroadcastsIndexer",
+      prefix: [
+        "getCategoryLink",
+        `Indexer ${this.name}`,
+        `category ${this.category}`,
+        `url ${url}`,
+      ],
+    })
     const [eltLoad] = this.categoryDetails.links
     logger.debug(`Getting page ${url} with element ${eltLoad}`)
     const page = await this.getPage(url, eltLoad.path)
@@ -34,14 +46,18 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
     const ret: string[] = []
     for (const { path } of this.categoryDetails.links) {
       logger.debug(`Evaluating with linkSelector ${path}`)
-      const links = await page.$$eval(path, (innerLinks) => (innerLinks as HTMLAnchorElement[]).map(({ href, textContent }) => ({ href, textContent })))
+      const links = await page.$$eval(path, (innerLinks) =>
+        (innerLinks as HTMLAnchorElement[]).map(({ href, textContent }) => ({ href, textContent })),
+      )
       logger.debug(`Found ${links.length} links`)
       // Default lookup is the category
       const lookups = this.categoryDetails.lookups?.get(this.category) || [this.category]
       logger.debug(`Looking for ${lookups.join(", ")}`)
       for (const categoryLookup of lookups) {
         const allLinks = links.filter((link) => !!link)
-        const categoryLink = allLinks.find((link) => link.textContent?.toLocaleLowerCase().includes(categoryLookup.toLocaleLowerCase()))
+        const categoryLink = allLinks.find((link) =>
+          link.textContent?.toLocaleLowerCase().includes(categoryLookup.toLocaleLowerCase()),
+        )
         if (categoryLink) {
           logger.info(`Found category link ${categoryLink.href}`)
           ret.push(categoryLink.href)
@@ -52,7 +68,14 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
   }
 
   public async generate(): Promise<BroadcastDocument[]> {
-    const logger = mainLogger.getSubLogger({ name: "BroadcastsIndexer", prefix: ["generate", `Indexer ${this.name}`, `category ${this.category}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "BroadcastsIndexer",
+      prefix: [
+        "generate",
+        `Indexer ${this.name}`,
+        `category ${this.category}`,
+      ],
+    })
     try {
       const links = await this.getCategoryLink(this.baseUrl)
       for (const link of links) {
@@ -124,9 +147,9 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
       startTime: data.startTime.toJSDate(),
       link: data.link,
       streams: new Types.DocumentArray<{
-        url: string;
-        referer?: string;
-        expiresAt?: Date;
+        url: string
+        referer?: string
+        expiresAt?: Date
       }>([]),
       streamIndex: 0,
     }

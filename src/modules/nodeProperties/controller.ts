@@ -1,6 +1,6 @@
+import env from "../../config/env"
 import { NodePropertiesDocument } from "./model"
 import * as NodePropertiesService from "./service"
-import env from "../../config/env"
 
 export async function setNodeProperty(type: string, key: string, value: string): Promise<NodePropertiesDocument> {
   return NodePropertiesService.setNodeProperty(env.nodeUuid, type, key, value)

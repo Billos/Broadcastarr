@@ -1,8 +1,8 @@
 import { readdirSync } from "fs"
 import { join } from "path"
 
-import { Command, CommandGenerator, isCommand, isCommandGenerator } from "./type"
 import mainLogger from "../utils/logger"
+import { Command, CommandGenerator, isCommand, isCommandGenerator } from "./type"
 
 const logger = mainLogger.getSubLogger({ name: "Commands", prefix: ["index"] })
 

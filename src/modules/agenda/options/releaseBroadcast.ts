@@ -1,3 +1,3 @@
 export type ReleaseBroadcastOptions = {
-  broadcastId: string;
+  broadcastId: string
 }

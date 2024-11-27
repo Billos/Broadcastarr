@@ -48,7 +48,11 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     //     Initialiser le logger avec les informations de la catégorie et de l'URL.
     const logger = mainLogger.getSubLogger({
       name: "GenericBroadcastsIndexer",
-      prefix: ["getBroadcastsData", `category ${this.category}`, `url ${url}`],
+      prefix: [
+        "getBroadcastsData",
+        `category ${this.category}`,
+        `url ${url}`,
+      ],
     })
     //     Charger la page à partir de l'URL donnée.
     const page = await this.getPage(url, this.loadPageElement)
@@ -83,7 +87,10 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
   }
 
   private async parseCurrentPage(page: Page): Promise<BroadcastData[]> {
-    const logger = mainLogger.getSubLogger({ name: "GenericBroadcastsIndexer", prefix: ["parseCurrentPage", `category ${this.category}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "GenericBroadcastsIndexer",
+      prefix: ["parseCurrentPage", `category ${this.category}`],
+    })
     const activeGroups = await GroupController.getActiveGroups(this.category)
     const inactiveGroups = await GroupController.getInactiveGroups(this.category)
 
@@ -119,7 +126,10 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     activeGroups: GroupDocument[],
     inactiveGroups: GroupDocument[],
   ): Promise<BroadcastData[]> {
-    const logger = mainLogger.getSubLogger({ name: "GenericBroadcastsIndexer", prefix: ["parseBroadcastSet", `category ${this.category}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "GenericBroadcastsIndexer",
+      prefix: ["parseBroadcastSet", `category ${this.category}`],
+    })
     logger.debug("Parsing broadcast set")
     const day: DateTime = await this.getBroadcastSetDay(broadcastSet)
 
@@ -142,7 +152,10 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     inactiveGroups: GroupDocument[],
     day?: DateTime,
   ): Promise<BroadcastData[]> {
-    const logger = mainLogger.getSubLogger({ name: "GenericBroadcastsIndexer", prefix: ["parseBroadcasts", `category ${this.category}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "GenericBroadcastsIndexer",
+      prefix: ["parseBroadcasts", `category ${this.category}`],
+    })
     logger.debug(`Parsing ${broadcastBlocks.length} blocks`)
     const data: BroadcastData[] = []
 
@@ -181,8 +194,15 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     await page.waitForNavigation({ waitUntil: "domcontentloaded" })
   }
 
-  private async getGroup(broadcastBlock: ElementHandle, activeGroups: GroupDocument[], inactiveGroups: GroupDocument[]): Promise<Group> {
-    const logger = mainLogger.getSubLogger({ name: "GenericBroadcastsIndexer", prefix: ["getGroup", `name ${this.name}`] })
+  private async getGroup(
+    broadcastBlock: ElementHandle,
+    activeGroups: GroupDocument[],
+    inactiveGroups: GroupDocument[],
+  ): Promise<Group> {
+    const logger = mainLogger.getSubLogger({
+      name: "GenericBroadcastsIndexer",
+      prefix: ["getGroup", `name ${this.name}`],
+    })
     if (this.broadcast.group.length === 0) {
       logger.warn("No group selector or regex, using default group")
       const group = { country: "World", name: "Ungrouped" }
@@ -194,7 +214,8 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     if (
       inactiveGroups.find(
         ({ country, name }) =>
-          name.toLocaleLowerCase() === group.name.toLocaleLowerCase() && group.country.toLocaleLowerCase() === country.toLocaleLowerCase(),
+          name.toLocaleLowerCase() === group.name.toLocaleLowerCase() &&
+          group.country.toLocaleLowerCase() === country.toLocaleLowerCase(),
       )
     ) {
       throw new SilentError(`Group ${group.name} of Country ${group.country} is inactive`)
@@ -204,7 +225,8 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     if (
       !activeGroups.find(
         ({ country, name }) =>
-          name.toLocaleLowerCase() === group.name.toLocaleLowerCase() && group.country.toLocaleLowerCase() === country.toLocaleLowerCase(),
+          name.toLocaleLowerCase() === group.name.toLocaleLowerCase() &&
+          group.country.toLocaleLowerCase() === country.toLocaleLowerCase(),
       )
     ) {
       // If the group does not exist, we create it in the DB as inactive and raise an error

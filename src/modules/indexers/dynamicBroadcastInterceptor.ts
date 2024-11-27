@@ -1,7 +1,7 @@
-import { convertTextSelector } from "./converters"
-import GenericBroadcastInterceptor from "./genericBroadcastInterceptor"
 import { BroadcastDocument } from "../broadcast"
 import { IndexerDocument } from "../indexer"
+import { convertTextSelector } from "./converters"
+import GenericBroadcastInterceptor from "./genericBroadcastInterceptor"
 import { Selector, TextContentSelector } from "./scrapper"
 
 export default class DynamicBroadcastInterceptor extends GenericBroadcastInterceptor {

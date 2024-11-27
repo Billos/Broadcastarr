@@ -17,7 +17,9 @@ async function execute(interaction: CommandInteraction) {
     ephemeral: true,
   })
   // Ask for confirmation
-  const confirmationResponse = await confirmationInteraction.awaitMessageComponent({ componentType: ComponentType.Button })
+  const confirmationResponse = await confirmationInteraction.awaitMessageComponent({
+    componentType: ComponentType.Button,
+  })
   const confirmed = confirmationResponse.customId === "confirm_yes"
 
   // Remove the group
@@ -35,11 +37,13 @@ const commandGenerator: CommandGenerator = {
 
     const data = new SlashCommandBuilder()
       .setName("removecategory")
-      .addStringOption((option) => option
-        .setName("category")
-        .setDescription("The category to remove")
-        .setRequired(true)
-        .setChoices(categoryChoices))
+      .addStringOption((option) =>
+        option
+          .setName("category")
+          .setDescription("The category to remove")
+          .setRequired(true)
+          .setChoices(categoryChoices),
+      )
       .setDescription("Remove a category")
 
     return {

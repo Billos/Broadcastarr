@@ -1,12 +1,4 @@
-import {
-  ClientEvent,
-  EventType,
-  MatrixClient,
-  Room,
-  SyncState,
-  Visibility,
-  createClient,
-} from "matrix-js-sdk"
+import { ClientEvent, createClient, EventType, MatrixClient, Room, SyncState, Visibility } from "matrix-js-sdk"
 import { logger as matrixLogger } from "matrix-js-sdk/lib/logger"
 import { Converter } from "showdown"
 
@@ -115,7 +107,14 @@ class MatrixPublisher extends MarkdownPublisher {
 
   protected async sendMessage(category: CategoryDocument, content: string): Promise<string[]> {
     const roomId = this.rooms[category.name]
-    const logger = mainLogger.getSubLogger({ name: "MatrixPublisher", prefix: ["sendMessage", `category ${category.name}`, `room ${roomId}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "MatrixPublisher",
+      prefix: [
+        "sendMessage",
+        `category ${category.name}`,
+        `room ${roomId}`,
+      ],
+    })
     logger.info("Sending the message")
     // Send the message as markdown
     const htmlMessage = new Converter().makeHtml(content)
@@ -124,7 +123,10 @@ class MatrixPublisher extends MarkdownPublisher {
   }
 
   protected async removeMessages(category: string, messageIds: string[]): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "MatrixPublisher", prefix: ["removeMessages", `category ${category}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "MatrixPublisher",
+      prefix: ["removeMessages", `category ${category}`],
+    })
     const roomId = this.rooms[category]
     for (const messageId of messageIds) {
       await sleep(200)
@@ -137,7 +139,10 @@ class MatrixPublisher extends MarkdownPublisher {
   }
 
   public async updateChannelName(category: CategoryDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "MatrixPublisher", prefix: ["updateChannelName", `category ${category.name}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "MatrixPublisher",
+      prefix: ["updateChannelName", `category ${category.name}`],
+    })
     logger.debug("Not updating the channel name for Matrix")
     // const broadcasts = await BroadcastController.getBroadcastsOfCategory(category.name)
     // const broadcastsWithStream = broadcasts.filter((broadcast) => broadcast.streams.length > 0)

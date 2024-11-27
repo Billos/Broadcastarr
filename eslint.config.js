@@ -1,7 +1,7 @@
-import parser from "@typescript-eslint/parser"
-import typescriptPlugin from "@typescript-eslint/eslint-plugin"
 import stylisticJs from "@stylistic/eslint-plugin-js"
 import stylisticTs from "@stylistic/eslint-plugin-ts"
+import typescriptPlugin from "@typescript-eslint/eslint-plugin"
+import parser from "@typescript-eslint/parser"
 
 export default [
   {
@@ -21,7 +21,12 @@ export default [
     settings: {
       "import/resolver": {
         node: {
-          extensions: [".js", ".jsx", ".ts", ".tsx"],
+          extensions: [
+            ".js",
+            ".jsx",
+            ".ts",
+            ".tsx",
+          ],
         },
       },
     },
@@ -47,8 +52,18 @@ export default [
         "error",
         {
           blankLine: "always",
-          prev: ["export", "class", "default", "function"],
-          next: ["export", "class", "default", "function"],
+          prev: [
+            "export",
+            "class",
+            "default",
+            "function",
+          ],
+          next: [
+            "export",
+            "class",
+            "default",
+            "function",
+          ],
         },
       ],
       // Linebreaks

@@ -43,7 +43,14 @@ class JellyfinReleaser implements IReleaser {
   }
 
   async releaseBroadcast(broadcast: BroadcastDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "JellyfinReleaser", prefix: ["releaseBroadcast", `broadcastId ${broadcast.id}`, `broadcastName ${broadcast.name}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "JellyfinReleaser",
+      prefix: [
+        "releaseBroadcast",
+        `broadcastId ${broadcast.id}`,
+        `broadcastName ${broadcast.name}`,
+      ],
+    })
 
     const path = await BroadcastController.getM3U8Path(broadcast.id)
     const tuners = await JellyfinAPI.getTvTunerHostsPaths()
@@ -72,7 +79,14 @@ class JellyfinReleaser implements IReleaser {
   }
 
   async unreleaseBroadcast(broadcast: BroadcastDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "JellyfinReleaser", prefix: ["unreleaseBroadcast", `broadcastId ${broadcast.id}`, `broadcastName ${broadcast.name}`] })
+    const logger = mainLogger.getSubLogger({
+      name: "JellyfinReleaser",
+      prefix: [
+        "unreleaseBroadcast",
+        `broadcastId ${broadcast.id}`,
+        `broadcastName ${broadcast.name}`,
+      ],
+    })
     logger.debug("Removing Live TV Tuner Host")
     await JellyfinAPI.removeTunerHost(broadcast.tunerHostId)
 

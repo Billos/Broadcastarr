@@ -1,4 +1,4 @@
 export type GrabBroadcastStreamOptions = {
-  broadcastId: string;
-  streamIndex: number;
+  broadcastId: string
+  streamIndex: number
 }
