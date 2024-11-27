@@ -19,6 +19,7 @@
         "message": "chore(release): Bump version to ${nextRelease.version}"
       }
     ],
+    "@semantic-release/npm",
     "@semantic-release/github",
     [
       "@codedependant/semantic-release-docker",
