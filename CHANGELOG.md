@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Billos/Broadcastarr/compare/1.1.0...1.1.1) (2024-11-27)
+
+
+### Bug Fixes
+
+* **package:** change start script from node to tsx for improved execution ([9b987cc](https://github.com/Billos/Broadcastarr/commit/9b987ccb090ddd36dbaec612c97403a6d1ce6035))
+
 # [1.1.0](https://github.com/Billos/Broadcastarr/compare/1.0.1...1.1.0) (2024-11-27)
 
 
