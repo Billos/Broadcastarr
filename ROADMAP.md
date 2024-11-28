@@ -17,3 +17,4 @@
 - [ ] Refactor the publishers configuration to store everything in the database
 - [ ] Refactor the releasers configuration to store everything in the database
 - [ ] Use node in start script
+- [ ] Implement a Plex releaser
