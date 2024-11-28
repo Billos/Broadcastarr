@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/Billos/Broadcastarr/compare/1.1.5...1.1.6) (2024-11-28)
+
+
+### Bug Fixes
+
+* **roadmap:** update roadmap ([1e7ba59](https://github.com/Billos/Broadcastarr/commit/1e7ba5931555ec4f484dc63625af09efab55e0f3))
+
 ## [1.1.5](https://github.com/Billos/Broadcastarr/compare/1.1.4...1.1.5) (2024-11-28)
 
 
