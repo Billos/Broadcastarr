@@ -3,13 +3,13 @@
     "branches": ["main"]
   },
   "plugins": [
+    "@semantic-release/commit-analyzer",
     [
       "@semantic-release/exec",
       {
         "prepareCmd": "sed -i 's/docker.io\\/billos\\/broadcastarr:.*/docker.io\\/billos\\/broadcastarr:${nextRelease.version}/g' docker-compose*.yml"
       }
     ],
-    "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     "@semantic-release/npm",
