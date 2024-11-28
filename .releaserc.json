@@ -3,20 +3,20 @@
     "branches": ["main"]
   },
   "plugins": [
-    "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
-    "@semantic-release/changelog",
-    "@semantic-release/npm",
     [
       "@semantic-release/exec",
       {
         "prepareCmd": "sed -i 's/docker.io\\/billos\\/broadcastarr:.*/docker.io\\/billos\\/broadcastarr:${nextRelease.version}/g' docker-compose*.yml"
       }
     ],
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    "@semantic-release/npm",
     [
       "@semantic-release/git",
       {
-        "assets": ["package.json, CHANGELOG.md"],
+        "assets": ["package.json, CHANGELOG.md", "docker-compose.yml", "docker-compose.bootstrap.yml", "docker-compose.dev.yml"],
         "message": "chore(release): Bump version to ${nextRelease.version}"
       }
     ],
