@@ -1,3 +1,14 @@
+## [1.1.5](https://github.com/Billos/Broadcastarr/compare/1.1.4...1.1.5) (2024-11-28)
+
+
+### Bug Fixes
+
+* **docker-compose:** update image tags to latest version ([3d8ecac](https://github.com/Billos/Broadcastarr/commit/3d8ecac8f430a5cebd8dda9ceb2e0d71d04d1cfd))
+* **releaserc:** add docker-compose files to release assets ([9aadbac](https://github.com/Billos/Broadcastarr/commit/9aadbac2e490f94f19704483945ab68679c4acc3))
+* **releaserc:** add npm plugin for semantic release configuration ([2ad5e57](https://github.com/Billos/Broadcastarr/commit/2ad5e577c76709bbcba03e13314021c50dbb1d34))
+* **releaserc:** add npm plugin for semantic release configuration ([2a3ba94](https://github.com/Billos/Broadcastarr/commit/2a3ba9482a2fc89981c6369ae1fb9d774f9943b1))
+* **roadmap:** Add task in roadmap ([2e4a41a](https://github.com/Billos/Broadcastarr/commit/2e4a41a93fdc49415696fbf72a4355e7b4793bef))
+
 ## [1.1.4](https://github.com/Billos/Broadcastarr/compare/1.1.3...1.1.4) (2024-11-27)
 
 
