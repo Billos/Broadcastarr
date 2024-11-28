@@ -18,3 +18,4 @@
 - [ ] Refactor the releasers configuration to store everything in the database
 - [ ] Use node in start script
 - [ ] Implement a Plex releaser
+- [ ] Implement a Emby releaser
