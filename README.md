@@ -64,10 +64,10 @@ Implemented publishers:
 
 The service is designed to be scalable and can be deployed on multiple instances.
 
-### VPN
+### VPN (Wireguard)
 
-The docker compose includes a Wireguard client that allows the workers to scrape and grab the broadcasts from the web pages through a VPN.
-The used configuration file is ./wg0.conf.
+The docker has a cron that runs `./scripts/gateway.sh`.
+This script checks if a container named `wireguard` can be pinged, if it can, the default gateway of the container (server, worker, init) is set to the ip of the `wireguard` container.
 
 ## Installation
 
