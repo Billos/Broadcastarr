@@ -6,7 +6,9 @@ RUN apt-get install -y \
         wget \ 
         iputils-ping \
         dnsutils \ 
-        iproute2 \
+        iproute2 \ 
+        cron \
+        nano \
         gnupg 
 RUN apt-get install -y \
         fonts-ipafont-gothic \
@@ -29,11 +31,18 @@ RUN apt-get install -yq \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
 
-# Set the working directory in the container
-
 WORKDIR /app
 
 COPY . .
+
+# Cron job for running /app/scripts/gateway.sh to run the script every 2 minutes
+RUN echo "*/2 * * * * /app/scripts/gateway.sh >> /var/log/cron_gateway.log" > /etc/cron.d/gateway-cron \
+        && chmod 0644 /etc/cron.d/gateway-cron \
+        && crontab /etc/cron.d/gateway-cron \
+        && touch /var/log/cron_gateway.log
+
+RUN chmod gu+rw /var/run
+RUN chmod gu+s /usr/sbin/cron
 
 ARG UID=1000
 
@@ -53,4 +62,4 @@ RUN yarn puppeteer browsers install firefox
 
 RUN yarn build
 
-ENTRYPOINT [ "yarn", "run" ]
+ENTRYPOINT [ "./scripts/entrypoint.sh" ]
