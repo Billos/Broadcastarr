@@ -6,6 +6,7 @@ RUN apt-get install -y \
         wget \ 
         iputils-ping \
         dnsutils \ 
+        iproute2 \
         gnupg 
 RUN apt-get install -y \
         fonts-ipafont-gothic \
