@@ -41,6 +41,8 @@ abstract class MarkdownPublisher extends Publisher {
       // `[\`❌ Kill\`](<${urlJoin(apiKey, "monitor", "killBrowsers")}>)`,
       // Refresh all groups for this category
       `[\`🔄 Refresh groups\`](<${urlJoin(apiKey, "category", category.name, "reload")}>)`,
+      // Refresh channel name for this category
+      `[\`🔄 Refresh channel name\`](<${urlJoin(apiKey, "category", category.name, "channelName")}>)`,
       // Add a link to the page of each indexer
     ]
 
@@ -122,12 +124,14 @@ abstract class MarkdownPublisher extends Publisher {
       displayContent = `${team1}${padding}${teamSeparator}${team2}${padding2}`
     } else {
       // Full length should be 2x maxTeamLength + 1
-      const maxSize = 2 * maxTeamLength + 1
+      const maxSize = 2 * maxTeamLength + 2
       const padding = " ".repeat(maxSize - displayContent.length)
       displayContent = `${displayContent}${padding}`
     }
 
     const { uuid: apiKey } = await UUIDController.getUUID()
+
+    console.log("Broadcast " + broadcast.streams.length + " " + broadcast.jellyfinId)
 
     const url = broadcast.jellyfinId ? await JellyfinAPI.getContentUrl(broadcast.jellyfinId) : ""
     const watchLink = url ? `[▶️ Watch ▶️](<${url}>)` : ""
