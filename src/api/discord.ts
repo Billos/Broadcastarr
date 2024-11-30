@@ -21,7 +21,9 @@ async function retry(error: AxiosError) {
   if (error.response.status === 429) {
     const retryAfter = error.response.headers["retry-after"]
     // Round up to the next second
-    const sleepTime = parseInt(retryAfter, 10) * 1000 + 100
+    // retry after seems
+    const sleepTime = 5 * 1000
+    // const sleepTime = parseInt(retryAfter, 10) * 1000 + 100
     logger.warn(`Rate limit exceeded for url ${error.config.url} - Waiting ${sleepTime / 1000} s`)
     await sleep(sleepTime)
     return botInstance(error.config)
@@ -35,6 +37,14 @@ async function retry(error: AxiosError) {
   logger.error(`Error for url ${error.config.url}`, error.response.data)
   return Promise.reject(error)
 }
+botInstance.interceptors.request.use(async (config) => {
+  await sleep(500)
+  return config
+})
+userInstance.interceptors.request.use(async (config) => {
+  await sleep(500)
+  return config
+})
 botInstance.interceptors.response.use(
   (response) => response,
   (err) => retry(err),
