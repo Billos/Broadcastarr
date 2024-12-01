@@ -31,7 +31,7 @@ export async function handler(job: Job<PublishGroupOptions>): Promise<void> {
     }
   }
   // Publish the group
-  logger.debug("Republishing the group")
+  logger.debug("Unpublishing the group")
   const res = await PublishersController.unpublishGroup(groupDocument)
   logger.debug("Unsetting the publications")
   for (const publisher of Object.keys(res)) {
