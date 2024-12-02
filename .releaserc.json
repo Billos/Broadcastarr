@@ -16,7 +16,13 @@
     [
       "@semantic-release/git",
       {
-        "assets": ["package.json, CHANGELOG.md", "docker-compose.yml", "docker-compose.bootstrap.yml", "docker-compose.dev.yml"],
+        "assets": [
+          "package.json",
+          "CHANGELOG.md",
+          "docker-compose.yml",
+          "docker-compose.bootstrap.yml",
+          "docker-compose.dev.yml"
+        ],
         "message": "chore(release): Bump version to ${nextRelease.version} [skip ci]"
       }
     ],
@@ -27,6 +33,7 @@
         "dockerProject": "billos"
       }
     ]
+
   ],
   "tagFormat": "${version}"
 }

@@ -131,8 +131,6 @@ abstract class MarkdownPublisher extends Publisher {
 
     const { uuid: apiKey } = await UUIDController.getUUID()
 
-    console.log("Broadcast " + broadcast.streams.length + " " + broadcast.jellyfinId)
-
     const url = broadcast.jellyfinId ? await JellyfinAPI.getContentUrl(broadcast.jellyfinId) : ""
     const watchLink = url ? `[▶️ Watch ▶️](<${url}>)` : ""
     const resetStreamIndex = urlJoin(apiKey, "broadcast", broadcast.id, "resetStreamIndex")

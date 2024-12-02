@@ -12,6 +12,7 @@
   "author": "Billos",
   "main": "./src/server.ts",
   "scripts": {
+    "bootstrap": "yarn start build/bootstrap.js",
     "build": "tsc -p tsconfig.json",
     "dev": "tsx watch --clear-screen",
     "dev:bootstrap": "yarn dev src/bootstrap.ts",
@@ -20,7 +21,6 @@
     "docker:build": "docker build . -t billos/broadcastarr:latest",
     "format": "prettier . --write",
     "format-check": "prettier . --check",
-    "bootstrap": "yarn start build/bootstrap.js",
     "lint": "eslint src",
     "release": "semantic-release",
     "server": "yarn start build/server.js",

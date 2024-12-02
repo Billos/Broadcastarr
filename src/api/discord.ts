@@ -19,7 +19,7 @@ async function retry(error: AxiosError) {
   const logger = mainLogger.getSubLogger({ name: "Discord", prefix: ["retry"] })
   // If we hit the rate limit, we wait 500ms and retry
   if (error.response.status === 429) {
-    const retryAfter = error.response.headers["retry-after"]
+    // const retryAfter = error.response.headers["retry-after"]
     // Round up to the next second
     // retry after seems
     const sleepTime = 5 * 1000
