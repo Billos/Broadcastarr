@@ -63,13 +63,16 @@ async function sendDiscordMessage(webhookId: string, webhookToken: string, conte
   }
   const url = join(webhookId, `${webhookToken}?wait=true`)
   logger.trace("Sending message")
+  const data: Record<string, string> = { content }
+  if (env.publishers.discord.botAvatar) {
+    data.avatar_url = env.publishers.discord.botAvatar
+  }
+  if (env.publishers.discord.botName) {
+    data.username = env.publishers.discord.botName
+  }
   const {
     data: { id },
-  } = await botInstance.post(url, {
-    content,
-    username: env.publishers.discord.botName,
-    avatar_url: env.publishers.discord.botAvatar,
-  })
+  } = await botInstance.post(url, data)
   return id
 }
 
