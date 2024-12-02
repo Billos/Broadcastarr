@@ -1,3 +1,22 @@
+# [1.2.0](https://github.com/Billos/Broadcastarr/compare/1.1.6...1.2.0) (2024-12-02)
+
+
+### Bug Fixes
+
+* **agenda:** update log message to reflect unpublishing of the group ([ea0e905](https://github.com/Billos/Broadcastarr/commit/ea0e9050a70ef4cf80f888365dd1a949b9af2d8d))
+* **discord:** sleep before Discord query to have more resilience ([3101b5b](https://github.com/Billos/Broadcastarr/commit/3101b5b2a69d72fb997481075966fff9d4cfe8e7))
+* **discord:** webhooks name and avatar are now optionnal ([f2fdc24](https://github.com/Billos/Broadcastarr/commit/f2fdc2444cad95badc94225a88384c765182847e))
+* **docker:** add iproute2 in docker ([370c441](https://github.com/Billos/Broadcastarr/commit/370c441d00843b6e44f2ce961d6e8f02fc2d8ebb))
+* **eslint:** set prefer-template eslint rule ([8548a5e](https://github.com/Billos/Broadcastarr/commit/8548a5e61cbc3b2a95446c86f8a4aab474f26f63))
+* **jellyfin:** prepend "Broadcastarr " to collection names to avoid name detections ([cbecc62](https://github.com/Billos/Broadcastarr/commit/cbecc627e33e402607c0e3859a1979e3619f3a19))
+* **jellyfin:** Repair collection creation and image setting ([4fb4b63](https://github.com/Billos/Broadcastarr/commit/4fb4b6352e1219b27a551e393f8a8ffb0ef5eb42))
+
+
+### Features
+
+* **category:** add endpoint to refresh channel name for a category ([e3056fd](https://github.com/Billos/Broadcastarr/commit/e3056fdaacfcdfac6e5f87457512015616b18d29))
+* **docker:** cron to change de default gateway if wireguard container is detected & entrypoint script ([e1f8a6b](https://github.com/Billos/Broadcastarr/commit/e1f8a6b7c6e36d4af9e9e37cd7840b1e6fa1014f))
+
 ## [1.1.6](https://github.com/Billos/Broadcastarr/compare/1.1.5...1.1.6) (2024-11-28)
 
 ### Bug Fixes
