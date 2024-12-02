@@ -126,7 +126,7 @@ async function getCollection(collectionName: string): Promise<Collection> {
   })
   logger.trace("getCollection")
   const { Id } = await getCollectionsCollectionFolders()
-  const name = "Broadcastarr " + collectionName
+  const name = `Broadcastarr ${collectionName}`
   const {
     data: { Items },
   } = await instance.get<ItemSearch<Collection>>(`/Items?ParentId=${Id}&searchTerm=${name}&Recursive=true`)
@@ -139,7 +139,7 @@ async function createCollection(collectionName: string): Promise<void> {
     prefix: ["createCollection", `collectionName ${collectionName}`],
   })
   logger.info("createCollection")
-  const name = "Broadcastarr " + collectionName
+  const name = `Broadcastarr ${collectionName}`
   const { Id: parentId } = await getCollectionsCollectionFolders()
   await instance.post<Item>(`/Collections?ParentId=${parentId}&Name=${name}`)
 }

@@ -18,10 +18,10 @@ class JellyfinReleaser implements IReleaser {
       // If the collection is not found, we create it
       const collection = await JellyfinAPI.getCollection(category.name)
       if (!collection) {
-        logger.info("Creating the Jellyfin collection '" + category.name + "'")
+        logger.info(`Creating the Jellyfin collection '${category.name}'`)
         await JellyfinAPI.createCollection(category.name)
       } else {
-        logger.info("The Jellyfin collection '" + category.name + "' already exists")
+        logger.info(`The Jellyfin collection '${category.name}' already exists`)
       }
       // We check if the image of the collection exists
       if (await checkImageExists(category.name)) {

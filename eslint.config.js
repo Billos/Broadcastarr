@@ -39,6 +39,7 @@ export default [
         },
         {},
       ],
+      "prefer-template": "error",
       "consistent-return": "off",
       "no-param-reassign": [
         "error",
