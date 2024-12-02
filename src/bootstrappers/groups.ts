@@ -39,7 +39,8 @@ export class GroupsBootstrapper extends Bootstrapper {
     logger.info("Creating categories and groups")
     // Once the groups are parsed, we create them in the db if they don't already exist
     for (const [category, groups] of Object.entries(envGroups) as [string, Set<Group>][]) {
-      logger.info(`Creating category ${category} with groups ${Array.from(groups).join(", ")}`)
+      const groupNames = Array.from(groups).map((group) => group.name)
+      logger.info(`Creating category ${category} with groups ${groupNames.join(", ")}`)
       // Assert that category exists
       try {
         await CategoryController.getCategory(category)
