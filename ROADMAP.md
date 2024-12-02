@@ -19,3 +19,4 @@
 - [ ] Use node in start script
 - [ ] Implement a Plex releaser
 - [ ] Implement a Emby releaser
+- [ ] Ensure Jellyfin collection does not need to be created manually

@@ -23,7 +23,11 @@ type Item = {
 }
 
 type CollectionFolder = Item
-type Collection = Item
+type Collection = Item & {
+  ImageTags: {
+    Primary: string
+  }
+}
 type TvChannel = Item
 
 type ItemSearch<T> = {
@@ -152,13 +156,23 @@ async function setItemImage(collectionName: string): Promise<void> {
     return
   }
 
-  const { Id } = await getCollection(collectionName)
+  const collection = await getCollection(collectionName)
+  if (!collection) {
+    logger.warn("Collection does not exist")
+    return
+  }
+
+  if (collection.ImageTags?.Primary) {
+    logger.warn("Image already exists")
+    return
+  }
+
   // Get the image binary
   const image = await getImage(collectionName)
 
   // Post the image binary
   logger.info("Posting image")
-  await instance.post(`/Items/${Id}/Images/Primary`, image, { headers: { "Content-Type": "image/png" } })
+  await instance.post(`/Items/${collection.Id}/Images/Primary`, image, { headers: { "Content-Type": "image/png" } })
 }
 
 async function getChannels(): Promise<TvChannel[]> {

@@ -42,7 +42,7 @@ export async function emptyFolder(folder: string, filter: string): Promise<void>
 export async function checkImageExists(imageName: string): Promise<boolean> {
   const logger = mainLogger.getSubLogger({ name: "File", prefix: ["checkImageExists", `imageName ${imageName}`] })
   logger.debug("CheckImageExists")
-  const filepath = join(__dirname, "..", "..", "images", `${imageName}.png`)
+  const filepath = join(__dirname, "..", "..", "assets", `${imageName}.png`)
   return existsSync(filepath)
 }
 
