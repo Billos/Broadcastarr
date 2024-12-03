@@ -1,3 +1,16 @@
+## [1.2.1](https://github.com/Billos/Broadcastarr/compare/1.2.0...1.2.1) (2024-12-03)
+
+
+### Bug Fixes
+
+* **env:** Comments on environment variables and update README ([6fa6633](https://github.com/Billos/Broadcastarr/commit/6fa66334f2b824445e79eef1dd2ac34d1d6b6fdf))
+* **env:** replace DESTINATION with M3U8_FOLDER in environment configuration ([bf69227](https://github.com/Billos/Broadcastarr/commit/bf692271a4b2dc95dcf00d419a5b7c5f57003057))
+* **env:** set default values for Discord bot avatar and name ([d8b9cfd](https://github.com/Billos/Broadcastarr/commit/d8b9cfdbe5002a8d2b7dad05627fbcb65fd8b149))
+* **matrix:** refactor room alias creation to replace spaces with dashes ([ef93f4f](https://github.com/Billos/Broadcastarr/commit/ef93f4f25f9986368f30dbf21891638961a2fa25))
+* **matrix:** replace spaces with dashes in room alias ([c4b440d](https://github.com/Billos/Broadcastarr/commit/c4b440da5458adc8faa4a3ab6586efd43e10f35a))
+* **matrix:** update room alias prefix from 'scrapper' to 'broadcastarr' ([3dc23e9](https://github.com/Billos/Broadcastarr/commit/3dc23e948899277ed5fa9c36f22ee9d0612a3c9a))
+* **scrapper:** repair defaultValue in regex, fix [#7](https://github.com/Billos/Broadcastarr/issues/7) ([e1c3a2d](https://github.com/Billos/Broadcastarr/commit/e1c3a2dee662019b46ae9c0d6cb127ba7ea82da0))
+
 # [1.2.0](https://github.com/Billos/Broadcastarr/compare/1.1.6...1.2.0) (2024-12-02)
 
 
