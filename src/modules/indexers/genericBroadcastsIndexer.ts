@@ -209,24 +209,23 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     }
 
     const group = await this.getRegexContent(broadcastBlock, this.broadcast.group)
-    if (
-      inactiveGroups.find(
-        ({ country, name }) =>
-          name.toLocaleLowerCase() === group.name.toLocaleLowerCase() &&
-          group.country.toLocaleLowerCase() === country.toLocaleLowerCase(),
-      )
-    ) {
+    logger.debug(`Checking if group is active`)
+    const inactiveGroup = inactiveGroups.find(
+      ({ country, name }) =>
+        name.toLowerCase() === group.name.toLowerCase() && group.country.toLowerCase() === country.toLowerCase(),
+    )
+    if (inactiveGroup) {
       throw new SilentError(`Group ${group.name} of Country ${group.country} is inactive`)
     }
+    logger.debug(`Group is not inactive`)
 
     // If group is not in the filters, we don't need to parse the Broadcast, and we save time
-    if (
-      !activeGroups.find(
-        ({ country, name }) =>
-          name.toLocaleLowerCase() === group.name.toLocaleLowerCase() &&
-          group.country.toLocaleLowerCase() === country.toLocaleLowerCase(),
-      )
-    ) {
+    const activeGroup = activeGroups.find(
+      ({ country, name }) =>
+        name.toLowerCase() === group.name.toLowerCase() && group.country.toLowerCase() === country.toLowerCase(),
+    )
+    if (!activeGroup) {
+      logger.debug(`Group is not in filters`)
       // If the group does not exist, we create it in the DB as inactive and raise an error
       const created = await this.assertGroupExists(group, false)
       if (created) {
