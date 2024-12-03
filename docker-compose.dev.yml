@@ -13,7 +13,7 @@ services:
     environment:
       NODE_ENV: development
       LOG_LEVEL: 2
-      MONGO_URL: mongodb://mongo:27017
+      MONGO_URL: mongodb://mongo
       MONGO_AGENDA_DB: agenda
       MONGO_DB: broadcastarr
     deploy:
@@ -38,7 +38,7 @@ services:
     volumes:
       - broadcastarr_data:/data/db
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongosh mongo:27017/test --quiet
+      test: echo 'db.runCommand("ping").ok' | mongosh mongo/test --quiet
       interval: 5s
       timeout: 5s
       retries: 5
