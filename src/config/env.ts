@@ -11,7 +11,7 @@ export default {
     agendaDb: process.env.MONGO_AGENDA_DB,
   },
   remoteUrl: process.env.BROADCASTARR_REMOTE_URL,
-  m3u8Destination: process.env.DESTINATION,
+  m3u8Destination: process.env.M3U8_FOLDER,
   browser: {
     userAgent: process.env.USER_AGENT,
   },
