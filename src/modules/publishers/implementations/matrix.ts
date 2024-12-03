@@ -188,9 +188,10 @@ class MatrixPublisher extends MarkdownPublisher {
   }
 
   private async createRoom(category: CategoryDocument): Promise<void> {
-    const rawRoomAlias = `#broadcastarr-${category.name}:${env.publishers.matrix.serverName}`
+    const name = `broadcastarr-${category.name}`.replace(/ /g, "-")
+    const server = env.publishers.matrix.serverName
+    const roomAlias = `#${name}:${server}`
     // Replace spaces with dashes
-    const roomAlias = rawRoomAlias.replace(/ /g, "-")
 
     const logger = mainLogger.getSubLogger({ name: "MatrixPublisher", prefix: ["createRoom", `alias ${roomAlias}`] })
     // Checking if the room already exists
@@ -204,10 +205,9 @@ class MatrixPublisher extends MarkdownPublisher {
       logger.info("Room does not exist")
       // Create the room
       logger.info(`Creating the room - name ${roomAlias} - alias ${roomAlias}`)
-      const name = `broadcastarr-${category.name}`
       const { room_id: roomId } = await this.client.createRoom({
         name,
-        topic: ` for ${category}`,
+        topic: `for ${category}`,
         visibility: Visibility.Public,
         room_alias_name: name,
       })
