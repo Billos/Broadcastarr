@@ -265,7 +265,9 @@ export default abstract class PageScrapper {
         }
         const keys = Object.keys(groups) as (keyof T)[]
         for (const key of keys) {
-          result[key] = groups[key] as T[keyof T]
+          if (groups[key]) {
+            result[key] = groups[key] as T[keyof T]
+          }
         }
 
         return result
