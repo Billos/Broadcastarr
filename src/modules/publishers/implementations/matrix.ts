@@ -188,7 +188,10 @@ class MatrixPublisher extends MarkdownPublisher {
   }
 
   private async createRoom(category: CategoryDocument): Promise<void> {
-    const roomAlias = `#scrapper-${category.name}:${env.publishers.matrix.serverName}`
+    const rawRoomAlias = `#scrapper-${category.name}:${env.publishers.matrix.serverName}`
+    // Replace spaces with dashes
+    const roomAlias = rawRoomAlias.replace(/ /g, "-")
+
     const logger = mainLogger.getSubLogger({ name: "MatrixPublisher", prefix: ["createRoom", `alias ${roomAlias}`] })
     // Checking if the room already exists
     logger.info("Checking if the room already exists")
