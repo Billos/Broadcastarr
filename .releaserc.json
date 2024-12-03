@@ -21,6 +21,7 @@
           "CHANGELOG.md",
           "docker-compose.yml",
           "docker-compose.bootstrap.yml",
+          "docker-compose.bootstrap.dev.yml",
           "docker-compose.dev.yml"
         ],
         "message": "chore(release): Bump version to ${nextRelease.version} [skip ci]"
