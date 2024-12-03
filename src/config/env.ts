@@ -18,8 +18,8 @@ export default {
   publishers: {
     discord: {
       token: process.env.DISCORD_USER_TOKEN,
-      botAvatar: process.env.DISCORD_WEBHOOK_AVATAR,
-      botName: process.env.DISCORD_WEBHOOK_USERNAME,
+      botAvatar: process.env.DISCORD_WEBHOOK_AVATAR || null,
+      botName: process.env.DISCORD_WEBHOOK_USERNAME || null,
     },
     matrix: {
       url: process.env.MATRIX_URL,
