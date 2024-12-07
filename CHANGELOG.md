@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/Billos/Broadcastarr/compare/1.2.1...1.2.2) (2024-12-07)
+
+
+### Bug Fixes
+
+* **urlJoin:** encode arguments to fix spaces. ([36416a6](https://github.com/Billos/Broadcastarr/commit/36416a63daa48bb4a1443ab31ce5c760faae7570))
+
 ## [1.2.1](https://github.com/Billos/Broadcastarr/compare/1.2.0...1.2.1) (2024-12-03)
 
 
