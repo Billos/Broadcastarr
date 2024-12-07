@@ -1,6 +1,6 @@
 services:
   server:
-    image: docker.io/billos/broadcastarr:1.2.1
+    image: docker.io/billos/broadcastarr:1.2.2
     container_name: server
     command: "dev:server"
     volumes:
