@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/Billos/Broadcastarr/compare/1.2.2...1.2.3) (2024-12-10)
+
+
+### Bug Fixes
+
+* **package.json:** update bootstrap and server paths to use src directory ([7906881](https://github.com/Billos/Broadcastarr/commit/790688152bd86e9fa26478f204640bce6b8aa407))
+
 ## [1.2.2](https://github.com/Billos/Broadcastarr/compare/1.2.1...1.2.2) (2024-12-07)
 
 
