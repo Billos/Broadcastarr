@@ -12,7 +12,7 @@
   "author": "Billos",
   "main": "./src/server.ts",
   "scripts": {
-    "bootstrap": "yarn start build/bootstrap.js",
+    "bootstrap": "yarn start src/bootstrap.js",
     "build": "tsc -p tsconfig.json",
     "dev": "tsx watch --clear-screen",
     "dev:bootstrap": "yarn dev src/bootstrap.ts",
@@ -23,10 +23,10 @@
     "format-check": "prettier . --check",
     "lint": "eslint src",
     "release": "semantic-release",
-    "server": "yarn start build/server.js",
+    "server": "yarn start src/server.js",
     "start": "tsx",
     "type-check": "tsc --noEmit",
-    "worker": "sleep 1; yarn start build/worker.js"
+    "worker": "sleep 1; yarn start src/worker.js"
   },
   "dependencies": {
     "@hokify/agenda": "^6.3.0",
