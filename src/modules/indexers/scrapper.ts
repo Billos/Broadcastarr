@@ -1,4 +1,5 @@
 import { DateTime } from "luxon"
+import nunjucks from "nunjucks"
 import puppeteer, { Browser, ElementHandle, Page } from "puppeteer"
 import { v4 as uuidv4 } from "uuid"
 
@@ -194,7 +195,9 @@ export default abstract class PageScrapper {
     const res: ElementHandle<Element>[] = []
     for (const { path } of selectors) {
       try {
-        const elements = await root.$$(path)
+        // Templating the path
+        const rendered = nunjucks.renderString(path, this)
+        const elements = await root.$$(rendered)
         res.push(...elements)
       } catch (error) {
         // Do nothing
