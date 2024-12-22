@@ -12,6 +12,7 @@
 - [x] Create docker image that does not mount the src folder
 - [x] Implement a Gotify publisher
 - [ ] Unit tests
+- [x] Tester that uses 0s delays
 - [ ] Option to reload a stream when proxying has been requested
 - [ ] Working API for TheSportsDB
 - [ ] Refactor the publishers configuration to store everything in the database

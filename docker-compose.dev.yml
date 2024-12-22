@@ -10,6 +10,7 @@ services:
       - ./tsconfig.json:/app/tsconfig.json
     env_file:
       - .env
+      - .env.dev
     environment:
       NODE_ENV: development
       LOG_LEVEL: 2

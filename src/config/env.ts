@@ -4,6 +4,9 @@ import { v4 as uuidv4 } from "uuid"
 export default {
   logLevel: parseInt(process.env.LOG_LEVEL, 10),
   nodeUuid: uuidv4(),
+  dev: process.env.NODE_ENV === "development",
+  devIndexer: process.env.INDEXER,
+  devCategory: process.env.CATEGORY,
   port: parseInt(process.env.PORT, 10),
   mongo: {
     url: process.env.MONGO_URL,
