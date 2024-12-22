@@ -1,5 +1,6 @@
 import { DateTime } from "luxon"
 import { Types } from "mongoose"
+import { Page } from "puppeteer"
 
 import * as TheSportsDb from "../../api/theSportsDB"
 import getGroupEmoji from "../../utils/getEmoji"
@@ -18,6 +19,8 @@ export type CategoryDetails = {
 
 export default abstract class BroadcastsIndexer extends PageScrapper {
   public docs: BroadcastDocument[] = []
+
+  protected abstract loadPageElement: string
 
   protected abstract categoryDetails: CategoryDetails
 
@@ -77,10 +80,15 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
       ],
     })
     try {
+      // If the links are anchors, we can directly get the broadcasts
+      if (this.categoryDetails.links && this.categoryDetails.links.length > 0) {
       const links = await this.getCategoryLink(this.baseUrl)
       for (const link of links) {
-        for (const data of await this.getBroadcastsData(link)) {
+          const page = await this.getPage(link, this.loadPageElement)
+          const broadcastData = await this.getBroadcastsData(page)
+          for (const data of broadcastData) {
           this.docs.push(await this.broadcastDataToBroadcastDocument(data))
+          }
         }
       }
     } catch (error) {

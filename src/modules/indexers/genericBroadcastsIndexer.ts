@@ -33,8 +33,6 @@ export type BroadcastDetails = {
 export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer {
   private latestDate: DateTime
 
-  protected abstract loadPageElement: string
-
   protected abstract broadcastSets: BroadcastSetDetails
 
   protected abstract broadcast: BroadcastDetails
@@ -43,17 +41,15 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
 
   protected abstract teamSplitterRegex: RegExp
 
-  async getBroadcastsData(url: string): Promise<BroadcastData[]> {
+  async getBroadcastsData(page: Page): Promise<BroadcastData[]> {
     const logger = mainLogger.getSubLogger({
       name: "GenericBroadcastsIndexer",
       prefix: [
         "getBroadcastsData",
         `category ${this.category}`,
-        `url ${url}`,
+        `url ${page.url()}`,
       ],
     })
-    //     Charger la page à partir de l'URL donnée.
-    const page = await this.getPage(url, this.loadPageElement)
     //     Initialiser un tableau pour stocker les données de diffusion (BroadcastData).
     const data: BroadcastData[] = []
     // Boucle de Pagination :
