@@ -243,7 +243,7 @@ export default abstract class PageScrapper {
           raw = raw.replace(dateReplacement.regex, now)
         }
 
-        const date = DateTime.fromFormat(raw, format, { zone: "UTC" })
+        const date = DateTime.fromFormat(raw, format, { zone: "local" })
         if (!date.isValid) {
           throw new Error("Invalid day")
         }
