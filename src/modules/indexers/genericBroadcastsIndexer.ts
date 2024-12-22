@@ -231,9 +231,9 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
       if (created) {
         throw new SilentError(`Creating group ${group.country} ${group.name} and set it to inactive groups`)
       }
-      throw new SilentError(`Group ${group} is not in filters`)
+      throw new SilentError(`Group ${group.name} of country ${group.country} is not in filters`)
     }
-    logger.debug(`Group ${group} is in filters`)
+    logger.debug(`Group ${group.name} of country ${group.country} is in filters`)
 
     return group
   }
