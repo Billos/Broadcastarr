@@ -70,7 +70,8 @@ const broadcastSetSchema = new mongoose.Schema(
 
 const categorySchema = new mongoose.Schema(
   {
-    links: { type: [selectorSchema], required: true },
+    links: { type: [selectorSchema], required: false },
+    clicks: { type: [selectorSchema], required: false },
     lookups: { type: Map, of: [String] },
   },
   { _id: false },
@@ -90,6 +91,29 @@ const indexerSchema = new mongoose.Schema({
   active: {
     type: Boolean,
     default: true,
+  },
+  login: {
+    type: {
+      url: { type: String },
+      username: {
+        selector: { type: selectorSchema },
+        value: { type: String },
+      },
+      password: {
+        selector: { type: selectorSchema },
+        value: { type: String },
+      },
+      submit: { type: selectorSchema },
+      otp: {
+        type: {
+          selector: { type: selectorSchema },
+          value: { type: String },
+          submit: { type: selectorSchema },
+        },
+        required: false,
+      },
+    },
+    required: false,
   },
   data: {
     category: { type: categorySchema },

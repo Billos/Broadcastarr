@@ -5,6 +5,7 @@ import { Page } from "puppeteer"
 import * as TheSportsDb from "../../api/theSportsDB"
 import getGroupEmoji from "../../utils/getEmoji"
 import mainLogger from "../../utils/logger"
+import sleep from "../../utils/sleep"
 import { BroadcastDocument } from "../broadcast"
 import { CategoryController } from "../category"
 import { GroupController } from "../group"
@@ -13,7 +14,8 @@ import PageScrapper, { Selector } from "./scrapper"
 export type BroadcastData = { link: string; textContent: string; group: string; country: string; startTime: DateTime }
 
 export type CategoryDetails = {
-  links: Selector[]
+  links?: Selector[]
+  clicks?: Selector[]
   lookups: Map<string, string[]>
 }
 
@@ -82,13 +84,38 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
     try {
       // If the links are anchors, we can directly get the broadcasts
       if (this.categoryDetails.links && this.categoryDetails.links.length > 0) {
-      const links = await this.getCategoryLink(this.baseUrl)
-      for (const link of links) {
+        const links = await this.getCategoryLink(this.baseUrl)
+        for (const link of links) {
           const page = await this.getPage(link, this.loadPageElement)
           const broadcastData = await this.getBroadcastsData(page)
           for (const data of broadcastData) {
-          this.docs.push(await this.broadcastDataToBroadcastDocument(data))
+            this.docs.push(await this.broadcastDataToBroadcastDocument(data))
           }
+        }
+      }
+
+      // If the links are not anchors, we need to find elements to click on
+      if (this.categoryDetails.clicks && this.categoryDetails.clicks.length > 0) {
+        const page = await this.getPage(this.baseUrl, this.loadPageElement)
+        let index = 0
+        for (const selector of this.categoryDetails.clicks) {
+          await page.screenshot({ path: `/data/images/${index}.png`, fullPage: true })
+          const elts = await this.getElements(page, [selector])
+          if (elts.length === 0) {
+            logger.warn(`No element found for selector ${selector.path}`)
+            console.log(await page.url())
+            continue
+          }
+          const [elt] = elts
+          logger.info(`Clicking on element ${selector.path}`)
+          await elt.click()
+          await sleep(500)
+          index++
+        }
+        await page.screenshot({ path: `/data/images/${index}.png` })
+        const broadcastData = await this.getBroadcastsData(page)
+        for (const data of broadcastData) {
+          this.docs.push(await this.broadcastDataToBroadcastDocument(data))
         }
       }
     } catch (error) {
@@ -163,5 +190,5 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
     }
   }
 
-  abstract getBroadcastsData(url: string): Promise<BroadcastData[]>
+  abstract getBroadcastsData(page: Page): Promise<BroadcastData[]>
 }
