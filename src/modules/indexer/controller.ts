@@ -1,4 +1,4 @@
-import { IndexerData, IndexerDocument, IndexerInterceptorData } from "./model"
+import { IndexerData, IndexerDocument, IndexerInterceptorData, LoginData } from "./model"
 import * as IndexerService from "./service"
 
 export async function getIndexers(active?: boolean): Promise<IndexerDocument[]> {
@@ -15,6 +15,10 @@ export async function getActiveIndexer(name: string): Promise<IndexerDocument> {
 
 export async function createIndexer(name: string, url: string): Promise<IndexerDocument> {
   return IndexerService.createIndexer(name, url)
+}
+
+export async function updateLogin(name: string, data: Partial<LoginData>): Promise<IndexerDocument> {
+  return IndexerService.updateLogin(name, data)
 }
 
 export async function updateActive(name: string, active: boolean): Promise<IndexerDocument> {

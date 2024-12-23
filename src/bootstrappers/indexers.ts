@@ -27,6 +27,7 @@ export class IndexersBootstrapper extends Bootstrapper {
         }
         await IndexerController.getIndexer(data.name)
         logger.info(`Updating indexer ${data.name}`)
+        await IndexerController.updateLogin(data.name, data.login)
         await IndexerController.updateActive(data.name, data.active)
         await IndexerController.updateIndexerData(data.name, data.data)
         await IndexerController.updateIndexerInterceptorData(data.name, data.interceptorData)

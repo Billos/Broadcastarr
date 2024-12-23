@@ -47,5 +47,7 @@ export default class DynamicBroadcastsIndexer extends GenericBroadcastsIndexer {
       clicks: this.indexer.data.category.clicks,
       lookups: this.indexer.data.category.lookups,
     }
+
+    this.loginDetails = this.indexer.login
   }
 }

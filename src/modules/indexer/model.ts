@@ -94,21 +94,22 @@ const indexerSchema = new mongoose.Schema({
   },
   login: {
     type: {
+      clicks: { type: [selectorSchema] },
       url: { type: String },
       username: {
-        selector: { type: selectorSchema },
+        selector: { type: [selectorSchema] },
         value: { type: String },
       },
       password: {
-        selector: { type: selectorSchema },
+        selector: { type: [selectorSchema] },
         value: { type: String },
       },
-      submit: { type: selectorSchema },
-      otp: {
+      submit: { type: [selectorSchema] },
+      validation: {
         type: {
-          selector: { type: selectorSchema },
+          selector: { type: [selectorSchema] },
           value: { type: String },
-          submit: { type: selectorSchema },
+          submit: { type: [selectorSchema] },
         },
         required: false,
       },
@@ -135,6 +136,8 @@ const indexerSchema = new mongoose.Schema({
 export const IndexerModel = mongoose.model("Indexer", indexerSchema)
 
 export type IndexerDocument = InferSchemaType<typeof indexerSchema>
+
+export type LoginData = IndexerDocument["login"]
 
 export type IndexerData = IndexerDocument["data"]
 

@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid"
 import env from "../../config/env"
 import mainLogger from "../../utils/logger"
 import onExit from "../../utils/onExit"
+import { LoginData } from "../indexer/model"
 import { NodePropertiesController } from "../nodeProperties"
 
 process.setMaxListeners(Infinity)
@@ -50,8 +51,14 @@ export default abstract class PageScrapper {
 
   private browserTimeoutDelay: number = 2 * 60 * 1000
 
+  protected loginDetails: LoginData
+
+    this.loggedIn = false
+  private loggedIn: boolean
+
   constructor(public scrapperName: string) {
     this.browserUuid = uuidv4()
+    this.loggedIn = false
   }
 
   protected async getBrowser(): Promise<Browser> {
