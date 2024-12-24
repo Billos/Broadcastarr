@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid"
 import env from "../../config/env"
 import mainLogger from "../../utils/logger"
 import onExit from "../../utils/onExit"
+import sleep from "../../utils/sleep"
 import { LoginData } from "../indexer/model"
 import { NodePropertiesController } from "../nodeProperties"
 
@@ -53,7 +54,6 @@ export default abstract class PageScrapper {
 
   protected loginDetails: LoginData
 
-    this.loggedIn = false
   private loggedIn: boolean
 
   constructor(public scrapperName: string) {
@@ -109,7 +109,54 @@ export default abstract class PageScrapper {
     }
     logger.trace("getBrowser done")
 
+    if (!this.loggedIn) {
+      await this.login()
+    }
+
     return this.browser
+  }
+
+  private async login(): Promise<void> {
+    this.loggedIn = true
+    const logger = mainLogger.getSubLogger({ name: "Scrapper", prefix: ["login"] })
+    if (this.loginDetails) {
+      logger.debug("Performing login")
+      const { clicks, username, password, submit, url, validation } = this.loginDetails
+      const page = await this.getPage(url, "body")
+
+      // Performing clicks
+      for (const { path } of clicks) {
+        await sleep(500)
+        await page.click(path)
+      }
+
+      await page.waitForSelector(username.selector[0].path)
+      const [usernameField] = await this.getElements(page, username.selector)
+      const [passwordField] = await this.getElements(page, password.selector)
+
+      await usernameField.type(username.value, { delay: 10 })
+      await passwordField.type(password.value, { delay: 10 })
+
+      await page.waitForSelector(submit[0].path)
+      const [submitButton] = await this.getElements(page, submit)
+      await submitButton.click()
+      await sleep(1000)
+
+      if (validation?.selector[0]?.path) {
+        await page.waitForSelector(validation.selector[0].path)
+        const [validationField] = await this.getElements(page, validation.selector)
+        await validationField.type(validation.value, { delay: 10 })
+        await page.waitForSelector(validation.submit[0].path)
+        const [validationSubmit] = await this.getElements(page, validation.submit)
+        await validationSubmit.click()
+        await sleep(1000)
+      }
+
+      await page.close()
+      logger.debug("login done")
+    } else {
+      logger.debug("No login details")
+    }
   }
 
   private async setNodeProperty(): Promise<void> {
