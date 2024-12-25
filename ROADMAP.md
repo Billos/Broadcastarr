@@ -13,7 +13,7 @@
 - [x] Implement a Gotify publisher
 - [ ] Unit tests
 - [x] Tester that uses 0s delays
-- [ ] Implement an optional authentication for Indexers and Interceptors
+- [x] Implement an optional authentication for Indexers and Interceptors
 - [ ] Implement a generic engine for Puppeteer, and review the indexers and interceptors to use it
 - [ ] Option to reload a stream when proxying has been requested
 - [ ] Working API for TheSportsDB
