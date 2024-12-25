@@ -1,3 +1,20 @@
+# [1.3.0](https://github.com/Billos/Broadcastarr/compare/1.2.3...1.3.0) (2024-12-25)
+
+
+### Bug Fixes
+
+* **scrapper:** change timezone from UTC to local for date parsing ([1a286d9](https://github.com/Billos/Broadcastarr/commit/1a286d9a790aceddbfb14a714601b30bcb341985))
+
+
+### Features
+
+* **dev:** add development environment configuration and indexing support ([ecb5054](https://github.com/Billos/Broadcastarr/commit/ecb505449d796dc7e40ecd0b7bfe9b21f9e76b01))
+* **indexer:** add support for clicks and optional login fields in category schema ([0f9b087](https://github.com/Billos/Broadcastarr/commit/0f9b087c31c24ee726a38d316330f6d731000532))
+* **indexer:** Data model of indexer includes login definition ([938c8ca](https://github.com/Billos/Broadcastarr/commit/938c8ca1e70ce73b1a24fa9d5b2e36d6c353974d))
+* **indexer:** handle clicks for Indexers ([3cc9da2](https://github.com/Billos/Broadcastarr/commit/3cc9da2ffeda8ff08db51994b405017afa6398da))
+* **scrapper:** basic nunjucks templating ([d58d6fe](https://github.com/Billos/Broadcastarr/commit/d58d6feb8b9a67d5fdbe9034542c6cd85137533a))
+* **scrapper:** implement basic login functionality with validation and click handling ([c773275](https://github.com/Billos/Broadcastarr/commit/c77327568cded32a827fe52514d6fe9a3aed6606))
+
 ## [1.2.3](https://github.com/Billos/Broadcastarr/compare/1.2.2...1.2.3) (2024-12-10)
 
 
