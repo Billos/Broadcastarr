@@ -1,6 +1,8 @@
 import { readdirSync, readFileSync } from "fs"
 import { join } from "path"
 
+import JSON5 from "json5"
+
 import { IndexerController, IndexerDocument } from "../modules/indexer"
 import mainLogger from "../utils/logger"
 import { Bootstrapper } from "./bootstrapper"
@@ -40,7 +42,7 @@ export class IndexersBootstrapper extends Bootstrapper {
   private async generateData(raw: string): Promise<IndexerDocument> {
     const logger = mainLogger.getSubLogger({ name: "IndexersBootstrapper", prefix: ["generateData"] })
     logger.info("Generating data for indexer")
-    const data = JSON.parse(raw) as IndexerDocument
+    const data = JSON5.parse(raw) as IndexerDocument
     return {
       ...data,
       active: data.active || false,
