@@ -61,8 +61,11 @@ const broadcastSetSchema = new mongoose.Schema(
     day: { type: [dateSelectorSchema] },
     selector: { type: [selectorSchema], required: true },
     today: {
+      type: {
       regex: { type: String, required: true },
       format: { type: String, required: true },
+      },
+      required: false,
     },
   },
   { _id: false },
