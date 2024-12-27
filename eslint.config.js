@@ -31,6 +31,7 @@ export default [
       },
     },
     rules: {
+      "arrow-body-style": ["error", "as-needed"],
       "prefer-destructuring": [
         "error",
         {
