@@ -19,9 +19,13 @@ export async function deleteAuth(type: string, value: string): Promise<void> {
 }
 
 export async function addRolesToAuth(type: string, value: string, roles: string[]): Promise<AuthDocument> {
-  return AuthModel.findOneAndUpdate({ type, value }, { $addToSet: { roles } }, { new: true }).orFail()
+  return AuthModel.findOneAndUpdate(
+    { type, value },
+    { $addToSet: { roles } },
+    { new: true, runValidators: true },
+  ).orFail()
 }
 
 export async function deleteRolesFromAuth(type: string, value: string, roles: string[]): Promise<AuthDocument> {
-  return AuthModel.findOneAndUpdate({ type, value }, { $pull: { roles } }, { new: true }).orFail()
+  return AuthModel.findOneAndUpdate({ type, value }, { $pull: { roles } }, { new: true, runValidators: true }).orFail()
 }

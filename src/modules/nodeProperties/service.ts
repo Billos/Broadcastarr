@@ -7,7 +7,11 @@ export async function setNodeProperty(
   key: string,
   value: string,
 ): Promise<NodePropertiesDocument> {
-  return NodePropertiesModel.findOneAndUpdate({ uuid, key }, { $set: { type, value } }, { upsert: true, new: true })
+  return NodePropertiesModel.findOneAndUpdate(
+    { uuid, key },
+    { $set: { type, value } },
+    { upsert: true, new: true, runValidators: true },
+  )
 }
 
 // Get node data

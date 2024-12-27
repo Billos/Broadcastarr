@@ -17,5 +17,5 @@ export async function deletePublisher(name: string): Promise<void> {
 }
 
 export async function updatePublisher(name: string, data: Partial<PublisherDocument>): Promise<PublisherDocument> {
-  return PublisherModel.findOneAndUpdate({ name }, data, { new: true })
+  return PublisherModel.findOneAndUpdate({ name }, data, { new: true, runValidators: true })
 }

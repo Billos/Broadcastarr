@@ -17,5 +17,5 @@ export async function deleteReleaser(name: string): Promise<void> {
 }
 
 export async function updateReleaser(name: string, data: Partial<ReleaserDocument>): Promise<ReleaserDocument> {
-  return ReleaserModel.findOneAndUpdate({ name }, data, { new: true })
+  return ReleaserModel.findOneAndUpdate({ name }, data, { new: true, runValidators: true })
 }

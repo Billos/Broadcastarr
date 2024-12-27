@@ -20,16 +20,16 @@ export async function setPublications(
   await GroupModel.findOneAndUpdate(
     { name, country, category },
     { $set: { [`publications.${publisher}`]: publicationIds } },
-    { upsert: true },
+    { upsert: true, runValidators: true },
   )
 }
 
 export async function setEmoji({ category, name, country }: GroupIndex, emoji: string): Promise<void> {
-  await GroupModel.findOneAndUpdate({ name, category, country }, { $set: { emoji } }).orFail()
+  await GroupModel.findOneAndUpdate({ name, category, country }, { $set: { emoji } }, { runValidators: true }).orFail()
 }
 
 export async function updateActive({ category, name, country }: GroupIndex, active: boolean): Promise<void> {
-  await GroupModel.findOneAndUpdate({ name, category, country }, { $set: { active } }).orFail()
+  await GroupModel.findOneAndUpdate({ name, category, country }, { $set: { active } }, { runValidators: true }).orFail()
 }
 
 export async function removeGroup({ category, name, country }: GroupIndex): Promise<void> {

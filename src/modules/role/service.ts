@@ -30,9 +30,9 @@ export async function getRoles(): Promise<RoleDocument[]> {
 }
 
 export async function addAbilities(name: string, abilities: string[]): Promise<RoleDocument> {
-  return RoleModel.findOneAndUpdate({ name }, { $addToSet: { abilities } }, { new: true }).orFail()
+  return RoleModel.findOneAndUpdate({ name }, { $addToSet: { abilities } }, { new: true, runValidators: true }).orFail()
 }
 
 export async function deleteAbilities(name: string, abilities: string[]): Promise<RoleDocument> {
-  return RoleModel.findOneAndUpdate({ name }, { $pull: { abilities } }, { new: true }).orFail()
+  return RoleModel.findOneAndUpdate({ name }, { $pull: { abilities } }, { new: true, runValidators: true }).orFail()
 }

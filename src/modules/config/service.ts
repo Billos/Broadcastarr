@@ -9,7 +9,7 @@ export async function getConfigs(): Promise<ConfigDocument[]> {
 }
 
 export async function setConfig(key: string, value: string): Promise<ConfigDocument> {
-  return ConfigModel.findOneAndUpdate({ key }, { $set: { value } }, { upsert: true, new: true })
+  return ConfigModel.findOneAndUpdate({ key }, { $set: { value } }, { upsert: true, new: true, runValidators: true })
 }
 
 export async function unsetConfig(key: string): Promise<void> {

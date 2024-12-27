@@ -17,13 +17,17 @@ export async function deleteCategory(name: string): Promise<void> {
 }
 
 export async function setDiscordMessageId(name: string, discordMessageId: string): Promise<void> {
-  await CategoryModel.updateOne({ name }, { discordMessageId })
+  await CategoryModel.updateOne({ name }, { discordMessageId }, { runValidators: true })
 }
 
 export async function setEmoji(name: string, emoji: string): Promise<void> {
-  await CategoryModel.updateOne({ name }, { emoji })
+  await CategoryModel.updateOne({ name }, { emoji }, { runValidators: true })
 }
 
 export async function setPublications(name: string, publisher: string, publicationIds: string[]): Promise<void> {
-  await CategoryModel.updateOne({ name }, { $set: { [`publications.${publisher}`]: publicationIds } }, { upsert: true })
+  await CategoryModel.updateOne(
+    { name },
+    { $set: { [`publications.${publisher}`]: publicationIds } },
+    { upsert: true, runValidators: true },
+  )
 }

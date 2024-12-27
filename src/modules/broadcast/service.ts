@@ -33,19 +33,19 @@ export async function getBroadcasts(filters: BroadcastsFilter): Promise<Broadcas
 }
 
 export async function setTunerHostId(id: string, tunerHostId: string): Promise<BroadcastDocument> {
-  return BroadcastModel.findByIdAndUpdate(id, { tunerHostId })
+  return BroadcastModel.findByIdAndUpdate(id, { tunerHostId }, { runValidators: true })
 }
 
 export async function setStream(id: string, stream: BroadcastStream): Promise<BroadcastDocument> {
-  return BroadcastModel.findByIdAndUpdate(id, { $set: { streams: [stream] } })
+  return BroadcastModel.findByIdAndUpdate(id, { $set: { streams: [stream] } }, { runValidators: true })
 }
 
 export async function setJellyfinId(id: string, jellyfinId: string): Promise<BroadcastDocument> {
-  return BroadcastModel.findByIdAndUpdate(id, { jellyfinId })
+  return BroadcastModel.findByIdAndUpdate(id, { jellyfinId }, { runValidators: true })
 }
 
 export async function setStreamIndex(id: string, streamIndex: number): Promise<BroadcastDocument> {
-  return BroadcastModel.findByIdAndUpdate(id, { streamIndex })
+  return BroadcastModel.findByIdAndUpdate(id, { streamIndex }, { runValidators: true })
 }
 
 export async function removeBroadcast(id: string): Promise<void> {

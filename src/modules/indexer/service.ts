@@ -20,26 +20,26 @@ export async function createIndexer(name: string, url: string): Promise<IndexerD
 }
 
 export async function updateLogin(name: string, data: Partial<LoginData>): Promise<IndexerDocument> {
-  return IndexerModel.findOneAndUpdate({ name }, { $set: { login: data } }, { new: true })
+  return IndexerModel.findOneAndUpdate({ name }, { $set: { login: data } }, { new: true, runValidators: true })
 }
 
 export async function updateActive(name: string, active: boolean): Promise<IndexerDocument> {
-  return IndexerModel.findOneAndUpdate({ name }, { active })
+  return IndexerModel.findOneAndUpdate({ name }, { active }, { new: true, runValidators: true })
 }
 
 export async function updateIndexer(name: string, url: string): Promise<IndexerDocument> {
-  return IndexerModel.findOneAndUpdate({ name }, { url })
+  return IndexerModel.findOneAndUpdate({ name }, { url }, { new: true, runValidators: true })
 }
 
 export async function updateIndexerData(name: string, data: Partial<IndexerData>): Promise<IndexerDocument> {
-  return IndexerModel.findOneAndUpdate({ name }, { $set: { data } }, { new: true })
+  return IndexerModel.findOneAndUpdate({ name }, { $set: { data } }, { new: true, runValidators: true })
 }
 
 export async function updateIndexerInterceptorData(
   name: string,
   interceptorData: Partial<IndexerInterceptorData>,
 ): Promise<IndexerDocument> {
-  return IndexerModel.findOneAndUpdate({ name }, { $set: { interceptorData } }, { new: true })
+  return IndexerModel.findOneAndUpdate({ name }, { $set: { interceptorData } }, { new: true, runValidators: true })
 }
 
 export async function deleteIndexer(name: string): Promise<void> {
