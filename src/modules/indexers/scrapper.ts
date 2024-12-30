@@ -1,5 +1,4 @@
 import { DateTime } from "luxon"
-import nunjucks from "nunjucks"
 import puppeteer, { Browser, ElementHandle, Page } from "puppeteer"
 import { v4 as uuidv4 } from "uuid"
 
@@ -9,6 +8,7 @@ import onExit from "../../utils/onExit"
 import sleep from "../../utils/sleep"
 import { LoginData } from "../indexer/model"
 import { NodePropertiesController } from "../nodeProperties"
+import { templater } from "../templater"
 
 process.setMaxListeners(Infinity)
 
@@ -250,7 +250,7 @@ export default abstract class PageScrapper {
     for (const { path } of selectors) {
       try {
         // Templating the path
-        const rendered = nunjucks.renderString(path, this)
+        const rendered = templater.renderString(path, this)
         const elements = await root.$$(rendered)
         res.push(...elements)
       } catch (error) {
