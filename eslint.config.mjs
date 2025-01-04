@@ -41,6 +41,8 @@ export default [
         {},
       ],
       "prefer-template": "error",
+      "no-useless-concat": "error",
+      "@stylistic/js/quotes": ["error", "double"],
       "consistent-return": "off",
       "no-param-reassign": [
         "error",
