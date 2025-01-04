@@ -3,12 +3,9 @@ import { Types } from "mongoose"
 import { Page } from "puppeteer"
 
 import * as TheSportsDb from "../../api/theSportsDB"
-import getGroupEmoji from "../../utils/getEmoji"
 import mainLogger from "../../utils/logger"
 import sleep from "../../utils/sleep"
 import { BroadcastDocument } from "../broadcast"
-import { CategoryController } from "../category"
-import { GroupController } from "../group"
 import PageScrapper, { Selector } from "./scrapper"
 
 export type BroadcastData = { link: string; textContent: string; group: string; country: string; startTime: DateTime }
@@ -157,28 +154,12 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
       return null
     }
 
-    const startTimeStr = data.startTime.toFormat("HH:mm")
-    let groupEmoji = getGroupEmoji(data.group.toLocaleLowerCase(), data.group)
-
-    try {
-      const group = await GroupController.getGroup({ name: data.group, category: this.category, country: data.country })
-      if (group && group.emoji) {
-        groupEmoji = group.emoji
-      }
-    } catch (error) {
-      // Do nothing
-    }
-    // const formattedContent = convertBroadcastTitle(data.textContent)
-    const category = await CategoryController.getCategory(this.category)
-    const channelEmoji = category.emoji ?? ""
-    const displayTitle = `${channelEmoji}${groupEmoji} ${startTimeStr} - ${data.textContent}`
     return {
       indexer: this.name,
       category: this.category,
       group: data.group || "Amical",
       country: data.country,
       name: data.textContent,
-      displayTitle,
       startTime: data.startTime.toJSDate(),
       link: data.link,
       streams: new Types.DocumentArray<{

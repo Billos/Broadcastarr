@@ -66,7 +66,8 @@ class JellyfinReleaser implements IReleaser {
 
     // We retrieve the jellyfinId of the broadcast
     logger.info("Retrieving the Jellyfin Id")
-    const jellyfinId = await JellyfinAPI.getChannelId(broadcast.displayTitle)
+    const displayTitle = await BroadcastController.getDisplayTitle(broadcast)
+    const jellyfinId = await JellyfinAPI.getChannelId(displayTitle)
     if (jellyfinId) {
       await BroadcastController.setJellyfinId(broadcast.id, jellyfinId)
       broadcast.jellyfinId = jellyfinId

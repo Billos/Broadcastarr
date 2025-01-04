@@ -1,8 +1,13 @@
 import { join } from "path"
 
+import { DateTime } from "luxon"
+
 import env from "../../config/env"
 import { fileExists, saveFile } from "../../utils/file"
+import getGroupEmoji from "../../utils/getEmoji"
 import mainLogger from "../../utils/logger"
+import { CategoryController } from "../category"
+import { GroupController } from "../group"
 import { BroadcastDocument, BroadcastStream } from "./model"
 import * as BroadcastService from "./service"
 
@@ -64,9 +69,34 @@ export async function getM3U8Path(id: string): Promise<string> {
   return join(env.m3u8Destination, `${broadcast.id}.m3u8`)
 }
 
+export async function getDisplayTitle(broadcast: BroadcastDocument): Promise<string> {
+  let groupEmoji = getGroupEmoji(broadcast.group.toLocaleLowerCase(), broadcast.group)
+
+  try {
+    const group = await GroupController.getGroup({
+      name: broadcast.group,
+      category: broadcast.category,
+      country: broadcast.country,
+    })
+    if (group && group.emoji) {
+      groupEmoji = group.emoji
+    }
+  } catch (error) {
+    // Do nothing
+  }
+
+  const category = await CategoryController.getCategory(broadcast.category)
+
+  const channelEmoji = category.emoji ?? ""
+
+  const startTimeStr = DateTime.fromJSDate(broadcast.startTime).toFormat("HH:mm")
+  return `${channelEmoji}${groupEmoji} ${startTimeStr} - ${broadcast.name}`
+}
+
 export async function generateM3U8File(id: string): Promise<string> {
   const logger = mainLogger.getSubLogger({ name: "BroadcastController", prefix: ["generateM3U8File", `id ${id}`] })
-  const { displayTitle } = await BroadcastService.getBroadcast(id)
+  const broadcast = await BroadcastService.getBroadcast(id)
+  const displayTitle = await getDisplayTitle(broadcast)
 
   const path = await getM3U8Path(id)
   logger.info(`Generating m3u8 file ${path}`)
