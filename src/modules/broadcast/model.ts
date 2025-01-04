@@ -35,11 +35,6 @@ const broadcastSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
-  displayTitle: {
-    type: String,
-    unique: true,
-    required: true,
-  },
   startTime: {
     type: Date,
     required: true,
