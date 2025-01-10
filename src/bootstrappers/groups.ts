@@ -15,6 +15,10 @@ export class GroupsBootstrapper extends Bootstrapper {
     // group will be set as "CategoryA:groupA,countryB*groupB,groupC|CategoryB:countryD*groupD,groupE|CategoryA:groupF"
     const envGroups: Record<string, Set<Group>> = {}
     // const envGroups: Record<string, Set<string>> = {}
+    if (!process.env.GROUPS) {
+      logger.info("No groups to bootstrap")
+      return
+    }
     for (const categoryStr of process.env.GROUPS.split("|")) {
       const [category, groupsStr] = categoryStr.split(":")
 
