@@ -4,6 +4,8 @@ import mainLogger from "../../../utils/logger"
 import { BroadcastController } from "../../broadcast"
 import { IndexerController } from "../../indexer"
 import { DynamicBroadcastInterceptor } from "../../indexers"
+import { StreamData } from "../../indexers/broadcastInterceptor"
+import { Orchestrator } from "../../scrapper/Orchestrator"
 import { GrabBroadcastStreamOptions } from "../options"
 import { Triggers } from "../triggers"
 
@@ -19,12 +21,28 @@ export async function handler(job: Job<GrabBroadcastStreamOptions>): Promise<voi
     ],
   })
 
+  let stream: StreamData
+  let streamIndex: number
+
   const indexerDocument = await IndexerController.getIndexer(broadcast.indexer)
-  const interceptor = new DynamicBroadcastInterceptor(indexerDocument, broadcast)
-  const stream = await interceptor.getStream()
-  // Saving the current stream index
-  const currentIndex = interceptor.getStreamIndex()
-  await BroadcastController.setStreamIndex(broadcast.id, currentIndex)
+
+  if (indexerDocument.scenarios) {
+    logger.info("Grabbing the broadcast stream")
+    const { scenarios } = indexerDocument
+    const orchestrator = new Orchestrator(scenarios, broadcast)
+    const result = await orchestrator.run("intercept")
+    // eslint-disable-next-line prefer-destructuring
+    stream = result.stream
+    // eslint-disable-next-line prefer-destructuring
+    streamIndex = result.streamIndex
+  } else {
+    logger.info("LEGACY - Grabbing the broadcast stream")
+    const interceptor = new DynamicBroadcastInterceptor(indexerDocument, broadcast)
+    stream = await interceptor.getStream()
+    // Saving the current stream index
+    streamIndex = interceptor.getStreamIndex()
+  }
+  await BroadcastController.setStreamIndex(broadcast.id, streamIndex)
 
   if (!stream) {
     logger.error("No stream found")
@@ -34,7 +52,7 @@ export async function handler(job: Job<GrabBroadcastStreamOptions>): Promise<voi
 
   // Will need to be updated 10 minutes before the stream expires
   logger.debug("Renewing the GrabBroadcastStream task")
-  await Triggers.renewGrabBroadcastStream(broadcastId, currentIndex)
+  await Triggers.renewGrabBroadcastStream(broadcastId, streamIndex)
 
   // Set the stream in the database
   logger.debug("Setting the stream in the database")
