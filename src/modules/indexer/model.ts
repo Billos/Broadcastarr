@@ -2,6 +2,8 @@
 
 import mongoose, { InferSchemaType } from "mongoose"
 
+import { CommandDocument, CommandSchema } from "./commands"
+
 const selectorSchemaRaw = {
   path: { type: String, required: true },
 }
@@ -62,8 +64,8 @@ const broadcastSetSchema = new mongoose.Schema(
     selector: { type: [selectorSchema], required: true },
     today: {
       type: {
-      regex: { type: String, required: true },
-      format: { type: String, required: true },
+        regex: { type: String, required: true },
+        format: { type: String, required: true },
       },
       required: false,
     },
@@ -88,12 +90,38 @@ const indexerSchema = new mongoose.Schema({
   },
   url: {
     type: String,
-    required: true,
-    unique: true,
   },
   active: {
     type: Boolean,
     default: true,
+  },
+  scenarios: {
+    type: Map,
+    of: {
+      type: Map,
+      of: CommandSchema,
+    },
+    validate: [
+      {
+        validator: (scenarios: Map<string, Map<string, CommandDocument>>) => {
+          if (!scenarios.has("index")) {
+            throw new Error("The indexer must include an 'index' scenario in the scenarios field")
+          }
+          if (!scenarios.has("intercept")) {
+            throw new Error("The indexer must include an 'intercept' scenario in the scenarios field")
+          }
+        },
+      },
+      {
+        validator: (scenarios: Map<string, Map<string, CommandDocument>>) => {
+          for (const [name, scenario] of scenarios) {
+            if (!scenario.has("start")) {
+              throw new Error(`Scenario ${name} must have a 'start' command`)
+            }
+          }
+        },
+      },
+    ],
   },
   login: {
     type: {
@@ -137,6 +165,8 @@ const indexerSchema = new mongoose.Schema({
 })
 
 export const IndexerModel = mongoose.model("Indexer", indexerSchema)
+
+export type ScenariosDocument = InferSchemaType<typeof indexerSchema>["scenarios"]
 
 export type IndexerDocument = InferSchemaType<typeof indexerSchema>
 
