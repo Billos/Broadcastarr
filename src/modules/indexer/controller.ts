@@ -40,6 +40,14 @@ export async function updateIndexerInterceptorData(
   return IndexerService.updateIndexerInterceptorData(name, interceptorData)
 }
 
+export async function updateScenarios(name: string, scenarios: any): Promise<IndexerDocument> {
+  return IndexerService.updateScenarios(name, scenarios)
+}
+
+export async function validateIndexer(name: string): Promise<void> {
+  return IndexerService.validateIndexer(name)
+}
+
 export async function deleteIndexer(name: string): Promise<void> {
   return IndexerService.deleteIndexer(name)
 }
