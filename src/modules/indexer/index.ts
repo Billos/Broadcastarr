@@ -7,3 +7,5 @@ export {
   TextContentSelector as DBTextContentSelector,
   IndexerDocument,
 } from "./model"
+
+export * from "./commands"
