@@ -42,6 +42,15 @@ export async function updateIndexerInterceptorData(
   return IndexerModel.findOneAndUpdate({ name }, { $set: { interceptorData } }, { new: true, runValidators: true })
 }
 
+export async function validateIndexer(name: string): Promise<void> {
+  const doc = await IndexerModel.findOne({ name }).orFail()
+  await doc.validate()
+}
+
+export async function updateScenarios(name: string, scenarios: any): Promise<IndexerDocument> {
+  return IndexerModel.findOneAndUpdate({ name }, { $set: { scenarios } }, { new: true, runValidators: true })
+}
+
 export async function deleteIndexer(name: string): Promise<void> {
   await IndexerModel.deleteOne({ name })
 }

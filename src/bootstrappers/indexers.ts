@@ -33,6 +33,12 @@ export class IndexersBootstrapper extends Bootstrapper {
         await IndexerController.updateActive(data.name, data.active)
         await IndexerController.updateIndexerData(data.name, data.data)
         await IndexerController.updateIndexerInterceptorData(data.name, data.interceptorData)
+        logger.info(`Validating indexer ${data.name}`)
+        await IndexerController.validateIndexer(data.name)
+
+        if (data.scenarios) {
+          await IndexerController.updateScenarios(data.name, data.scenarios)
+        }
       } catch (error) {
         logger.warn(`Error while processing file ${file} - ${error.message}`)
       }
