@@ -96,11 +96,9 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
         const page = await this.getPage(this.baseUrl, this.loadPageElement)
         let index = 0
         for (const selector of this.categoryDetails.clicks) {
-          await page.screenshot({ path: `/data/images/${index}.png`, fullPage: true })
           const elts = await this.getElements(page, [selector])
           if (elts.length === 0) {
             logger.warn(`No element found for selector ${selector.path}`)
-            console.log(await page.url())
             continue
           }
           const [elt] = elts
@@ -109,7 +107,6 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
           await sleep(500)
           index++
         }
-        await page.screenshot({ path: `/data/images/${index}.png` })
         const broadcastData = await this.getBroadcastsData(page)
         for (const data of broadcastData) {
           this.docs.push(await this.broadcastDataToBroadcastDocument(data))
