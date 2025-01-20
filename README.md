@@ -150,7 +150,7 @@ An indexer now includes a set of scenarios to run. These are defined in the fiel
 The scenarios field must include a "index" and a "intercept" scenarios.
 A scenario consist of a dictionary CommandName => CommandDefinition, and must include a "start" command.
 
-The documentation to write the commands is in the [Commands](./commands.md) file.
+The documentation to write the commands is in the [Commands](./COMMANDS.md) file.
 
 ### Runtime
 
