@@ -1,6 +1,6 @@
 services:
   bootstrap:
-    image: docker.io/billos/broadcastarr:1.3.0
+    image: docker.io/billos/broadcastarr:1.4.0
     command: "dev:bootstrap"
     env_file:
       - .env

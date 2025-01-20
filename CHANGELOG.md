@@ -1,3 +1,28 @@
+# [1.4.0](https://github.com/Billos/Broadcastarr/compare/1.3.0...1.4.0) (2025-01-20)
+
+
+### Bug Fixes
+
+* **eslint:** add rule for arrow-body-style to enforce concise syntax ([f1a70ad](https://github.com/Billos/Broadcastarr/commit/f1a70ad914769cbfa257273f48c57eb6c02d39a0))
+* **groups:** add check for GROUPS environment variable before bootstrapping ([d0535ef](https://github.com/Billos/Broadcastarr/commit/d0535ef20987bfe8e98a3df032036a78e0ee6aa8))
+* **indexer:** update today field to include optional type definition ([3b58467](https://github.com/Billos/Broadcastarr/commit/3b584678dab602445b07a5d87460c1b7e0ebbbf3))
+* **models:** add runValidators option to update operations for data integrity ([dda5f75](https://github.com/Billos/Broadcastarr/commit/dda5f759440a9782de6ed53f09ff4b71592568d0))
+* **templater:** implement Templater module to encapsulate nunjucks ([f766883](https://github.com/Billos/Broadcastarr/commit/f7668835de9d59dda0c9c201d2fced225dfc6dc3))
+
+
+### Features
+
+* **agenda:** integrate Orchestrator for stream and category indexing ([aa437a4](https://github.com/Billos/Broadcastarr/commit/aa437a473a7b879ad348748d38462057bd63a8fe))
+* **dependencies:** add json5 package to enhance JSON parsing capabilities ([7e7eab6](https://github.com/Billos/Broadcastarr/commit/7e7eab6fa9aef8c3f381bc7b5a75fca4e2c47e83))
+* **displayTitle:** displayTitle is generated from broadcast content ([5433d64](https://github.com/Billos/Broadcastarr/commit/5433d643f9d788d980023cbfe5a8e5bfcb6896ee))
+* **documentation:** update README and add COMMANDS and LEGACY documentation for new command pattern ([72f1617](https://github.com/Billos/Broadcastarr/commit/72f1617d7f080d107e0d0223f9c6c07f527dc2ed))
+* **indexer:** add command schemas and integrate into indexer model ([4e2c5c0](https://github.com/Billos/Broadcastarr/commit/4e2c5c010c59bdc4bf823dc9d5ec7cdf55916bfd))
+* **indexer:** add validation and scenario update functionality ([4e40b8f](https://github.com/Billos/Broadcastarr/commit/4e40b8fb56549678f4774c90fdc92981db7d5f30))
+* **scrapper:** Add the basic commands to perform scenarios ([dfa1e38](https://github.com/Billos/Broadcastarr/commit/dfa1e3803e0d33f889b4cbec8330ff674bea00b1))
+* **scrapper:** Orchestrator runs scenarios ([d6b3617](https://github.com/Billos/Broadcastarr/commit/d6b3617b6be653f8a5f38fcec466087acaba74a1))
+* **templater:** enhance TemplateRenderer with date formatting and error handling ([ef42985](https://github.com/Billos/Broadcastarr/commit/ef429856c9cf2427d152b85181a3d23b9cef870b))
+* **worker:** add functionality to empty image folder in dev mode ([aa3659c](https://github.com/Billos/Broadcastarr/commit/aa3659cbc24d58d8e96210d00e5f96fc15307594))
+
 # [1.3.0](https://github.com/Billos/Broadcastarr/compare/1.2.3...1.3.0) (2024-12-25)
 
 

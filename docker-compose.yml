@@ -1,6 +1,6 @@
 services:
   server:
-    image: docker.io/billos/broadcastarr:1.3.0
+    image: docker.io/billos/broadcastarr:1.4.0
     command: "server"
     volumes:
       - ${M3U8_FOLDER}:${M3U8_FOLDER}:rw
