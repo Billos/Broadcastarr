@@ -65,3 +65,4 @@ jspm_packages/
 
 # Ignore the data files
 data/*.json
+data/*.json5
