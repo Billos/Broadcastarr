@@ -37,7 +37,6 @@
     "json5": "^2.2.3",
     "lodash": "^4.17.21",
     "luxon": "^3.3.0",
-    "matrix-js-sdk": "^34.4.0",
     "mongoose": "^8.8.3",
     "node-cache": "^5.1.2",
     "nunjucks": "^3.2.4",
