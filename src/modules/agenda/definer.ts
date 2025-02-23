@@ -9,7 +9,7 @@ import { Tasks } from "./tasks"
 
 export async function defineAgendaTasks() {
   agenda.on("fail", async (error, job) => {
-    const logger = mainLogger.getSubLogger({ name: "AgendaDefiner", prefix: ["onFail"] })
+    const logger = mainLogger.child({ name: "AgendaDefiner", func: "onFail" })
     const { name, data } = job.attrs as { name: Tasks; data: TaskOptions<typeof name> }
     logger.error(`Job "${name}" failed with error: ${error.message} - data: ${JSON.stringify(data)}`)
 
@@ -38,7 +38,7 @@ export async function defineAgendaTasks() {
   })
 
   agenda.on("success", async (job) => {
-    const logger = mainLogger.getSubLogger({ name: "AgendaDefiner", prefix: ["onSuccess"] })
+    const logger = mainLogger.child({ name: "AgendaDefiner", func: "onSuccess" })
     const { name } = job.attrs as { name: Tasks; data: TaskOptions<typeof name> }
     logger.debug(`Job "${name}" succeeded, removing it from the database`)
     await job.remove()
@@ -53,7 +53,7 @@ export async function defineAgendaTasks() {
   agenda.define(Tasks.DeleteBroadcast, Handlers.DeleteBroadcast, { concurrency: 1 })
 
   agenda.on("error", (error) => {
-    const logger = mainLogger.getSubLogger({ name: "AgendaDefiner", prefix: ["onError"] })
+    const logger = mainLogger.child({ name: "AgendaDefiner", func: "onError" })
     // Print the task name and error message
     logger.error(`Task error: ${error.stack}`)
     logger.error(`Agenda error: ${error.message}`)

@@ -4,7 +4,7 @@ import { GroupDocument } from "../../modules/group"
 import mainLogger from "../../utils/logger"
 
 export default function selectGroup(groups: GroupDocument[]): ActionRowBuilder<StringSelectMenuBuilder> {
-  const logger = mainLogger.getSubLogger({ name: "SelectGroup", prefix: ["selectGroup"] })
+  const logger = mainLogger.child({ name: "SelectGroup", func: "selectGroup" })
   const select = new StringSelectMenuBuilder()
   select.setCustomId("selectGroup")
   select.setPlaceholder("Select a group")

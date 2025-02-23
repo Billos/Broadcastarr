@@ -13,13 +13,13 @@ import { Triggers } from "../triggers"
 
 export async function handler(job: Job<IndexCategoryOptions>): Promise<void> {
   const { category, indexerName } = job.attrs.data
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "IndexCategoryHandler",
-    prefix: [
-      "handler",
-      `category ${category}`,
-      `indexer ${indexerName}`,
-    ],
+    func: "handler",
+    data: {
+      category,
+      indexerName,
+    },
   })
 
   let allBroadcasts: BroadcastDocument[] = []

@@ -8,7 +8,7 @@ export { NodePropertiesController }
 export { NodePropertiesDocument } from "./model"
 
 onExit(async () => {
-  const logger = mainLogger.getSubLogger({ name: "NodeProperties", prefix: [`Node ${env.nodeUuid}`] })
+  const logger = mainLogger.child({ name: "NodeProperties", func: "onExit", data: { nodeUuid: env.nodeUuid } })
   logger.info("Deleting node properties")
   await NodePropertiesController.deleteNodeProperties()
   logger.info("Node properties deleted")

@@ -13,7 +13,7 @@ const closeWindow = "<script>window.close()</script>"
 router.get(
   "/:group/:country/category/:category/add",
   async (req: Request<Pick<Params, "category" | "group" | "country">>, res) => {
-    const logger = mainLogger.getSubLogger({ name: "API", prefix: ["Group", "Add"] })
+    const logger = mainLogger.child({ name: "API Group", func: "Add" })
     const { category, group, country } = req.params
     logger.info(`Adding group ${group} to category ${category}`)
     await GroupController.createGroup({ name: group, category, country }, true)
@@ -25,7 +25,7 @@ router.get(
 router.get(
   "/:group/:country/category/:category/remove",
   async (req: Request<Pick<Params, "category" | "group" | "country">>, res) => {
-    const logger = mainLogger.getSubLogger({ name: "API", prefix: ["Group", "Remove"] })
+    const logger = mainLogger.child({ name: "API Group", func: "Remove" })
     const { category, group, country } = req.params
     logger.info(`Removing group ${group} from category ${category}`)
     const groupDocument = await GroupController.getGroup({ name: group, category, country })
@@ -38,7 +38,7 @@ router.get(
 router.get(
   "/:group/:country/category/:category/reload",
   async (req: Request<Pick<Params, "group" | "category" | "country">>, res) => {
-    const logger = mainLogger.getSubLogger({ name: "API", prefix: ["Group", "Update"] })
+    const logger = mainLogger.child({ name: "API Group", func: "Update" })
     const { group, category, country } = req.params
     logger.info(`Reload broadcasts for group ${group}`)
     // Schedule the task

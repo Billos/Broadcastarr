@@ -4,9 +4,12 @@ import { jobs, schedule } from "../agenda"
 import { Tasks } from "../tasks"
 
 export async function updateCategoryChannelName(category: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "UpdateCategoryChannelNameTrigger",
-    prefix: ["updateCategoryChannelName", `category ${category}`],
+    func: "updateCategoryChannelName",
+    data: {
+      category,
+    },
   })
   const [existingJob] = await jobs(Tasks.UpdateCategoryChannelName, { data: { category } })
   const delay = await ConfigController.getNumberConfig("delay-simple-UpdateCategoryChannelName")

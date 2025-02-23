@@ -7,9 +7,10 @@ import { UpdateCategoryChannelNameOptions } from "../options"
 
 export async function handler(job: Job<UpdateCategoryChannelNameOptions>): Promise<void> {
   const { category } = job.attrs.data
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "UpdateCategoryChannelNameHandler",
-    prefix: ["handler", `category ${category}`],
+    func: "handler",
+    data: { category },
   })
 
   logger.debug("Updating the category channel name")

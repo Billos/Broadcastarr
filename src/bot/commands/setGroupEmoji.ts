@@ -8,7 +8,7 @@ import selectGroup from "../components/selectGroup"
 import { Command, CommandGenerator } from "../type"
 
 async function execute(interaction: CommandInteraction) {
-  const logger = mainLogger.getSubLogger({ name: "RemoveGroup", prefix: ["execute"] })
+  const logger = mainLogger.child({ name: "RemoveGroup", func: "execute" })
   logger.info("Executing set emoji command")
   const category = interaction.options.get("category", true).value as string
 

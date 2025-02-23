@@ -11,10 +11,8 @@ import mainLogger from "./utils/logger"
 import onExit from "./utils/onExit"
 
 // Print the node version
-mainLogger.info(`Node version: ${process.version}`)
-
 router.listen(env.port, async () => {
-  const logger = mainLogger.getSubLogger({ name: "Server", prefix: [`uuid ${env.nodeUuid}`] })
+  const logger = mainLogger.child({ name: "Server", func: "listen", data: { uuid: env.nodeUuid } })
   logger.info(`Listening on port ${env.port}`)
   // Check if mongo is up
   const mongo = await mongoose.connect(`${env.mongo.url}/${env.mongo.db}`, {})

@@ -66,13 +66,10 @@ export async function removeGroup(group: GroupIndex): Promise<void> {
 }
 
 export async function reload(group: GroupIndex): Promise<void> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "GroupController",
-    prefix: [
-      "reload",
-      `name ${group.name}`,
-      `category ${group.category}`,
-    ],
+    func: "reload",
+    data: group,
   })
   logger.info("Reloading group")
   return Triggers.publishGroup(group.name, group.category, group.country)

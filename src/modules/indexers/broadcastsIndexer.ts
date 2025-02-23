@@ -32,14 +32,14 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
   }
 
   protected async getCategoryLink(url: string): Promise<string[]> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "BroadcastsIndexer",
-      prefix: [
-        "getCategoryLink",
-        `Indexer ${this.name}`,
-        `category ${this.category}`,
-        `url ${url}`,
-      ],
+      func: "getCategoryLink",
+      data: {
+        indexer: this.name,
+        category: this.category,
+        url,
+      },
     })
     const [eltLoad] = this.categoryDetails.links
     logger.debug(`Getting page ${url} with element ${eltLoad}`)
@@ -70,13 +70,13 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
   }
 
   public async generate(): Promise<BroadcastDocument[]> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "BroadcastsIndexer",
-      prefix: [
-        "generate",
-        `Indexer ${this.name}`,
-        `category ${this.category}`,
-      ],
+      func: "generate",
+      data: {
+        indexer: this.name,
+        category: this.category,
+      },
     })
     try {
       // If the links are anchors, we can directly get the broadcasts
@@ -122,7 +122,7 @@ export default abstract class BroadcastsIndexer extends PageScrapper {
   }
 
   protected async broadcastDataToBroadcastDocument(data: BroadcastData): Promise<BroadcastDocument> {
-    const logger = mainLogger.getSubLogger({ name: "BroadcastsIndexer", prefix: ["broadcastDataToBroadcastDocument"] })
+    const logger = mainLogger.child({ name: "BroadcastsIndexer", func: "broadcastDataToBroadcastDocument" })
 
     // streamName will be either
     // Team1 v Team2

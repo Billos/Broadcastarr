@@ -10,7 +10,7 @@ import { IPublisher } from "./types"
 
 const implementations: Record<string, new () => IPublisher> = {
   Discord,
-  Matrix,
+  Gotify,
 }
 
 const publishers: Record<string, IPublisher> = {}
@@ -57,7 +57,7 @@ async function getPublisherInstance(name: string): Promise<IPublisher> {
 }
 
 export async function bootstrapPublishers(): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "PublisherController", prefix: ["bootstrapPublishers"] })
+  const logger = mainLogger.child({ name: "PublisherController", func: "bootstrapPublishers" })
   logger.info("Bootstrapping publishers")
   const activePublishers = await getActivePublishers()
   for (const doc of activePublishers) {
@@ -67,7 +67,7 @@ export async function bootstrapPublishers(): Promise<void> {
 }
 
 export async function startPublishers(): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "PublisherController", prefix: ["startPublishers"] })
+  const logger = mainLogger.child({ name: "PublisherController", func: "startPublishers" })
   logger.info("Starting publishers")
   const activePublishers = await getActivePublishers()
   for (const doc of activePublishers) {
@@ -77,9 +77,10 @@ export async function startPublishers(): Promise<void> {
 }
 
 export async function updateChannelName(category: CategoryDocument): Promise<void> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "PublisherController",
-    prefix: ["updateChannelName", `category ${category.name}`],
+    func: "updateChannelName",
+    data: { category: category.name },
   })
   logger.info("Updating channel name")
   const activePublishers = await getActivePublishers()
@@ -91,9 +92,10 @@ export async function updateChannelName(category: CategoryDocument): Promise<voi
 
 // This function returns an object with the publication ids for each publisher
 export async function publishCategory(category: CategoryDocument): Promise<Record<string, string[]>> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "PublisherController",
-    prefix: ["publishCategory", `category ${category.name}`],
+    func: "publishCategory",
+    data: { category: category.name },
   })
   logger.info("Publishing category")
   const result: Record<string, string[]> = {}
@@ -115,9 +117,10 @@ export async function publishGroup(
   group: GroupDocument,
   broadcasts: BroadcastDocument[],
 ): Promise<Record<string, string[]>> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "PublisherController",
-    prefix: ["publishGroup", `group ${group.name}`],
+    func: "publishGroup",
+    data: { group: group.name },
   })
   logger.info("Publishing group")
   const result: Record<string, string[]> = {}
@@ -135,9 +138,10 @@ export async function publishGroup(
 }
 
 export async function unpublishGroup(group: GroupDocument): Promise<Record<string, string[]>> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "PublisherController",
-    prefix: ["unpublishGroup", `group ${group.name}`],
+    func: "unpublishGroup",
+    data: { group: group.name },
   })
   logger.info("Unpublishing group")
   const result: Record<string, string[]> = {}

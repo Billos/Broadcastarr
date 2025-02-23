@@ -14,9 +14,10 @@ abstract class MarkdownPublisher extends Publisher {
 
   protected async sendCategoryMessages(category: CategoryDocument): Promise<string[]> {
     const { uuid: apiKey } = await UUIDController.getUUID()
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "MarkdownPublisher",
-      prefix: ["sendCategoryMessages", `category ${category.name}`],
+      func: "sendCategoryMessages",
+      data: { category: category.name },
     })
     logger.debug("Sending category messages")
     const indexers = await IndexerController.getIndexers(true)
@@ -58,13 +59,13 @@ abstract class MarkdownPublisher extends Publisher {
 
   protected async sendGroupMessages(groupDocument: GroupDocument, broadcasts: BroadcastDocument[]): Promise<string[]> {
     const { name: group, category, country } = groupDocument
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "MarkdownPublisher",
-      prefix: [
-        "sendGroupMessages",
-        `group ${group}`,
-        `category ${category}`,
-      ],
+      func: "sendGroupMessages",
+      data: {
+        group,
+        category,
+      },
     })
     logger.debug("Sending group messages")
 

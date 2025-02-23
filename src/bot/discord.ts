@@ -25,7 +25,7 @@ class DiscordBot {
   }
 
   public async start() {
-    const logger = mainLogger.getSubLogger({ name: "DiscordBot", prefix: ["start"] })
+    const logger = mainLogger.child({ name: "DiscordBot", func: "start" })
     this.client.on("ready", this.onReady.bind(this))
     this.client.on("guildCreate", this.onGuildCreate.bind(this))
     this.client.on("guildAvailable", this.onGuildAvailable.bind(this))
@@ -45,7 +45,7 @@ class DiscordBot {
   }
 
   private async deployCommands(guildId: string): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "DiscordBot", prefix: ["deployCommands"] })
+    const logger = mainLogger.child({ name: "DiscordBot", func: "deployCommands" })
     logger.info(`Deploying commands to guild ${guildId}`)
     this.commands = []
     this.commands.push(...commands)
@@ -70,26 +70,27 @@ class DiscordBot {
   }
 
   private async onReady(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "DiscordBot", prefix: ["onReady"] })
+    const logger = mainLogger.child({ name: "DiscordBot", func: "onReady" })
     logger.info("Discord bot is ready")
   }
 
   private async onGuildCreate(guild: Guild): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "DiscordBot", prefix: ["onGuildCreate", `guildId ${guild.id}`] })
+    const logger = mainLogger.child({ name: "DiscordBot", func: "onGuildCreate", data: { guildId: guild.id } })
     logger.info(`Joined guild ${guild.name}`)
     // await deployCommands({ guildId: guild.id })
   }
 
   private async onGuildAvailable(guild: Guild): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "DiscordBot", prefix: ["onGuildAvailable", `guildId ${guild.id}`] })
+    const logger = mainLogger.child({ name: "DiscordBot", func: "onGuildAvailable", data: { guildId: guild.id } })
     logger.info(`Guild is available ${guild.name}`)
     await this.deployCommands(guild.id)
   }
 
   private async isAuthorized(interaction: Interaction, command: string): Promise<boolean> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "DiscordBot",
-      prefix: ["isAuthorized", `interactionId ${interaction.id}`],
+      func: "isAuthorized",
+      data: { interactionId: interaction.id },
     })
 
     const auths = await AuthController.getAuths()
@@ -117,9 +118,10 @@ class DiscordBot {
   }
 
   private async onInteractionCreate(interaction: Interaction): Promise<void> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "DiscordBot",
-      prefix: ["onInteractionCreate", `interactionId ${interaction.id}`],
+      func: "onInteractionCreate",
+      data: { interactionId: interaction.id },
     })
     if (!interaction.isCommand()) {
       return

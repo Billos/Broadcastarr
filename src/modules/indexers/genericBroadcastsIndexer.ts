@@ -42,13 +42,13 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
   protected abstract teamSplitterRegex: RegExp
 
   async getBroadcastsData(page: Page): Promise<BroadcastData[]> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "GenericBroadcastsIndexer",
-      prefix: [
-        "getBroadcastsData",
-        `category ${this.category}`,
-        `url ${page.url()}`,
-      ],
+      func: "getBroadcastsData",
+      data: {
+        category: this.category,
+        url: page.url(),
+      },
     })
     //     Initialiser un tableau pour stocker les données de diffusion (BroadcastData).
     const data: BroadcastData[] = []
@@ -81,9 +81,10 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
   }
 
   private async parseCurrentPage(page: Page): Promise<BroadcastData[]> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "GenericBroadcastsIndexer",
-      prefix: ["parseCurrentPage", `category ${this.category}`],
+      func: "parseCurrentPage",
+      data: { category: this.category },
     })
     const activeGroups = await GroupController.getActiveGroups(this.category)
     const inactiveGroups = await GroupController.getInactiveGroups(this.category)
@@ -120,9 +121,10 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     activeGroups: GroupDocument[],
     inactiveGroups: GroupDocument[],
   ): Promise<BroadcastData[]> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "GenericBroadcastsIndexer",
-      prefix: ["parseBroadcastSet", `category ${this.category}`],
+      func: "parseBroadcastSet",
+      data: { category: this.category },
     })
     logger.debug("Parsing broadcast set")
     const day: DateTime = await this.getBroadcastSetDay(broadcastSet)
@@ -146,9 +148,10 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     inactiveGroups: GroupDocument[],
     day?: DateTime,
   ): Promise<BroadcastData[]> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "GenericBroadcastsIndexer",
-      prefix: ["parseBroadcasts", `category ${this.category}`],
+      func: "parseBroadcasts",
+      data: { category: this.category },
     })
     logger.debug(`Parsing ${broadcastBlocks.length} blocks`)
     const data: BroadcastData[] = []
@@ -193,9 +196,10 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     activeGroups: GroupDocument[],
     inactiveGroups: GroupDocument[],
   ): Promise<Group> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "GenericBroadcastsIndexer",
-      prefix: ["getGroup", `name ${this.name}`],
+      func: "getGroup",
+      data: { name: this.name },
     })
     if (this.broadcast.group.length === 0) {
       logger.warn("No group selector or regex, using default group")

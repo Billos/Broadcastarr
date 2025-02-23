@@ -6,8 +6,8 @@ export abstract class Scrapper {
   private browser: Browser = null
 
   protected async getBrowser(): Promise<Browser> {
-    const logger = mainLogger.getSubLogger({ name: "Scrapper", prefix: ["getBrowser"] })
-    logger.trace("getBrowser")
+    const logger = mainLogger.child({ name: "Scrapper", func: "getBrowser" })
+    logger.silly("getBrowser")
     if (!this.browser) {
       logger.info("Creating a new browser")
       const args = [
@@ -26,7 +26,7 @@ export abstract class Scrapper {
         args,
       })
     }
-    logger.trace("getBrowser done")
+    logger.silly("getBrowser done")
 
     return this.browser
   }

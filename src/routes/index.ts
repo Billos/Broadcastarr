@@ -6,7 +6,7 @@ import streamRouter from "./stream"
 
 const app = express()
 app.get("/", (_req, res) => {
-  const logger = mainLogger.getSubLogger({ name: "Server", prefix: [""] })
+  const logger = mainLogger.child({ name: "Server", func: "Hello World" })
   logger.info("Hello World")
   res.send("Hello World!")
 })

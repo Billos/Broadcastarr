@@ -12,13 +12,13 @@ import { Triggers } from "../triggers"
 export async function handler(job: Job<GrabBroadcastStreamOptions>): Promise<void> {
   const { broadcastId } = job.attrs.data
   const broadcast = await BroadcastController.getBroadcast(broadcastId)
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "GrabBroadcastStreamHandler",
-    prefix: [
-      "handler",
-      `broadcastId ${broadcast.id}`,
-      `broadcastName ${broadcast.name}`,
-    ],
+    func: "handler",
+    data: {
+      broadcastId: broadcast.id,
+      broadcastName: broadcast.name,
+    },
   })
 
   let stream: StreamData
@@ -71,9 +71,10 @@ export async function handler(job: Job<GrabBroadcastStreamOptions>): Promise<voi
 
 export async function onError(error: Error, job: Job<GrabBroadcastStreamOptions>): Promise<boolean> {
   const { broadcastId } = job.attrs.data
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "GrabBroadcastStreamHandler",
-    prefix: ["onError", `broadcastId ${broadcastId}`],
+    func: "onError",
+    data: { broadcastId },
   })
   logger.error(`An error occurred while grabbing the broadcast stream: ${error.message}`)
   try {

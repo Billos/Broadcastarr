@@ -10,7 +10,7 @@ import { SetValuesCommand } from "../scenario/SetValues"
 
 export class CounterCommand extends CommandClass<CounterCommandArgs> {
   async execute(page: Page, context: Context, _scrapper: Orchestrator): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "CounterCommand", prefix: ["execute", this.name] })
+    const logger = mainLogger.child({ name: "CounterCommand", func: "execute", data: { name: this.name } })
     const { root, selector, store } = this.args
 
     let rootElt: ElementHandle | Page = page

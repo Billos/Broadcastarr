@@ -43,41 +43,41 @@ const instance = axios.create({
 })
 
 async function getApplications(): Promise<Application[]> {
-  const logger = mainLogger.getSubLogger({ name: "Gotify", prefix: ["getApplications"] })
+  const logger = mainLogger.child({ name: "Gotify", func: "getApplications" })
   logger.info("Getting applications")
   const { data } = await instance.get<Application[]>("/application")
   return data
 }
 
 async function getApplication(name: string): Promise<Application> {
-  const logger = mainLogger.getSubLogger({ name: "Gotify", prefix: ["getApplication"] })
+  const logger = mainLogger.child({ name: "Gotify", func: "getApplication" })
   logger.info(`Getting application ${name}`)
   const applications = await getApplications()
   return applications.find((app) => app.name === name)
 }
 
 async function createApplication(params: ApplicationParams): Promise<Application> {
-  const logger = mainLogger.getSubLogger({ name: "Gotify", prefix: ["createApplication"] })
+  const logger = mainLogger.child({ name: "Gotify", func: "createApplication" })
   logger.info(`Creating application ${params.name}`)
   const { data } = await instance.post<Application>("/application", params)
   return data
 }
 
 async function deleteApplication(appId: number): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "Gotify", prefix: ["deleteApplication"] })
+  const logger = mainLogger.child({ name: "Gotify", func: "deleteApplication" })
   logger.info(`Deleting application ${appId}`)
   await instance.delete(`/application/${appId}`)
 }
 
 async function createMessage(application: Application, params: MessageParams): Promise<Message> {
-  const logger = mainLogger.getSubLogger({ name: "Gotify", prefix: ["createMessage"] })
+  const logger = mainLogger.child({ name: "Gotify", func: "createMessage" })
   logger.info(`Creating message for application ${application.name}`)
   const { data } = await instance.post<Message>(`/message?token=${application.token}`, params)
   return data
 }
 
 async function deleteMessage(messageId: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "Gotify", prefix: ["deleteMessage"] })
+  const logger = mainLogger.child({ name: "Gotify", func: "deleteMessage" })
   logger.info(`Deleting message ${messageId}`)
   try {
     await instance.delete(`/message/${messageId}`)
@@ -87,7 +87,7 @@ async function deleteMessage(messageId: string): Promise<void> {
 }
 
 async function getMessagesOfApplication(appId: number): Promise<Message[]> {
-  const logger = mainLogger.getSubLogger({ name: "Gotify", prefix: ["getMessagesOfApplication"] })
+  const logger = mainLogger.child({ name: "Gotify", func: "getMessagesOfApplication" })
   logger.info(`Getting messages of application ${appId}`)
   const res = await instance.get<{ messages: Message[] }>(`/application/${appId}/message`)
   return res.data.messages

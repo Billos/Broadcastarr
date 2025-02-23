@@ -7,7 +7,7 @@ services:
       - .env.bootstrap
     environment:
       NODE_ENV: development
-      LOG_LEVEL: 2
+      LOG_LEVEL: debug
       MONGO_URL: mongodb://mongo
       MONGO_AGENDA_DB: agenda
       MONGO_DB: broadcastarr

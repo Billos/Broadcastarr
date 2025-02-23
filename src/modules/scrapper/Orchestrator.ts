@@ -46,7 +46,7 @@ export class Orchestrator extends Scrapper {
   }
 
   async run<T extends "index" | "intercept">(scenario: T): Promise<Partial<RunReturnMap[T]>> {
-    const logger = mainLogger.getSubLogger({ name: "Orchestrator", prefix: ["run"] })
+    const logger = mainLogger.child({ name: "Orchestrator", func: "run" })
 
     const browser = await this.getBrowser()
     const browserContext = await browser.createBrowserContext()

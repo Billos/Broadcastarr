@@ -9,7 +9,7 @@ const router = express.Router()
 const closeWindow = "<script>window.close()</script>"
 
 router.get("/:indexer/category/:category/reload", async (req: Request<Pick<Params, "indexer" | "category">>, res) => {
-  const logger = mainLogger.getSubLogger({ name: "API", prefix: ["Indexer", "reload"] })
+  const logger = mainLogger.child({ name: "API Indexer", func: "reload" })
   const { indexer, category } = req.params
   logger.info(`Updating broadcasts for ${category} with ${indexer}`)
   // Schedule the task

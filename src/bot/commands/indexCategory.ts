@@ -7,7 +7,7 @@ import mainLogger from "../../utils/logger"
 import { Command, CommandGenerator } from "../type"
 
 async function execute(interaction: CommandInteraction) {
-  const logger = mainLogger.getSubLogger({ name: "ListBroadcasts", prefix: ["execute"] })
+  const logger = mainLogger.child({ name: "ListBroadcasts", func: "execute" })
   logger.info("Executing list broadcasts command")
   const category = interaction.options.get("category", true).value as string
 

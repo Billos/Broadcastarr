@@ -76,13 +76,13 @@ export abstract class Publisher implements IPublisher {
   // Defined in the abstract class
   // Cannot be overridden
   public async publishGroup(group: GroupDocument, docs: BroadcastDocument[]): Promise<string[]> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "Publisher",
-      prefix: [
-        "publishGroup",
-        `group ${group.name}`,
-        `category ${group.category}`,
-      ],
+      func: "publishGroup",
+      data: {
+        group: group.name,
+        category: group.category,
+      },
     })
     logger.debug("Publishing the group")
     const ids = await this.sendGroupMessages(group, docs)
@@ -90,22 +90,23 @@ export abstract class Publisher implements IPublisher {
   }
 
   public async unpublishGroup(group: GroupDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "Publisher",
-      prefix: [
-        "unpublishGroup",
-        `group ${group.name}`,
-        `category ${group.category}`,
-      ],
+      func: "unpublishGroup",
+      data: {
+        group: group.name,
+        category: group.category,
+      },
     })
     logger.debug("Unpublishing the group")
     await this.removeMessages(group.category, group.publications.get(this.name) || [])
   }
 
   public async publishCategory(category: CategoryDocument): Promise<string[]> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "Publisher",
-      prefix: ["publishCategory", `category ${category.name}`],
+      func: "publishCategory",
+      data: { category: category.name },
     })
     logger.debug("Publishing the category")
 
@@ -127,9 +128,10 @@ export abstract class Publisher implements IPublisher {
   }
 
   public async clearUnlistedMessages(category: CategoryDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "Publisher",
-      prefix: ["clearUnlistedMessages", `category ${category.name}`],
+      func: "clearUnlistedMessages",
+      data: { category: category.name },
     })
     logger.debug("Clearing the unlisted messages")
     const categoryPublications = category.publications.get(this.name) || []

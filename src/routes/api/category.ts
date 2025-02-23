@@ -10,7 +10,7 @@ const router = express.Router()
 const closeWindow = "<script>window.close()</script>"
 
 router.get("/:category/reload", async (req: Request<Pick<Params, "category">>, res) => {
-  const logger = mainLogger.getSubLogger({ name: "API", prefix: ["Category", "reload"] })
+  const logger = mainLogger.child({ name: "API Category", func: "reload" })
   const { category } = req.params
   logger.info(`Reloading broadcasts for ${category}`)
   await CategoryController.reloadCategoryGroups(category)
@@ -18,7 +18,7 @@ router.get("/:category/reload", async (req: Request<Pick<Params, "category">>, r
 })
 
 router.get("/:category/channelName", async (req: Request<Pick<Params, "category">>, res) => {
-  const logger = mainLogger.getSubLogger({ name: "API", prefix: ["Category", "channelName"] })
+  const logger = mainLogger.child({ name: "API Category", func: "channelName" })
   const { category } = req.params
   logger.info(`Getting channel name for ${category}`)
   await Triggers.updateCategoryChannelName(category)

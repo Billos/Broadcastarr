@@ -9,7 +9,7 @@ import { SetValuesCommand } from "../scenario/SetValues"
 
 export class GetValuesCommand extends CommandClass<GetValueCommandArgs> {
   async execute(page: Page, context: Context): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "GetValuesCommand", prefix: ["execute", this.name] })
+    const logger = mainLogger.child({ name: "GetValuesCommand", func: "execute", data: { name: this.name } })
 
     const { root, values } = this.args
     let rootElt: ElementHandle | Page = page

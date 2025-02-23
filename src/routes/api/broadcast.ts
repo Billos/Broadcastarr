@@ -12,7 +12,7 @@ const router = express.Router()
 const closeWindow = "<script>window.close()</script>"
 
 router.use("/:broadcastId", async (req: Request<Pick<Params, "broadcastId">>, res, next) => {
-  const logger = mainLogger.getSubLogger({ name: "API", prefix: ["Broadcast", "Middleware"] })
+  const logger = mainLogger.child({ name: "API Broadcast", func: "Middleware" })
   const { broadcastId } = req.params
   logger.info(`Checking for job for ${broadcastId}`)
   const [existingJob] = await jobs(Tasks.GrabBroadcastStream, { data: { broadcastId } })
@@ -25,7 +25,7 @@ router.use("/:broadcastId", async (req: Request<Pick<Params, "broadcastId">>, re
 })
 
 router.get("/:broadcastId/nextStream", async (req: Request<Pick<Params, "broadcastId">>, res) => {
-  const logger = mainLogger.getSubLogger({ name: "API", prefix: ["Broadcast", "NextStream"] })
+  const logger = mainLogger.child({ name: "API Broadcast", func: "NextStream" })
   logger.info(`Next stream for ${req.params.broadcastId}`)
   const existingJob = res.locals.broadcastJob as Job<GrabBroadcastStreamOptions>
   // Increment the current streamIndex
@@ -37,7 +37,7 @@ router.get("/:broadcastId/nextStream", async (req: Request<Pick<Params, "broadca
 })
 
 router.get("/:broadcastId/askForStreamNow", async (req: Request<Pick<Params, "broadcastId">>, res) => {
-  const logger = mainLogger.getSubLogger({ name: "API", prefix: ["Broadcast", "AskForStreamNow"] })
+  const logger = mainLogger.child({ name: "API Broadcast", func: "AskForStreamNow" })
   logger.info(`Asking for stream now for ${req.params.broadcastId}`)
   const existingJob = res.locals.broadcastJob as Job<GrabBroadcastStreamOptions>
   existingJob.schedule("now")
@@ -46,7 +46,7 @@ router.get("/:broadcastId/askForStreamNow", async (req: Request<Pick<Params, "br
 })
 
 router.get("/:broadcastId/resetStreamIndex", async (req: Request<Pick<Params, "broadcastId">>, res) => {
-  const logger = mainLogger.getSubLogger({ name: "API", prefix: ["Broadcast", "ResetStreamIndex"] })
+  const logger = mainLogger.child({ name: "API Broadcast", func: "ResetStreamIndex" })
   logger.info(`Resetting streamIndex for ${req.params.broadcastId}`)
   const existingJob = res.locals.broadcastJob as Job<GrabBroadcastStreamOptions>
   existingJob.attrs.data.streamIndex = 0

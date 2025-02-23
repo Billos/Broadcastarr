@@ -10,7 +10,7 @@ type Group = {
 
 export class GroupsBootstrapper extends Bootstrapper {
   public async bootstrap(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "GroupsBootstrapper", prefix: ["bootstrap"] })
+    const logger = mainLogger.child({ name: "GroupsBootstrapper", func: "bootstrap" })
     logger.info("Bootstrapping groups")
     // group will be set as "CategoryA:groupA,countryB*groupB,groupC|CategoryB:countryD*groupD,groupE|CategoryA:groupF"
     const envGroups: Record<string, Set<Group>> = {}

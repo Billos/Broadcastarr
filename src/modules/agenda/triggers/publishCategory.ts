@@ -3,9 +3,12 @@ import { jobs, now } from "../agenda"
 import { Tasks } from "../tasks"
 
 export async function publishCategory(category: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "PublishCategoryTrigger",
-    prefix: ["publishCategory", `category ${category}`],
+    func: "publishCategory",
+    data: {
+      category,
+    },
   })
   // We create a job to list broadcasts
   logger.debug("Scheduling PublishCategory task")

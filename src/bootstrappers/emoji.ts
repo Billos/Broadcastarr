@@ -6,7 +6,7 @@ import { Bootstrapper } from "./bootstrapper"
 
 export class EmojiBootstrapper extends Bootstrapper {
   public async bootstrap(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "EmojiBootstrapper", prefix: ["bootstrap"] })
+    const logger = mainLogger.child({ name: "EmojiBootstrapper", func: "bootstrap" })
     logger.info("Bootstrapping emojis for categories")
     // Emojis are stored in process.env.CATEGORIES_EMOJIS as CategoryA:emoji,CategoryB:emoji...
     const emojis = process.env.CATEGORIES_EMOJIS.split(",")

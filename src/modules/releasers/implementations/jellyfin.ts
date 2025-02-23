@@ -10,7 +10,7 @@ class JellyfinReleaser implements IReleaser {
   private timeout: NodeJS.Timeout | null = null
 
   async bootstrap(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "JellyfinReleaser", prefix: ["bootstrap"] })
+    const logger = mainLogger.child({ name: "JellyfinReleaser", func: "bootstrap" })
     const categories = await CategoryController.getCategories()
 
     for (const category of categories) {
@@ -32,7 +32,7 @@ class JellyfinReleaser implements IReleaser {
   }
 
   private async scheduleJellyfinRefresh(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "JellyfinReleaser", prefix: ["scheduleJellyfinRefresh"] })
+    const logger = mainLogger.child({ name: "JellyfinReleaser", func: "scheduleJellyfinRefresh" })
     logger.debug("Scheduling Jellyfin Refresh")
     if (this.timeout) {
       logger.debug("Clearing previous timeout")
@@ -45,13 +45,13 @@ class JellyfinReleaser implements IReleaser {
   }
 
   async releaseBroadcast(broadcast: BroadcastDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "JellyfinReleaser",
-      prefix: [
-        "releaseBroadcast",
-        `broadcastId ${broadcast.id}`,
-        `broadcastName ${broadcast.name}`,
-      ],
+      func: "releaseBroadcast",
+      data: {
+        broadcastId: broadcast.id,
+        broadcastName: broadcast.name,
+      },
     })
 
     const path = await BroadcastController.getM3U8Path(broadcast.id)
@@ -82,13 +82,13 @@ class JellyfinReleaser implements IReleaser {
   }
 
   async unreleaseBroadcast(broadcast: BroadcastDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "JellyfinReleaser",
-      prefix: [
-        "unreleaseBroadcast",
-        `broadcastId ${broadcast.id}`,
-        `broadcastName ${broadcast.name}`,
-      ],
+      func: "unreleaseBroadcast",
+      data: {
+        broadcastId: broadcast.id,
+        broadcastName: broadcast.name,
+      },
     })
     logger.debug("Removing Live TV Tuner Host")
     await JellyfinAPI.removeTunerHost(broadcast.tunerHostId)

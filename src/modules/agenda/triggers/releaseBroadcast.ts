@@ -3,18 +3,20 @@ import { cancel, now } from "../agenda"
 import { Tasks } from "../tasks"
 
 export async function releaseBroadcast(broadcastId: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "ReleaseBroadcastTrigger",
-    prefix: ["releaseBroadcast", `broadcastId ${broadcastId}`],
+    func: "releaseBroadcast",
+    data: { broadcastId },
   })
   logger.debug("Schedule ReleaseBroadcast task for now")
   await now(Tasks.ReleaseBroadcast, { broadcastId })
 }
 
 export async function cancelReleaseBroadcast(broadcastId: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "ReleaseBroadcastTrigger",
-    prefix: ["cancelReleaseBroadcast", `broadcastId ${broadcastId}`],
+    func: "cancelReleaseBroadcast",
+    data: { broadcastId },
   })
   logger.debug("Cancel ReleaseBroadcast task")
   await cancel(Tasks.ReleaseBroadcast, { data: { broadcastId } })

@@ -4,7 +4,7 @@ import { Bootstrapper } from "./bootstrapper"
 
 export class ReleasersBootstrapper extends Bootstrapper {
   public async bootstrap(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "ReleasersBootstrapper", prefix: ["bootstrap"] })
+    const logger = mainLogger.child({ name: "ReleasersBootstrapper", func: "bootstrap" })
     logger.info("Bootstrapping Releasers")
 
     await ReleasersController.deleteReleaser("Jellyfin")

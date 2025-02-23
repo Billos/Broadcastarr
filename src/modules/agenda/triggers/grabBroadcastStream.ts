@@ -7,13 +7,13 @@ import { Tasks } from "../tasks"
 export async function grabBroadcastStream(broadcastId: string, streamIndex: number): Promise<void> {
   const broadcast = await BroadcastController.getBroadcast(broadcastId)
   const [existingJob] = await jobs(Tasks.GrabBroadcastStream, { data: { broadcastId } })
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "GrabBroadcastStreamTrigger",
-    prefix: [
-      "grabBroadcastStream",
-      `broadcastId ${broadcastId}`,
-      `broadcastName ${broadcast.name}`,
-    ],
+    func: "grabBroadcastStream",
+    data: {
+      broadcastId,
+      broadcastName: broadcast.name,
+    },
   })
   if (existingJob) {
     logger.info("Task already scheduled")
@@ -27,13 +27,13 @@ export async function grabBroadcastStream(broadcastId: string, streamIndex: numb
 
 export async function renewGrabBroadcastStream(broadcastId: string, streamIndex: number): Promise<void> {
   const broadcast = await BroadcastController.getBroadcast(broadcastId)
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "GrabBroadcastStreamTrigger",
-    prefix: [
-      "renewGrabBroadcastStream",
-      `broadcastId ${broadcastId}`,
-      `broadcastName ${broadcast.name}`,
-    ],
+    func: "renewGrabBroadcastStream",
+    data: {
+      broadcastId,
+      broadcastName: broadcast.name,
+    },
   })
   const delay = await ConfigController.getNumberConfig("delay-simple-RenewStream")
   logger.info(`Renewing the task in ${delay} seconds`)

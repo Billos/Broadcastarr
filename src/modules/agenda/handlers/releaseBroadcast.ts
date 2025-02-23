@@ -9,13 +9,13 @@ import { Triggers } from "../triggers"
 export async function handler(job: Job<ReleaseBroadcastOptions>): Promise<void> {
   const { broadcastId } = job.attrs.data
   const broadcast = await BroadcastController.getBroadcast(broadcastId)
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "ReleaseBroadcastHandler",
-    prefix: [
-      "handler",
-      `broadcastId ${broadcast.id}`,
-      `broadcastName ${broadcast.name}`,
-    ],
+    func: "handler",
+    data: {
+      broadcastId: broadcast.id,
+      broadcastName: broadcast.name,
+    },
   })
 
   logger.debug("Releasing the broadcast")

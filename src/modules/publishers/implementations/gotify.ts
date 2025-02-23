@@ -32,7 +32,7 @@ class GotifyPublisher extends MarkdownPublisher {
   }
 
   public async clear(category: CategoryDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "GotifyPublisher", prefix: ["clear", `category ${category.name}`] })
+    const logger = mainLogger.child({ name: "GotifyPublisher", func: "clear", data: { category: category.name } })
     const applications = await GotifyAPI.getApplications()
     const allApplicationsOfCategory = applications.filter(({ name }) => name === this.generateApplicationName(category))
     for (const application of allApplicationsOfCategory) {
@@ -47,9 +47,10 @@ class GotifyPublisher extends MarkdownPublisher {
   }
 
   public override async listMessages(category: CategoryDocument): Promise<string[]> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "GotifyPublisher",
-      prefix: ["listMessages", `category ${category.name}`],
+      func: "listMessages",
+      data: { category: category.name },
     })
     const application = await this.getOrCreateApplication(category)
     logger.info(`Getting messages for application ${application.id}`)
@@ -58,9 +59,10 @@ class GotifyPublisher extends MarkdownPublisher {
   }
 
   protected override async sendMessage(category: CategoryDocument, message: string): Promise<string[]> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "GotifyPublisher",
-      prefix: ["sendMessages", `category ${category.name}`],
+      func: "sendMessages",
+      data: { category: category.name },
     })
     const application = await this.getOrCreateApplication(category)
     logger.info(`Sending message to application ${application.name}`)
@@ -74,9 +76,10 @@ class GotifyPublisher extends MarkdownPublisher {
   }
 
   protected async removeMessages(category: string, ids: string[]): Promise<void> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "GotifyPublisher",
-      prefix: ["removeMessages", `category ${category}`],
+      func: "removeMessages",
+      data: { category },
     })
     logger.info(`Removing messages from category ${category}`)
     for (const id of ids) {
@@ -85,11 +88,12 @@ class GotifyPublisher extends MarkdownPublisher {
   }
 
   public async updateChannelName(category: CategoryDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "GotifyPublisher",
-      prefix: ["updateChannelName", `category ${category.name}`],
+      func: "updateChannelName",
+      data: { category: category.name },
     })
-    logger.trace("Nothing to do here")
+    logger.silly("Nothing to do here")
   }
 }
 

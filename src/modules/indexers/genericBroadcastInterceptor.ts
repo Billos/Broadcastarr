@@ -29,9 +29,12 @@ export default abstract class GenericBroadcastInterceptor extends BroadcastInter
   protected abstract referer: string
 
   public override async getStream(): Promise<StreamData> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "BroadcastInterceptor",
-      prefix: ["getStream", `name ${this.broadcastName}`],
+      func: "getStream",
+      data: {
+        broadcastName: this.broadcastName,
+      },
     })
     logger.debug("Getting stream")
     const page = await this.getPage(this.broadcastLink, this.loadPageElement)

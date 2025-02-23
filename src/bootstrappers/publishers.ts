@@ -4,7 +4,7 @@ import { Bootstrapper } from "./bootstrapper"
 
 export class PublishersBootstrapper extends Bootstrapper {
   public async bootstrap(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "PublishersBootstrapper", prefix: ["bootstrap"] })
+    const logger = mainLogger.child({ name: "PublishersBootstrapper", func: "bootstrap" })
 
     logger.info("Creating Publishers")
     // check CREATE_PUBLISHER_DISCORD and  CREATE_PUBLISHER_MATRIX

@@ -11,9 +11,10 @@ import { Triggers } from "../triggers"
 export async function handler(job: Job<PublishCategoryOptions>): Promise<void> {
   const { category } = job.attrs.data
 
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "PublishCategoryHandler",
-    prefix: ["handler", `category ${category}`],
+    func: "handler",
+    data: { category },
   })
 
   const categoryDocument = await CategoryController.getCategory(category)

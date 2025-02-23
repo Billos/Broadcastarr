@@ -62,8 +62,8 @@ export default abstract class PageScrapper {
   }
 
   protected async getBrowser(): Promise<Browser> {
-    const logger = mainLogger.getSubLogger({ name: "Scrapper", prefix: ["getBrowser"] })
-    logger.trace("getBrowser")
+    const logger = mainLogger.child({ name: "Scrapper", func: "getBrowser" })
+    logger.silly("getBrowser")
     if (!this.browser) {
       const args = [
         "--disable-gpu",
@@ -107,7 +107,7 @@ export default abstract class PageScrapper {
       // For security reasons, we close the page and the browser after in 2 minutes if the page is still open
       await this.resetBrowserTimeout()
     }
-    logger.trace("getBrowser done")
+    logger.silly("getBrowser done")
 
     if (!this.loggedIn) {
       await this.login()
@@ -118,7 +118,7 @@ export default abstract class PageScrapper {
 
   private async login(): Promise<void> {
     this.loggedIn = true
-    const logger = mainLogger.getSubLogger({ name: "Scrapper", prefix: ["login"] })
+    const logger = mainLogger.child({ name: "Scrapper", func: "login" })
     if (this.loginDetails) {
       logger.debug("Performing login")
       const { clicks, username, password, submit, url, validation } = this.loginDetails
@@ -166,7 +166,7 @@ export default abstract class PageScrapper {
   }
 
   protected resetBrowserTimeout(): void {
-    const logger = mainLogger.getSubLogger({ name: "Scrapper", prefix: ["resetBrowserTimeout"] })
+    const logger = mainLogger.child({ name: "Scrapper", func: "resetBrowserTimeout" })
     logger.debug("resetBrowserTimeout")
     if (this.browserTimeout) {
       clearTimeout(this.browserTimeout)
@@ -187,7 +187,7 @@ export default abstract class PageScrapper {
     cb: (page: Page) => Promise<void>,
     timeout: number,
   ): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "Scrapper", prefix: ["asyncGoto", `url ${url}`] })
+    const logger = mainLogger.child({ name: "Scrapper", func: "asyncGoto", data: { url } })
     logger.debug(`Hitting url ${url} with timeout ${timeout}`)
     try {
       await page.goto(url, { timeout })
@@ -204,15 +204,15 @@ export default abstract class PageScrapper {
   }
 
   protected async getPage(url: string, elementToWait: string, timeout: number = 10000): Promise<Page> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "Scrapper",
-      prefix: [
-        "getPage",
-        `url ${url}`,
-        `elementToWait ${elementToWait}`,
-      ],
+      func: "getPage",
+      data: {
+        url,
+        elementToWait,
+      },
     })
-    logger.trace("Hitting url")
+    logger.silly("Hitting url")
     const browser = await this.getBrowser()
     const page = await browser.newPage()
     await page.setCacheEnabled(false)
@@ -225,8 +225,8 @@ export default abstract class PageScrapper {
   }
 
   public async getRemoteIP(url: string): Promise<string> {
-    const logger = mainLogger.getSubLogger({ name: "Scrapper", prefix: ["getRemoteIp", `url ${url}`] })
-    logger.trace("Hitting url")
+    const logger = mainLogger.child({ name: "Scrapper", func: "getRemoteIp", data: { url } })
+    logger.silly("Hitting url")
     const browser = await this.getBrowser()
     const page = await browser.newPage()
     await page.goto(url)
@@ -337,12 +337,12 @@ export default abstract class PageScrapper {
 }
 
 process.on("uncaughtException", (reason) => {
-  const logger = mainLogger.getSubLogger({ name: "Scrapper", prefix: ["uncaughtException"] })
+  const logger = mainLogger.child({ name: "Scrapper", func: "uncaughtException" })
   logger.error(`Uncaught Exception: ${reason}`)
 })
 
 onExit(async () => {
-  const logger = mainLogger.getSubLogger({ name: "Scrapper", prefix: ["onExit"] })
+  const logger = mainLogger.child({ name: "Scrapper", func: "onExit" })
   logger.info("Killing all browsers")
   for (const browser of browsers.values()) {
     browser.removeAllListeners()

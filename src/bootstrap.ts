@@ -9,7 +9,7 @@ mainLogger.info(`Node version: ${process.version}`)
 
 // Worker
 async function bootstrap() {
-  const logger = mainLogger.getSubLogger({ name: "Server", prefix: [""] })
+  const logger = mainLogger.child({ name: "Server", func: "bootstrap" })
   const mongo = await mongoose.connect(`${env.mongo.url}/${env.mongo.db}`, {})
   logger.info(`Mongo is up on ${mongo.connection.host}:${mongo.connection.port}`)
   logger.info("Running bootstrappers")

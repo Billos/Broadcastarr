@@ -4,7 +4,7 @@ import { join } from "path"
 import mainLogger from "../utils/logger"
 import { Command, CommandGenerator, isCommand, isCommandGenerator } from "./type"
 
-const logger = mainLogger.getSubLogger({ name: "Commands", prefix: ["index"] })
+const logger = mainLogger.child({ name: "Commands", func: "index" })
 
 const commands: Command[] = []
 const commandGenerators: CommandGenerator[] = []

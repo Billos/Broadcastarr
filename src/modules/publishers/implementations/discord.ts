@@ -32,17 +32,17 @@ class DiscordPublisher extends MarkdownPublisher {
   }
 
   public async bootstrap(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "DiscordPublisher", prefix: ["bootstrap"] })
+    const logger = mainLogger.child({ name: "DiscordPublisher", func: "bootstrap" })
     logger.debug("Nothing to do here")
   }
 
   public async start(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "DiscordPublisher", prefix: ["start"] })
+    const logger = mainLogger.child({ name: "DiscordPublisher", func: "start" })
     logger.debug("Nothing to do here")
   }
 
   public async clear(category: CategoryDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "DiscordPublisher", prefix: ["clear", `category ${category}`] })
+    const logger = mainLogger.child({ name: "DiscordPublisher", func: "clear", data: { category: category.name } })
     try {
       const { webhookId, webhookToken } = await this.getWebhook(category.name)
       const channelId = await DiscordAPI.getChannelIdWebhook(webhookId, webhookToken)
@@ -53,9 +53,10 @@ class DiscordPublisher extends MarkdownPublisher {
   }
 
   public override async listMessages(category: CategoryDocument): Promise<string[]> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "DiscordPublisher",
-      prefix: ["listMessages", `category ${category.name}`],
+      func: "listMessages",
+      data: { category: category.name },
     })
     const { webhookId, webhookToken } = await this.getWebhook(category.name)
     const channelId = await DiscordAPI.getChannelIdWebhook(webhookId, webhookToken)
@@ -65,9 +66,10 @@ class DiscordPublisher extends MarkdownPublisher {
   }
 
   protected override async sendMessage(category: CategoryDocument, content: string): Promise<string[]> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "DiscordPublisher",
-      prefix: ["sendMessages", `category ${category.name}`],
+      func: "sendMessages",
+      data: { category: category.name },
     })
     const { webhookId, webhookToken } = await this.getWebhook(category.name)
 
@@ -81,9 +83,10 @@ class DiscordPublisher extends MarkdownPublisher {
   }
 
   protected async removeMessages(category: string, ids: string[]): Promise<void> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "DiscordPublisher",
-      prefix: ["removeMessages", `category ${category}`],
+      func: "removeMessages",
+      data: { category },
     })
     logger.debug(`Deleting the message of category ${category} with ids ${ids}`)
     const { webhookId, webhookToken } = await this.getWebhook(category)
@@ -93,9 +96,10 @@ class DiscordPublisher extends MarkdownPublisher {
   }
 
   public async updateChannelName(category: CategoryDocument): Promise<void> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "DiscordPublisher",
-      prefix: ["updateChannelName", `category ${category.name}`],
+      func: "updateChannelName",
+      data: { category: category.name },
     })
     const { webhookId, webhookToken } = await this.getWebhook(category.name)
 

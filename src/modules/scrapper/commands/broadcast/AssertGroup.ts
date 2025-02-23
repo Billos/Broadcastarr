@@ -12,7 +12,7 @@ type AssertGroupResult = {
 
 export class AssertGroup extends CommandClass<AssertGroupCommandArgs> {
   async execute(_page: Page, context: Context<AssertGroupResult>): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "AssertGroup", prefix: ["execute", this.name] })
+    const logger = mainLogger.child({ name: "AssertGroup", func: "execute", data: { name: this.name } })
     const category = templater.renderString(this.args.category, context)
     const country = templater.renderString(this.args.country, context)
     const name = templater.renderString(this.args.name, context)
@@ -25,7 +25,7 @@ export class AssertGroup extends CommandClass<AssertGroupCommandArgs> {
   }
 
   private async assertGroupExists(category: string, country: string, name: string, active: boolean): Promise<boolean> {
-    const logger = mainLogger.getSubLogger({ name: "AssertGroup", prefix: ["assertGroupExists", this.name] })
+    const logger = mainLogger.child({ name: "AssertGroup", func: "assertGroupExists", data: { name: this.name } })
     try {
       await GroupController.getGroup({ name, category: category, country })
       logger.debug(`Group ${name} of country ${country} exists`)

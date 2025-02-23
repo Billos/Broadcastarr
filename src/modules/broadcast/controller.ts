@@ -94,7 +94,7 @@ export async function getDisplayTitle(broadcast: BroadcastDocument): Promise<str
 }
 
 export async function generateM3U8File(id: string): Promise<string> {
-  const logger = mainLogger.getSubLogger({ name: "BroadcastController", prefix: ["generateM3U8File", `id ${id}`] })
+  const logger = mainLogger.child({ name: "BroadcastController", func: "generateM3U8File", data: { id } })
   const broadcast = await BroadcastService.getBroadcast(id)
   const displayTitle = await getDisplayTitle(broadcast)
 

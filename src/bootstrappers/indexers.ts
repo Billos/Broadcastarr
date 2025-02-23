@@ -9,7 +9,7 @@ import { Bootstrapper } from "./bootstrapper"
 
 export class IndexersBootstrapper extends Bootstrapper {
   public async bootstrap(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "IndexersBootstrapper", prefix: ["bootstrap"] })
+    const logger = mainLogger.child({ name: "IndexersBootstrapper", func: "bootstrap" })
     logger.info("Bootstrapping indexers")
 
     const folder = process.env.DATA_FOLDER
@@ -46,7 +46,7 @@ export class IndexersBootstrapper extends Bootstrapper {
   }
 
   private async generateData(raw: string): Promise<IndexerDocument> {
-    const logger = mainLogger.getSubLogger({ name: "IndexersBootstrapper", prefix: ["generateData"] })
+    const logger = mainLogger.child({ name: "IndexersBootstrapper", func: "generateData" })
     logger.info("Generating data for indexer")
     const data = JSON5.parse(raw) as IndexerDocument
     return {

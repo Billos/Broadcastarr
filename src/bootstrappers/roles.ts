@@ -5,7 +5,7 @@ import { Bootstrapper } from "./bootstrapper"
 
 export class RolesBootstrapper extends Bootstrapper {
   public async bootstrap(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "RolesBootstrapper", prefix: ["bootstrap"] })
+    const logger = mainLogger.child({ name: "RolesBootstrapper", func: "bootstrap" })
 
     // Mandatory roles
     const roles = [

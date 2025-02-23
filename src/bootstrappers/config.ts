@@ -4,7 +4,7 @@ import { Bootstrapper } from "./bootstrapper"
 
 export class ConfigBootstrapper extends Bootstrapper {
   public async bootstrap(): Promise<void> {
-    const logger = mainLogger.getSubLogger({ name: "ConfigBootstrapper", prefix: ["bootstrap"] })
+    const logger = mainLogger.child({ name: "ConfigBootstrapper", func: "bootstrap" })
 
     logger.info("Bootstrapping config for Discord webhooks")
     // discordWebhooks will be set as "CategoryA:id:token,CategoryB:id:token"

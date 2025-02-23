@@ -16,7 +16,7 @@ const userInstance = axios.create({
 
 // axios capture error
 async function retry(error: AxiosError) {
-  const logger = mainLogger.getSubLogger({ name: "Discord", prefix: ["retry"] })
+  const logger = mainLogger.child({ name: "Discord", func: "retry" })
   // If we hit the rate limit, we wait 500ms and retry
   if (error.response.status === 429) {
     // const retryAfter = error.response.headers["retry-after"]
@@ -57,12 +57,12 @@ userInstance.interceptors.response.use(
 // Send a message to Discord
 // Different errors may occur (see https://discord.com/developers/docs/topics/opcodes-and-status-codes#http)
 async function sendDiscordMessage(webhookId: string, webhookToken: string, content: string): Promise<string> {
-  const logger = mainLogger.getSubLogger({ name: "Discord", prefix: ["sendDiscordMessage", `content ${content}`] })
+  const logger = mainLogger.child({ name: "Discord", func: "sendDiscordMessage", data: { content } })
   if (content.length > 2000) {
     logger.warn(`Message is too long: ${content.length} characters`)
   }
   const url = join(webhookId, `${webhookToken}?wait=true`)
-  logger.trace("Sending message")
+  logger.silly("Sending message")
   const data: Record<string, string> = { content }
   if (env.publishers.discord.botAvatar) {
     data.avatar_url = env.publishers.discord.botAvatar
@@ -77,18 +77,15 @@ async function sendDiscordMessage(webhookId: string, webhookToken: string, conte
 }
 
 async function deleteWebhookMessage(webhookId: string, webhookToken: string, messageId: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({
-    name: "Discord",
-    prefix: ["deleteWebhookMessage", `messageId ${messageId}`],
-  })
-  logger.trace("Deleting webhook message")
+  const logger = mainLogger.child({ name: "Discord", func: "deleteWebhookMessage", data: { messageId } })
+  logger.silly("Deleting webhook message")
   const url = join(webhookId, webhookToken, "messages", messageId)
   await botInstance.delete(url)
 }
 
 async function getChannelIdWebhook(webhookId: string, webhookToken: string): Promise<string> {
-  const logger = mainLogger.getSubLogger({ name: "Discord", prefix: ["getChannelIdWebhook", `webhookId ${webhookId}`] })
-  logger.trace("Getting channel id")
+  const logger = mainLogger.child({ name: "Discord", func: "getChannelIdWebhook", data: { webhookId } })
+  logger.silly("Getting channel id")
   const url = join(webhookId, webhookToken)
   const {
     data: { channel_id },
@@ -97,15 +94,8 @@ async function getChannelIdWebhook(webhookId: string, webhookToken: string): Pro
 }
 
 async function updateChannelName(channelId: string, name: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({
-    name: "Discord",
-    prefix: [
-      "updateChannelName",
-      `channelId ${channelId}`,
-      `name ${name}`,
-    ],
-  })
-  logger.trace("Updating channel name")
+  const logger = mainLogger.child({ name: "Discord", func: "updateChannelName", data: { channelId, name } })
+  logger.silly("Updating channel name")
   try {
     await userInstance.patch(channelId, { name })
   } catch (error) {
@@ -114,30 +104,23 @@ async function updateChannelName(channelId: string, name: string): Promise<void>
 }
 
 async function deleteMessage(channelId: string, messageId: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({
-    name: "Discord",
-    prefix: [
-      "deleteMessage",
-      `channelId ${channelId}`,
-      `messageId ${messageId}`,
-    ],
-  })
-  logger.trace("Deleting message")
+  const logger = mainLogger.child({ name: "Discord", func: "deleteMessage", data: { channelId, messageId } })
+  logger.silly("Deleting message")
   const url = join(channelId, "messages", messageId)
   await userInstance.delete(url)
 }
 
 async function getChannelMessages(channelId: string, after?: string): Promise<string[]> {
-  const logger = mainLogger.getSubLogger({ name: "Discord", prefix: ["getChannelMessages", `channelId ${channelId}`] })
-  logger.trace("Getting messages from channel")
+  const logger = mainLogger.child({ name: "Discord", func: "getChannelMessages", data: { channelId } })
+  logger.silly("Getting messages from channel")
   const url = join(channelId, `messages?limit=100${after ? `&after=${after}` : ""}`)
   const res = await userInstance.get<{ id: string }[]>(url)
   return res.data.map((message) => message.id)
 }
 
 async function emptyChannel(channelId: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "Discord", prefix: ["emptyChannel", `channelId ${channelId}`] })
-  logger.trace("Emptying channel")
+  const logger = mainLogger.child({ name: "Discord", func: "emptyChannel", data: { channelId } })
+  logger.silly("Emptying channel")
 
   // A getChannelMessages will return the last 100 messages, we want to delete all of them
   let messages = await getChannelMessages(channelId)

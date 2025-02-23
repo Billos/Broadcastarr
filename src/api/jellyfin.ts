@@ -60,7 +60,7 @@ instance.interceptors.request.use((config) => {
 let savedServerId: string = null
 async function getServerId(): Promise<string> {
   if (!savedServerId) {
-    const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["getServerId"] })
+    const logger = mainLogger.child({ name: "Jellyfin", func: "getServerId" })
     logger.debug("getServerId")
     const {
       data: { Id },
@@ -71,7 +71,7 @@ async function getServerId(): Promise<string> {
 }
 
 async function waitTaskDone(taskId: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["waitTaskDone"] })
+  const logger = mainLogger.child({ name: "Jellyfin", func: "waitTaskDone" })
   logger.debug("Awaiting")
   const task = await instance.get<ScheduledTasks>(`/ScheduledTasks/${taskId}`)
   if (task.data.State === "Idle") {
@@ -84,7 +84,7 @@ async function waitTaskDone(taskId: string): Promise<void> {
 }
 
 async function refreshJellyfinTV(): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["refreshJellyfinTV"] })
+  const logger = mainLogger.child({ name: "Jellyfin", func: "refreshJellyfinTV" })
   logger.info("Start")
   // Get all the scheduled tasks
   const scheduledTasks = await instance.get<ScheduledTasks[]>("/ScheduledTasks")
@@ -98,21 +98,21 @@ async function refreshJellyfinTV(): Promise<void> {
 }
 
 async function addItemToCollection(collectionId: string, itemId: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "Jellyfin",
-    prefix: [
-      "addItemToCollection",
-      `collectionId ${collectionId}`,
-      `itemId ${itemId}`,
-    ],
+    func: "addItemToCollection",
+    data: {
+      collectionId,
+      itemId,
+    },
   })
   logger.debug("Query")
   await instance.post(`/Collections/${collectionId}/Items?Ids=${itemId}`)
 }
 
 async function getCollectionsCollectionFolders(): Promise<CollectionFolder> {
-  const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["getCollectionsCollectionFolders"] })
-  logger.trace("getCollectionsCollectionFolders")
+  const logger = mainLogger.child({ name: "Jellyfin", func: "getCollectionsCollectionFolders" })
+  logger.silly("getCollectionsCollectionFolders")
   const {
     data: { Items: collectionFolders },
   } = await instance.get<ItemSearch<CollectionFolder>>("/Items?Recursive=true&IncludeItemTypes=CollectionFolder")
@@ -120,11 +120,12 @@ async function getCollectionsCollectionFolders(): Promise<CollectionFolder> {
 }
 
 async function getCollection(collectionName: string): Promise<Collection> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "Jellyfin",
-    prefix: ["getCollection", `collectionName ${collectionName}`],
+    func: "getCollection",
+    data: { collectionName },
   })
-  logger.trace("getCollection")
+  logger.silly("getCollection")
   const { Id } = await getCollectionsCollectionFolders()
   const name = `Broadcastarr ${collectionName}`
   const {
@@ -134,9 +135,10 @@ async function getCollection(collectionName: string): Promise<Collection> {
 }
 
 async function createCollection(collectionName: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "Jellyfin",
-    prefix: ["createCollection", `collectionName ${collectionName}`],
+    func: "createCollection",
+    data: { collectionName },
   })
   logger.info("createCollection")
   const name = `Broadcastarr ${collectionName}`
@@ -145,9 +147,10 @@ async function createCollection(collectionName: string): Promise<void> {
 }
 
 async function setItemImage(collectionName: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "Jellyfin",
-    prefix: ["setItemImage", `collectionName ${collectionName}`],
+    func: "setItemImage",
+    data: { collectionName },
   })
   logger.debug("setItemImage")
   // Check if the image exists
@@ -176,8 +179,8 @@ async function setItemImage(collectionName: string): Promise<void> {
 }
 
 async function getChannels(): Promise<TvChannel[]> {
-  const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["getChannels"] })
-  logger.trace("getChannels")
+  const logger = mainLogger.child({ name: "Jellyfin", func: "getChannels" })
+  logger.silly("getChannels")
   const {
     data: { Items: channels },
   } = await instance.get<ItemSearch<TvChannel>>("/LiveTv/Channels")
@@ -185,14 +188,14 @@ async function getChannels(): Promise<TvChannel[]> {
 }
 
 async function getChannelId(channelName: string): Promise<string> {
-  const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["getChannelId", `channelName ${channelName}`] })
-  logger.trace("getChannelId")
+  const logger = mainLogger.child({ name: "Jellyfin", func: "getChannelId", data: { channelName } })
+  logger.silly("getChannelId")
   const channels = await getChannels()
   return channels.find((channel) => channel.Name.includes(channelName))?.Id
 }
 
 async function getTvTunerHostsPaths(): Promise<string[]> {
-  const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["getTvTunerHostsPaths"] })
+  const logger = mainLogger.child({ name: "Jellyfin", func: "getTvTunerHostsPaths" })
   logger.debug("getTvTunerHostsPaths")
   const {
     data: { TunerHosts },
@@ -201,16 +204,17 @@ async function getTvTunerHostsPaths(): Promise<string[]> {
 }
 
 async function removeTunerHost(tunerHostId: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "Jellyfin",
-    prefix: ["removeTunerHost", `tunerHostId ${tunerHostId}`],
+    func: "removeTunerHost",
+    data: { tunerHostId },
   })
   logger.debug("removeTunerHost")
   await instance.delete(`/LiveTv/TunerHosts?id=${tunerHostId}`)
 }
 
 async function clearTvTunerHosts(): Promise<void> {
-  const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["clearTvTunerHosts"] })
+  const logger = mainLogger.child({ name: "Jellyfin", func: "clearTvTunerHosts" })
   logger.debug("clearTvTunerHosts")
   const {
     data: { TunerHosts },
@@ -224,7 +228,7 @@ async function clearTvTunerHosts(): Promise<void> {
 }
 
 async function createTunerHost(Url: string): Promise<string> {
-  const logger = mainLogger.getSubLogger({ name: "Jellyfin", prefix: ["createTunerHost", `Url ${Url}`] })
+  const logger = mainLogger.child({ name: "Jellyfin", func: "createTunerHost", data: { Url } })
   logger.debug("createTunerHost")
   const tunerHost = await instance.post<Item>("/LiveTv/TunerHosts", {
     DeviceId: null,

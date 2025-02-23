@@ -30,13 +30,13 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
     accessReferer?: string,
     cb?: (page: Page, index: number) => Promise<void>,
   ): Promise<HTTPResponse> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "BroadcastInterceptor",
-      prefix: [
-        "interceptResponse",
-        `link ${link}`,
-        `search ${search}`,
-      ],
+      func: "interceptResponse",
+      data: {
+        link,
+        search,
+      },
     })
     logger.debug(`Hitting url ${link} with search ${search} and timeout ${timeout} and accessReferer ${accessReferer}`)
     const browser = await this.getBrowser()
@@ -96,13 +96,13 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
   }
 
   private async interceptM3U8(link: string, accessReferer?: string, cb?: StreamDataCallback): Promise<StreamData> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "BroadcastInterceptor",
-      prefix: [
-        "interceptM3U8",
-        `name ${this.broadcastName}`,
-        `link ${link}`,
-      ],
+      func: "interceptM3U8",
+      data: {
+        name: this.broadcastName,
+        link,
+      },
     })
     logger.debug("Intercepting")
     const response = await this.interceptResponse(link, "m3u8", 20000, accessReferer, cb)
@@ -145,9 +145,10 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
     accessReferer?: string,
     cb?: (page: Page, index: number) => Promise<void>,
   ): Promise<StreamData> {
-    const logger = mainLogger.getSubLogger({
+    const logger = mainLogger.child({
       name: "BroadcastInterceptor",
-      prefix: ["getStreamData", `name ${this.broadcastName}`],
+      func: "getStreamData",
+      data: { name: this.broadcastName },
     })
 
     // Filter the links that are valid URL

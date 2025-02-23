@@ -8,13 +8,13 @@ export async function cancelIndexCategory(category: string, indexerName: string)
 }
 
 export async function indexCategory(category: string, indexerName: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "IndexCategoryTrigger",
-    prefix: [
-      "indexCategory",
-      `category ${category}`,
-      `indexerName ${indexerName}`,
-    ],
+    func: "indexCategory",
+    data: {
+      category,
+      indexerName,
+    },
   })
   const delay = await ConfigController.getNumberConfig("delay-simple-IndexCategory")
   // Getting the existing job that does not have a repeatInterval value
@@ -28,13 +28,13 @@ export async function indexCategory(category: string, indexerName: string): Prom
 }
 
 export async function renewIndexCategory(category: string, indexerName: string): Promise<void> {
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "IndexCategoryTrigger",
-    prefix: [
-      "renewIndexCategory",
-      `category ${category}`,
-      `indexerName ${indexerName}`,
-    ],
+    func: "renewIndexCategory",
+    data: {
+      category,
+      indexerName,
+    },
   })
   const delay = await ConfigController.getNumberConfig("delay-regular-IndexCategory")
   logger.info(`Renewing the task in ${delay / 60} minutes`)

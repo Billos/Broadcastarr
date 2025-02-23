@@ -30,7 +30,7 @@ export class TemplateRenderer extends Environment {
   }
 
   override renderString(template: string, context: Record<string, any>): string {
-    const logger = mainLogger.getSubLogger({ name: "TemplateRenderer", prefix: ["renderString"] })
+    const logger = mainLogger.child({ name: "TemplateRenderer", func: "renderString" })
     const templateRegex = /({{.*}})|({%.*%})/g
     if (!template || !template.match(templateRegex)) {
       return template

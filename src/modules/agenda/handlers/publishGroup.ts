@@ -9,13 +9,14 @@ import { Triggers } from "../triggers"
 
 export async function handler(job: Job<PublishGroupOptions>): Promise<void> {
   const { group, category, country } = job.attrs.data
-  const logger = mainLogger.getSubLogger({
+  const logger = mainLogger.child({
     name: "PublishGroupHandler",
-    prefix: [
-      "handler",
-      `groub ${group}`,
-      `category ${category}`,
-    ],
+    func: "handler",
+    data: {
+      group,
+      category,
+      country,
+    },
   })
   logger.info("Publishing group")
 
