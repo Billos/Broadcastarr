@@ -31,7 +31,8 @@
     [
       "@codedependant/semantic-release-docker",
       {
-        "dockerProject": "billos"
+        "dockerProject": "billos",
+        "dockerTags": ["{{version}}", "latest"]
       }
     ]
 
