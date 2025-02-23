@@ -23,10 +23,10 @@
     "format-check": "prettier . --check",
     "lint": "eslint src",
     "release": "semantic-release",
-    "server": "yarn start src/server.js",
-    "start": "tsx",
-    "type-check": "tsc --noEmit",
-    "worker": "sleep 1; yarn start src/worker.js"
+    "start:server": "node build/server.js",
+    "start:worker": "sleep 1; node build/worker.js",
+    "start:bootstrap": "node build/bootstrap.js",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@hokify/agenda": "^6.3.0",
