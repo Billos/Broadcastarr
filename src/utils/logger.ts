@@ -83,7 +83,7 @@ const logger = createLogger({
     format.printf(
       (info) =>
         `${info.level} - ${info.timestamp} - ${info.name} - ${info.func} : ${info.message}` +
-        `${info.data ? `\n${info.data}` : ""}` +
+        `${env.logData && info.data ? `\n${info.data}` : ""}` +
         "",
     ),
   ),

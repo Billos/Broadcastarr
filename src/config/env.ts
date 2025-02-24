@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid"
 // Read .env file
 export default {
   logLevel: process.env.LOG_LEVEL,
+  logData: process.env.LOG_DATA === "true",
   nodeUuid: uuidv4(),
   dev: process.env.NODE_ENV === "development",
   devIndexer: process.env.INDEXER,
