@@ -1,32 +1,49 @@
-import { readdirSync } from "fs"
-import { join } from "path"
-
 import mainLogger from "../utils/logger"
+import addCategory from "./commands/addCategory"
+import addRole from "./commands/addRole"
+import indexCategory from "./commands/indexCategory"
+import removeCategory from "./commands/removeCategory"
+import setCategoryEmoji from "./commands/setCategoryEmoji"
+import setConfig from "./commands/setConfig"
+import setGroupEmoji from "./commands/setGroupEmoji"
+import togglegroup from "./commands/togglegroup"
+import toggleindexer from "./commands/toggleindexer"
+import togglepublisher from "./commands/togglepublisher"
+import togglereleaser from "./commands/togglereleaser"
 import { Command, CommandGenerator, isCommand, isCommandGenerator } from "./type"
 
 const logger = mainLogger.child({ name: "Commands", func: "index" })
 
+const cmds = [
+  addCategory,
+  addRole,
+  indexCategory,
+  removeCategory,
+  setCategoryEmoji,
+  setConfig,
+  setGroupEmoji,
+  togglegroup,
+  toggleindexer,
+  togglepublisher,
+  togglereleaser,
+]
+
 const commands: Command[] = []
 const commandGenerators: CommandGenerator[] = []
 
-const files = readdirSync(join(__dirname, "commands"))
-logger.info(`Found ${files.length} commands: ${files.join(", ")}`)
 // Importing the classes
-for (const file of files) {
+for (const command of cmds) {
   try {
-    const command = require(`./commands/${file}`).default
     if (isCommandGenerator(command)) {
-      logger.info(`Importing Command ${file} as a generator`)
       commandGenerators.push(command)
       // Check if the instance is a valid
     } else if (isCommand(command)) {
-      logger.info(`Importing Command ${file}`)
       // Check if the instance is a valid
       isCommand(command)
       commands.push(command)
     }
   } catch (error) {
-    logger.error(`Error importing Command ${file}`, error)
+    logger.error("Error importing Command", error)
   }
 }
 
