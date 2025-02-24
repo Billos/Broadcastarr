@@ -172,6 +172,8 @@ LOG_LEVEL=
 PORT=
 # The folder where the M3U8 files are stored, must be accessible by the Jellyfin container too at the same path
 M3U8_FOLDER=
+# The folder where the images are stored
+IMAGEs_FOLDER=
 
 # The timezone of the server
 TZ=

@@ -16,6 +16,7 @@ export default {
   },
   remoteUrl: process.env.BROADCASTARR_REMOTE_URL,
   m3u8Destination: process.env.M3U8_FOLDER,
+  imagesFolder: process.env.IMAGES_FOLDER,
   browser: {
     userAgent: process.env.USER_AGENT,
   },

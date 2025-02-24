@@ -1,5 +1,6 @@
 import puppeteer, { Browser, Page } from "puppeteer"
 
+import env from "../../config/env"
 import mainLogger from "../../utils/logger"
 
 export abstract class Scrapper {
@@ -32,6 +33,6 @@ export abstract class Scrapper {
   }
 
   public async screenshot(page: Page, filename: string = `${Date.now()}`): Promise<void> {
-    await page.screenshot({ path: `/data/images/${filename}.png`, fullPage: true })
+    await page.screenshot({ path: `${env.imagesFolder}/${filename}.png`, fullPage: true })
   }
 }

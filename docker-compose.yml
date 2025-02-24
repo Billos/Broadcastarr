@@ -4,6 +4,7 @@ services:
     command: "start:server"
     volumes:
       - ${M3U8_FOLDER}:${M3U8_FOLDER}:rw
+      - ${IMAGES_FOLDER}:${IMAGES_FOLDER}:rw
     env_file:
       - .env
     environment:

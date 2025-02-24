@@ -36,7 +36,7 @@ async function worker() {
     await Triggers.indexCategory(env.devCategory, env.devIndexer)
     await ConfigController.setConfig("delay-simple-IndexCategory", value)
     // Remove all images in /data/images/${filename}.png
-    await emptyFolder("/data/images/", "png")
+    await emptyFolder(env.imagesFolder, "png")
   }
 }
 
