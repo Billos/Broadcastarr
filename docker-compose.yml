@@ -9,6 +9,7 @@ services:
     environment:
       NODE_ENV: development
       LOG_LEVEL: debug
+      LOG_DATA: true
       MONGO_URL: mongodb://mongo
       MONGO_AGENDA_DB: agenda
       MONGO_DB: broadcastarr
