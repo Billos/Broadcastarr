@@ -1,5 +1,5 @@
 import { DateTime } from "luxon"
-import { ElementHandle, Page } from "puppeteer"
+import { ElementHandle, Page } from "puppeteer-core"
 
 import mainLogger from "../../utils/logger"
 import SilentError from "../../utils/silentError"

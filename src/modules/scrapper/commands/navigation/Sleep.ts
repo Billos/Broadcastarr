@@ -1,4 +1,4 @@
-import { Page } from "puppeteer"
+import { Page } from "puppeteer-core"
 
 import sleep from "../../../../utils/sleep"
 import { SleepCommandArgs } from "../../../indexer"

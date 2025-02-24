@@ -1,4 +1,4 @@
-import puppeteer, { Browser, Page } from "puppeteer"
+import puppeteer, { Browser, Page } from "puppeteer-core"
 
 import env from "../../config/env"
 import mainLogger from "../../utils/logger"
@@ -13,17 +13,18 @@ export abstract class Scrapper {
       logger.info("Creating a new browser")
       const args = [
         "--disable-gpu",
-        "--single-process",
-        "--autoplay-policy=no-user-gesture-required",
-        "--disable-web-security",
-        "--disable-features=IsolateOrigins",
-        "--disable-site-isolation-trials",
+        // "--single-process",
+        // "--autoplay-policy=no-user-gesture-required",
+        // "--disable-web-security",
+        // "--disable-features=IsolateOrigins",
+        // "--disable-site-isolation-trials",
+        // "--disable-dev-shm-usage",
         "--no-sandbox",
       ]
 
       this.browser = await puppeteer.launch({
-        headless: true,
-        browser: "firefox",
+        browser: "chrome",
+        executablePath: "/usr/bin/chromium-browser",
         args,
       })
     }

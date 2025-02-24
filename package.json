@@ -40,7 +40,7 @@
     "mongoose": "^8.8.3",
     "node-cache": "^5.1.2",
     "nunjucks": "^3.2.4",
-    "puppeteer": "^23.11.1",
+    "puppeteer-core": "^24.2.1",
     "showdown": "^2.1.0",
     "uuid": "^11.0.3",
     "winston": "^3.17.0"

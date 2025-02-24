@@ -1,5 +1,5 @@
 import { DateTime } from "luxon"
-import { HTTPResponse, Page } from "puppeteer"
+import { HTTPResponse, Page } from "puppeteer-core"
 
 import mainLogger from "../../utils/logger"
 import PageScrapper from "./scrapper"

@@ -1,6 +1,6 @@
 import { DateTime } from "luxon"
 import { Types } from "mongoose"
-import { Page } from "puppeteer"
+import { Page } from "puppeteer-core"
 
 import * as TheSportsDb from "../../api/theSportsDB"
 import mainLogger from "../../utils/logger"

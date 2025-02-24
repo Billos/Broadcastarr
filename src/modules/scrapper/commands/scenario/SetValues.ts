@@ -1,6 +1,6 @@
 import set from "lodash/set"
 import { DateTime } from "luxon"
-import { Page } from "puppeteer"
+import { Page } from "puppeteer-core"
 
 // import mainLogger from "../../../../utils/logger"
 import { SetValueCommandArgs } from "../../../indexer"

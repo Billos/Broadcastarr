@@ -1,4 +1,4 @@
-import { Page } from "puppeteer"
+import { Page } from "puppeteer-core"
 
 import mainLogger from "../../../../utils/logger"
 import { ClickCommandArgs } from "../../../indexer"

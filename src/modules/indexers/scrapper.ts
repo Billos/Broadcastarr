@@ -1,5 +1,5 @@
 import { DateTime } from "luxon"
-import puppeteer, { Browser, ElementHandle, Page } from "puppeteer"
+import puppeteer, { Browser, ElementHandle, Page } from "puppeteer-core"
 import { v4 as uuidv4 } from "uuid"
 
 import env from "../../config/env"

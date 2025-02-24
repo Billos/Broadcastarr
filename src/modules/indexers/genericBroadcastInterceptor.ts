@@ -1,4 +1,4 @@
-import { ElementHandle } from "puppeteer"
+import { ElementHandle } from "puppeteer-core"
 
 import mainLogger from "../../utils/logger"
 import BroadcastInterceptor, { StreamData, StreamDataCallback } from "./broadcastInterceptor"

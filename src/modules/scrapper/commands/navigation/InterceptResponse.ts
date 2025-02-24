@@ -1,5 +1,5 @@
 import { Types } from "mongoose"
-import { HTTPResponse, Page } from "puppeteer"
+import { HTTPResponse, Page } from "puppeteer-core"
 
 import { ExtractValue, InterceptResponseCommandArgs } from "../../../indexer"
 import { templater } from "../../../templater"

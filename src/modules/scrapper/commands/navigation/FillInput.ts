@@ -1,4 +1,4 @@
-import { Page } from "puppeteer"
+import { Page } from "puppeteer-core"
 
 import { FillInputCommandArgs } from "../../../indexer"
 import { templater } from "../../../templater"
