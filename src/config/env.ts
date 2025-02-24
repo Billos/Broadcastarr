@@ -1,3 +1,4 @@
+import { SupportedBrowser } from "puppeteer-core"
 import { v4 as uuidv4 } from "uuid"
 
 // Read .env file
@@ -19,6 +20,8 @@ export default {
   imagesFolder: process.env.IMAGES_FOLDER,
   browser: {
     userAgent: process.env.USER_AGENT,
+    browser: process.env.BROWSER as SupportedBrowser,
+    executablePath: process.env.BROWSER_EXECUTABLE_PATH,
   },
   publishers: {
     discord: {

@@ -23,8 +23,8 @@ export abstract class Scrapper {
       ]
 
       this.browser = await puppeteer.launch({
-        browser: "chrome",
-        executablePath: "/usr/bin/chromium-browser",
+        browser: env.browser.browser,
+        executablePath: env.browser.executablePath,
         args,
       })
     }
