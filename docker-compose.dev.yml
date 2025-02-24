@@ -1,13 +1,14 @@
 services:
   server:
-    image: docker.io/billos/broadcastarr:1.4.0
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: server
     command: "dev:server"
     volumes:
-      - ./src:/app/src
+      - .:/app
       - ${M3U8_FOLDER}:${M3U8_FOLDER}:rw
-      - ./package.json:/app/package.json
-      - ./tsconfig.json:/app/tsconfig.json
+      - ${IMAGES_FOLDER}:${IMAGES_FOLDER}:rw
     env_file:
       - .env
       - .env.dev
@@ -18,6 +19,8 @@ services:
       MONGO_URL: mongodb://mongo
       MONGO_AGENDA_DB: agenda
       MONGO_DB: broadcastarr
+      INDEXER: BetclicCommand
+      CATEGORY: Football
     deploy:
       resources:
         limits:

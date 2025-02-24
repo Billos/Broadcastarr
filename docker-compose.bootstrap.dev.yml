@@ -1,6 +1,8 @@
 services:
   bootstrap:
-    image: docker.io/billos/broadcastarr:1.4.0
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: "dev:bootstrap"
     env_file:
       - .env
@@ -12,17 +14,14 @@ services:
       MONGO_URL: mongodb://mongo
       MONGO_AGENDA_DB: agenda
       MONGO_DB: broadcastarr
-      DATA_FOLDER: /data
+      DATA_FOLDER: /app/data
     deploy:
       resources:
         limits:
           memory: 4g
     restart: unless-stopped
     volumes:
-      - ./data:/data
-      - ./src:/app/src
-      - ./package.json:/app/package.json
-      - ./tsconfig.json:/app/tsconfig.json
+      - ./:/app
     depends_on:
       mongo:
         condition: service_healthy
