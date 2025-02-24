@@ -1,3 +1,25 @@
+# [1.5.0](https://github.com/Billos/Broadcastarr/compare/1.4.0...1.5.0) (2025-02-24)
+
+
+### Bug Fixes
+
+* **dependencies:** migrate from puppeteer to puppeteer-core for improved compatibility ([8629b44](https://github.com/Billos/Broadcastarr/commit/8629b44e641ae596719282c28e3fb2df48a309e5))
+* **docker:** update commands in docker-compose files to use 'start' prefix ([fc85373](https://github.com/Billos/Broadcastarr/commit/fc85373d31815f9694f958a01c0b65db334d20c3))
+* **legacy:** moveLEGACY.md file ([fbe21de](https://github.com/Billos/Broadcastarr/commit/fbe21de99f8db7630e68b7e01e67cd0ccc7639f0))
+* **logger:** replace tslog with winston logger and review child generation ([500c931](https://github.com/Billos/Broadcastarr/commit/500c931cb7dee9cd9150800812a8518ca3188449))
+* **publishers:** comment out Matrix publisher creation and deletion ([c071e6e](https://github.com/Billos/Broadcastarr/commit/c071e6ebb6f7972d54a76f6f44321c838ea6004f))
+* **readme:** update Readme ([91423bd](https://github.com/Billos/Broadcastarr/commit/91423bdc2d8324eb47efefb35f73551d25db54f1))
+* **readme:** Update README.md ([3aab03f](https://github.com/Billos/Broadcastarr/commit/3aab03fcaf8b850adee16bdd0b612316e95acfcd))
+* **releaserc:** add dockerTags for versioning in release configuration ([c3ded5e](https://github.com/Billos/Broadcastarr/commit/c3ded5e017d1d1d91ab92f805d64037443072afe))
+* **tsconfig:** update TypeScript configuration to target ESNext and use NodeNext module resolution ([bbd9506](https://github.com/Billos/Broadcastarr/commit/bbd95069d81e136e121dc37226e72ee33d0e8ff9))
+
+
+### Features
+
+* **env:** add IMAGES_FOLDER variable to manage image storage path ([1d900f0](https://github.com/Billos/Broadcastarr/commit/1d900f053f74c0317dd404b326b9cf55b855ac73))
+* **logger:** add LOG_DATA environment variable to control log data output ([b339133](https://github.com/Billos/Broadcastarr/commit/b339133520648015a85fa2231ed9a53f6891bdfd))
+* **publishers:** remove Matrix implementation and related dependencies ([031548a](https://github.com/Billos/Broadcastarr/commit/031548a3b312eb825ecd493df5d57633110ab4b0))
+
 # [1.4.0](https://github.com/Billos/Broadcastarr/compare/1.3.0...1.4.0) (2025-01-20)
 
 
