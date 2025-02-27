@@ -9,7 +9,11 @@ import { SetValuesCommand } from "../scenario/SetValues"
 
 export class GetValuesCommand extends CommandClass<GetValueCommandArgs> {
   async execute(page: Page, context: Context): Promise<void> {
-    const logger = mainLogger.child({ name: "GetValuesCommand", func: "execute", data: { name: this.name } })
+    const logger = mainLogger.child({
+      name: "GetValuesCommand",
+      func: "execute",
+      data: { name: this.name, url: page.url() },
+    })
 
     const { root, values } = this.args
     let rootElt: ElementHandle | Page = page
@@ -48,20 +52,18 @@ export class GetValuesCommand extends CommandClass<GetValueCommandArgs> {
           value = templater.renderString(valueIfFailed, context)
         }
       } else {
+        logger.debug(`Getting value for selector: ${selectorValue}, attribute: ${attributeValue}, rootElt: ${rootElt}`)
         value = await this.getValue(rootElt, selectorValue, attributeValue)
       }
 
       // Apply replacements
       if (replacements) {
-        // console.log("========================")
-        // console.log("Initial value:", value)
         for (const { from, to } of replacements) {
           const fromValue = templater.renderString(from, context)
           const toValue = templater.renderString(to, context)
           const regex = new RegExp(fromValue, "g")
           value = value.replace(regex, toValue)
         }
-        // console.log("Final value:", value)
       }
 
       // Store the value in the scenario context

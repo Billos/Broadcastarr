@@ -53,7 +53,9 @@ export class RunScenarioCommand extends CommandClass<RunScenarioCommandArgs> {
 
       // Take a screenshot at the end of the command
       if (command.next) {
+        logger.debug(`Next command: ${command.next}`)
         commandName = templater.renderString(command.next, context)
+        logger.debug(`Next command rendered: ${commandName}`)
       } else {
         commandName = null
       }
