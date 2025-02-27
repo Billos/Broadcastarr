@@ -19,7 +19,7 @@ services:
       MONGO_URL: mongodb://mongo
       MONGO_AGENDA_DB: agenda
       MONGO_DB: broadcastarr
-      DEV_NDEXER: BetclicCommand
+      DEV_INDEXER: Streamed
       DEV_CATEGORY: Football
     deploy:
       resources:
