@@ -7,8 +7,8 @@ export default {
   logData: process.env.LOG_DATA === "true",
   nodeUuid: uuidv4(),
   dev: process.env.NODE_ENV === "development",
-  devIndexer: process.env.INDEXER,
-  devCategory: process.env.CATEGORY,
+  devIndexer: process.env.DEV_INDEXER,
+  devCategory: process.env.DEV_CATEGORY,
   port: parseInt(process.env.PORT, 10),
   mongo: {
     url: process.env.MONGO_URL,

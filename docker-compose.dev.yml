@@ -19,8 +19,8 @@ services:
       MONGO_URL: mongodb://mongo
       MONGO_AGENDA_DB: agenda
       MONGO_DB: broadcastarr
-      INDEXER: BetclicCommand
-      CATEGORY: Football
+      DEV_NDEXER: BetclicCommand
+      DEV_CATEGORY: Football
     deploy:
       resources:
         limits:
