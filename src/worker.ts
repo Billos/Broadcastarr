@@ -29,13 +29,13 @@ async function worker() {
   await agenda.start()
 
   // If we are in dev mode, we can index the dev category right away
-  if (env.dev) {
+  if (env.dev && env.devCategory && env.devIndexer) {
     await agenda.cancel({})
     const { value } = await ConfigController.getConfig("delay-simple-IndexCategory")
     await ConfigController.setConfig("delay-simple-IndexCategory", "0")
     await Triggers.indexCategory(env.devCategory, env.devIndexer)
     await ConfigController.setConfig("delay-simple-IndexCategory", value)
-    // Remove all images in /data/images/${filename}.png
+    // Remove all images in imagesFolder
     await emptyFolder(env.imagesFolder, "png")
   }
 }
