@@ -19,9 +19,9 @@ export class CounterCommand extends CommandClass<CounterCommandArgs> {
 
     let rootElt: ElementHandle | Page = page
     if (root) {
-      await page.waitForSelector(root)
-      const selector = templater.renderString(root, context)
-      rootElt = await page.$(selector)
+      const rootSelector = templater.renderString(root, context)
+      await page.waitForSelector(rootSelector)
+      rootElt = await page.$(rootSelector)
     }
     const selectorValue = templater.renderString(selector, context)
 
