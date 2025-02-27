@@ -8,6 +8,7 @@ import { GetValuesCommand } from "./navigation/GetValues"
 import { GoToPageCommand } from "./navigation/GoToPage"
 import { InterceptResponseCommand } from "./navigation/InterceptResponse"
 import { SleepCommand } from "./navigation/Sleep"
+import { PrintCommand } from "./scenario/Print"
 import { RunScenarioCommand } from "./scenario/RunScenario"
 import { SetValuesCommand } from "./scenario/SetValues"
 
@@ -26,6 +27,7 @@ const commandClasses: Record<string, new (...args: any[]) => Command> = {
   // Scenario
   RunScenario: RunScenarioCommand,
   SetValues: SetValuesCommand,
+  Print: PrintCommand,
 }
 
 export function generateCommand(command: CommandDocument, name: string): Command {

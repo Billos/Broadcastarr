@@ -226,6 +226,15 @@ const InterceptResponseCommandSchema = new mongoose.Schema(
   { _id: false },
 )
 
+const PrintCommandSchema = new mongoose.Schema(
+  {
+    args: {
+      value: { type: String, required: true },
+    },
+  },
+  { _id: false },
+)
+
 CommandSchema.discriminator("GoToPage", GoToPageCommandSchema)
 CommandSchema.discriminator("Click", ClickCommandSchema)
 CommandSchema.discriminator("FillInput", FillInputCommandSchema)
@@ -237,6 +246,7 @@ CommandSchema.discriminator("SetValues", SetValuesCommandSchema)
 CommandSchema.discriminator("AssertGroup", AssertGroupCommandSchema)
 CommandSchema.discriminator("GenerateBroadcast", GenerateBroadcastCommandSchema)
 CommandSchema.discriminator("InterceptResponse", InterceptResponseCommandSchema)
+CommandSchema.discriminator("Print", PrintCommandSchema)
 
 export type GoToPageCommandArgs = InferSchemaType<typeof GoToPageCommandSchema>["args"]
 
@@ -260,6 +270,8 @@ export type GenerateBroadcastCommandArgs = InferSchemaType<typeof GenerateBroadc
 
 export type InterceptResponseCommandArgs = InferSchemaType<typeof InterceptResponseCommandSchema>["args"]
 
+export type PrintCommandArgs = InferSchemaType<typeof PrintCommandSchema>["args"]
+
 export type CommandDocument = InferSchemaType<typeof CommandSchema> &
   (
     | InferSchemaType<typeof GoToPageCommandSchema>
@@ -273,6 +285,7 @@ export type CommandDocument = InferSchemaType<typeof CommandSchema> &
     | InferSchemaType<typeof AssertGroupCommandSchema>
     | InferSchemaType<typeof GenerateBroadcastCommandSchema>
     | InferSchemaType<typeof InterceptResponseCommandSchema>
+    | InferSchemaType<typeof PrintCommandSchema>
   )
 
 export type ExtractValue = InferSchemaType<typeof ExtractValueSchema>
