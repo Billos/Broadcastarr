@@ -6,8 +6,8 @@ import { templater } from "../../../templater"
 import { CommandClass, Context } from "../command"
 
 export class PrintCommand extends CommandClass<PrintCommandArgs> {
-  async execute(page: Page, context: Context): Promise<void> {
-    const logger = mainLogger.child({ name: "SetValues", func: "execute", data: { name: this.name, url: page.url() } })
+  async execute(_page: Page, context: Context): Promise<void> {
+    const logger = mainLogger.child({ name: "SetValues", func: "execute" })
     const { value } = this.args
 
     // *******************
