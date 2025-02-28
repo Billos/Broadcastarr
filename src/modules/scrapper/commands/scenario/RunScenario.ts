@@ -10,7 +10,11 @@ import { CommandClass, Context } from "../command"
 
 export class RunScenarioCommand extends CommandClass<RunScenarioCommandArgs> {
   async execute(page: Page, context: Context, scrapper: Orchestrator): Promise<void> {
-    const logger = mainLogger.child({ name: "RunScenario", func: "execute", data: { name: this.name } })
+    const logger = mainLogger.child({
+      name: "RunScenario",
+      func: "execute",
+      data: { name: this.name, url: page.url() },
+    })
     const newPage = await page.browser().newPage()
     await page.setCacheEnabled(false)
     await page.setUserAgent(env.browser.userAgent)
@@ -36,7 +40,7 @@ export class RunScenarioCommand extends CommandClass<RunScenarioCommandArgs> {
   }
 
   private async runScenario(page: Page, context: Context, scrapper: Orchestrator): Promise<void> {
-    const logger = mainLogger.child({ name: "RunScenario", func: "runScenario" })
+    const logger = mainLogger.child({ name: "RunScenario", func: "runScenario", date: { url: page.url() } })
     logger.info(`Running scenario ${this.args.scenario}`)
     const scenario = scrapper.getScenario(this.args.scenario)
     let index = 0

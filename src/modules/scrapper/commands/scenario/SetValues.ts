@@ -9,7 +9,7 @@ import { CommandClass, Context } from "../command"
 
 export class SetValuesCommand extends CommandClass<SetValueCommandArgs> {
   async execute(_page: Page, context: Context): Promise<void> {
-    // const logger = mainLogger.child({ name: "SetValues", func: "execute", data: { name: this.name } })
+    // const logger = mainLogger.child({ name: "SetValues", func: "execute", data: { name: this.name, url: page.url() } })
     // logger.info(`Setting values ${JSON.stringify(this.args)}`)
     for (const { store, value, isDate, dateFormat, isEmptyArray } of this.args.values) {
       const pathValue = templater.renderString(store, context)

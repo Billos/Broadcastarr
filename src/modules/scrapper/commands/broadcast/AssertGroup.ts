@@ -11,8 +11,12 @@ type AssertGroupResult = {
 }
 
 export class AssertGroup extends CommandClass<AssertGroupCommandArgs> {
-  async execute(_page: Page, context: Context<AssertGroupResult>): Promise<void> {
-    const logger = mainLogger.child({ name: "AssertGroup", func: "execute", data: { name: this.name } })
+  async execute(page: Page, context: Context<AssertGroupResult>): Promise<void> {
+    const logger = mainLogger.child({
+      name: "AssertGroup",
+      func: "execute",
+      data: { name: this.name, url: page.url() },
+    })
     const category = templater.renderString(this.args.category, context)
     const country = templater.renderString(this.args.country, context)
     const name = templater.renderString(this.args.name, context)
