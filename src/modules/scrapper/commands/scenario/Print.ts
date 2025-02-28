@@ -10,16 +10,13 @@ export class PrintCommand extends CommandClass<PrintCommandArgs> {
     const logger = mainLogger.child({ name: "SetValues", func: "execute", data: { name: this.name } })
     const { value } = this.args
 
-    logger.info(`Printing: ${templater.renderString(value, context)}`)
     // *******************
     // |     PRINT       |
     // *******************
-
-    const rendered = templater.renderString(value, context)
     logger.info("*****************************************************************")
     logger.info(value)
     logger.info("*************************** RENDERING ***************************")
-    logger.info(`Value: ${rendered}`)
+    logger.info(templater.renderString(value, context))
     logger.info("*****************************************************************")
   }
 }
