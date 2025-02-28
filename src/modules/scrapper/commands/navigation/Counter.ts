@@ -30,7 +30,7 @@ export class CounterCommand extends CommandClass<CounterCommandArgs> {
     // Store the value in the scenario context
     if (store) {
       // Run a virtual SetValue command
-      const command = new SetValuesCommand("VirtualStorer", {
+      const command = new SetValuesCommand(`${this.name}-VirtualStorer`, {
         values: new Types.DocumentArray([{ store, value: `${count}` }]),
       })
       await command.execute(page, context)

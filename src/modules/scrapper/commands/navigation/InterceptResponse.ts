@@ -113,7 +113,7 @@ export class InterceptResponseCommand extends CommandClass<InterceptResponseComm
     const finalValue = this.performReplacements(context, value, replacements)
 
     const storeValue = templater.renderString(store, context)
-    const command = new SetValuesCommand("VirtualStorer", {
+    const command = new SetValuesCommand(`${this.name}-VirtualStorer`, {
       values: new Types.DocumentArray([{ store: storeValue, value: finalValue }]),
     })
     await command.execute(page, context)

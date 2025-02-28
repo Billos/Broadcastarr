@@ -32,7 +32,7 @@ export class GetValuesCommand extends CommandClass<GetValueCommandArgs> {
       if (elementExists) {
         const exists = await this.elementExists(rootElt, selectorValue)
         // logger.debug(`Storing value in context: ${store} = "${exists}"`)
-        const command = new SetValuesCommand("VirtualStorer", {
+        const command = new SetValuesCommand(`${this.name}-VirtualStorer`, {
           values: new Types.DocumentArray([{ store, value: `${exists}` }]),
         })
         await command.execute(page, context)
@@ -70,7 +70,7 @@ export class GetValuesCommand extends CommandClass<GetValueCommandArgs> {
       if (store) {
         // Run a virtual SetValue command
         // logger.debug(`Storing value in context: ${store} = ${value}`)
-        const command = new SetValuesCommand("VirtualStorer", {
+        const command = new SetValuesCommand(`${this.name}-VirtualStorer`, {
           values: new Types.DocumentArray([{ store, value }]),
         })
         await command.execute(page, context)
