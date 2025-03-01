@@ -2,15 +2,15 @@ import set from "lodash/set"
 import { DateTime } from "luxon"
 import { Page } from "puppeteer-core"
 
-// import mainLogger from "../../../../utils/logger"
+import mainLogger from "../../../../utils/logger"
 import { SetValueCommandArgs } from "../../../indexer"
 import { templater } from "../../../templater"
 import { CommandClass, Context } from "../command"
 
 export class SetValuesCommand extends CommandClass<SetValueCommandArgs> {
-  async execute(_page: Page, context: Context): Promise<void> {
-    // const logger = mainLogger.child({ name: "SetValues", func: "execute", data: { name: this.name, url: page.url() } })
-    // logger.info(`Setting values ${JSON.stringify(this.args)}`)
+  async execute(page: Page, context: Context): Promise<void> {
+    const logger = mainLogger.child({ name: "SetValues", func: "execute", data: { name: this.name, url: page.url() } })
+    logger.info(`Setting values ${JSON.stringify(this.args)}`)
     for (const { store, value, isDate, dateFormat, isEmptyArray } of this.args.values) {
       const pathValue = templater.renderString(store, context)
       const [scope] = pathValue.split(".")
