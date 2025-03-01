@@ -71,6 +71,8 @@ function stringifyData() {
   })()
 }
 
+const spaces = `${" ".repeat(5 + 3 + 12 + 3 + 23 + 3 + 20 + 3)}        `
+
 const logger = createLogger({
   format: format.combine(
     ignoreSilentErrors(),
@@ -83,7 +85,7 @@ const logger = createLogger({
     format.printf(
       (info) =>
         `${info.level} - ${info.timestamp} - ${info.name} - ${info.func} : ${info.message}` +
-        `${env.logData && info.data ? `\n${info.data}` : ""}` +
+        `${env.logData && info.data ? `\n${spaces}${info.data}` : ""}` +
         "",
     ),
   ),
