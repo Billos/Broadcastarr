@@ -1,6 +1,5 @@
 import { Types } from "mongoose"
 import { ElementHandle, Page } from "puppeteer-core"
-import { log } from "winston"
 
 import mainLogger from "../../../../utils/logger"
 import { GetValueCommandArgs } from "../../../indexer"
