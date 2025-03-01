@@ -1,5 +1,6 @@
 import { Types } from "mongoose"
 import { ElementHandle, Page } from "puppeteer-core"
+import { log } from "winston"
 
 import mainLogger from "../../../../utils/logger"
 import { GetValueCommandArgs } from "../../../indexer"
@@ -9,11 +10,7 @@ import { SetValuesCommand } from "../scenario/SetValues"
 
 export class GetValuesCommand extends CommandClass<GetValueCommandArgs> {
   async execute(page: Page, context: Context): Promise<void> {
-    const logger = mainLogger.child({
-      name: "GetValuesCommand",
-      func: "execute",
-      data: { name: this.name, url: page.url() },
-    })
+    const logger = mainLogger.child({ name: "GetValuesCommand", func: "execute", data: { name: this.name, url: page.url() } })
 
     const { root, values } = this.args
     let rootElt: ElementHandle | Page = page
@@ -52,7 +49,8 @@ export class GetValuesCommand extends CommandClass<GetValueCommandArgs> {
           value = templater.renderString(valueIfFailed, context)
         }
       } else {
-        logger.debug(`Getting value for selector: ${selectorValue}, attribute: ${attributeValue}, rootElt: ${rootElt}`)
+        const rootSelector = root ? templater.renderString(root, context) : "PAGE"
+        logger.debug(`Getting value for selector: ${selectorValue}, attribute: ${attributeValue}, rootElt selector: ${rootSelector}`)
         value = await this.getValue(rootElt, selectorValue, attributeValue)
       }
 
