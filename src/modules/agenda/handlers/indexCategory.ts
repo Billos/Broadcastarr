@@ -46,14 +46,10 @@ export async function handler(job: Job<IndexCategoryOptions>): Promise<void> {
   logger.debug(`${allBroadcasts.length} broadcasts found before filtering`)
   let broadcasts = allBroadcasts
   // Filtering the broadcasts that are started or will start in less than x minutes
-  broadcasts = broadcasts.filter(
-    ({ startTime }) => DateTime.fromJSDate(startTime).diff(now, "minutes").minutes < futureLimit,
-  )
+  broadcasts = broadcasts.filter(({ startTime }) => DateTime.fromJSDate(startTime).diff(now, "minutes").minutes < futureLimit)
   logger.debug(`${broadcasts.length} broadcasts kept after filtering futureLimit`)
   // Filtering the broadcast that did not start more than x minutes ago
-  broadcasts = broadcasts.filter(
-    ({ startTime }) => DateTime.fromJSDate(startTime).diff(now, "minutes").minutes > -pastLimit,
-  )
+  broadcasts = broadcasts.filter(({ startTime }) => DateTime.fromJSDate(startTime).diff(now, "minutes").minutes > -pastLimit)
   logger.debug(`${broadcasts.length} broadcasts kept after filtering pastLimit`)
   // Filtering the broadcasts with the groups we want, if groups is empty, we keep all the broadcasts
   broadcasts = broadcasts.filter(({ group }) => groups.length === 0 || groups.includes(group.toLowerCase().trim()))
