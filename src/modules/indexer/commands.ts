@@ -229,7 +229,7 @@ const InterceptResponseCommandSchema = new mongoose.Schema(
 const PrintCommandSchema = new mongoose.Schema(
   {
     args: {
-      value: { type: String, required: true },
+      values: [{ type: String, required: true }],
     },
   },
   { _id: false },
