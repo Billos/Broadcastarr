@@ -8,11 +8,31 @@ export class TemplateRenderer extends Environment {
     super(null, { autoescape: false, throwOnUndefined: true })
 
     this.addGlobal("dateToFormat", (days: number, format: string) => {
+      if (days === undefined) {
+        throw new Error("days is required")
+      }
+
+      if (format === undefined) {
+        throw new Error("format is required")
+      }
+
       const date = DateTime.local().plus({ days })
       return date.toFormat(format)
     })
 
     this.addFilter("formatDate", (date: string, inputFormat: string, outputFormat: string) => {
+      if (!date) {
+        throw new Error("date is required")
+      }
+
+      if (!inputFormat) {
+        throw new Error("inputFormat is required")
+      }
+
+      if (!outputFormat) {
+        throw new Error("outputFormat is required")
+      }
+
       const forbiddenFormats = ["x", "X"]
       if (forbiddenFormats.includes(inputFormat)) {
         throw new Error(`Invalid input format: ${inputFormat}`)
@@ -26,7 +46,12 @@ export class TemplateRenderer extends Environment {
       return parsedDate.toFormat(outputFormat)
     })
 
-    this.addGlobal("now", (format: string) => DateTime.local().toFormat(format))
+    this.addGlobal("now", (outputFormat: string) => {
+      if (!outputFormat) {
+        throw new Error("outputFormat is required")
+      }
+      return DateTime.local().toFormat(outputFormat)
+    })
   }
 
   override renderString(template: string, context: Record<string, any>): string {
