@@ -1,3 +1,27 @@
+# [1.6.0](https://github.com/Billos/Broadcastarr/compare/1.5.0...1.6.0) (2025-03-02)
+
+
+### Bug Fixes
+
+* **commands:** update SetValuesCommand to use dynamic name for VirtualStorer ([2816e22](https://github.com/Billos/Broadcastarr/commit/2816e22c2bd9ec827caa09a0eecc3e109eebee2b))
+* **counter:** fix root element selector handling in Counter command ([75ca8af](https://github.com/Billos/Broadcastarr/commit/75ca8afbe9d11f31f6eebc101dd40c3b4293a213))
+* **docker:** rename DEV_NDEXER to DEV_INDEXER in development configuration ([32fddd9](https://github.com/Billos/Broadcastarr/commit/32fddd994dae0f2e570c00fc683e17dae5fbba03))
+* **env:** rename environment variables for development configuration ([ce250e4](https://github.com/Billos/Broadcastarr/commit/ce250e457f1f874ecfd3d07240fca71c0bc76b4e))
+* **GetValues:** remove unused logger import ([8cc0c12](https://github.com/Billos/Broadcastarr/commit/8cc0c128bfae570a1f1db5180287f11b804c4c3c))
+* **logger:** align logger data output with consistent spacing ([ce8beeb](https://github.com/Billos/Broadcastarr/commit/ce8beeba9c383754510f613ce3c45af9242c7172))
+* **logging:** include page URL in logger data for AssertGroup, Click, GoToPage, Print, RunScenario commands ([1a32e4a](https://github.com/Billos/Broadcastarr/commit/1a32e4a5c00c53e5b156a451df2f4689d141d4b1))
+* **logging:** include page URL in logger data for Counter and GetValues commands ([c84722a](https://github.com/Billos/Broadcastarr/commit/c84722ae3f22f0a946e13dc0b960cf0f5b8aa512))
+* **prettierrc:** increase print width from 120 to 140 ([f91f51b](https://github.com/Billos/Broadcastarr/commit/f91f51b12de840c04fef5d9ed8a0d2c9603b196c))
+* **print:** remove page URL from logger data in Print command execution ([a75f7c7](https://github.com/Billos/Broadcastarr/commit/a75f7c7fd1447a8043019cf0fcf00d1b6da6515f))
+* **print:** simplify logging in Print command by directly rendering value ([e89439a](https://github.com/Billos/Broadcastarr/commit/e89439a9ace7181b4bf2bffef421c0eff354e6eb))
+* **SetValuesCommand:** enable logging of values being set with page URL context ([a8d9719](https://github.com/Billos/Broadcastarr/commit/a8d9719b54e242291275de587ffe3dbbb557ce18))
+* **worker:** enhance dev mode checks and improve image folder cleanup ([6ccb354](https://github.com/Billos/Broadcastarr/commit/6ccb3547f51d2b360ef8b1c593332c36edf44719))
+
+
+### Features
+
+* **print:** add Print command to log rendered values ([6daebf3](https://github.com/Billos/Broadcastarr/commit/6daebf3f4ae169a37920b63cec4bd97b2d081b1a))
+
 # [1.5.0](https://github.com/Billos/Broadcastarr/compare/1.4.0...1.5.0) (2025-02-24)
 
 
