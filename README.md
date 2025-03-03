@@ -57,7 +57,7 @@ A publisher is a service that can publish the categories, groups and broadcasts 
 Implemented publishers:
 
 - Discord
-- Matrix
+- ~~Matrix~~ Will be re-implemented with Node 23
 - Gotify
 
 ### Scalability
