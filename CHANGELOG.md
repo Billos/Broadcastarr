@@ -1,3 +1,16 @@
+# [1.7.0](https://github.com/Billos/Broadcastarr/compare/1.6.0...1.7.0) (2025-03-03)
+
+
+### Bug Fixes
+
+* **TemplateRenderer:** add error handling for required parameters in date formatting functions ([616279e](https://github.com/Billos/Broadcastarr/commit/616279e9b8259f9232ca3adf69b6bb4898590b6b))
+* **TemplateRenderer:** update date formatting to use current time instead of local time ([7c709f8](https://github.com/Billos/Broadcastarr/commit/7c709f86fdc54807cc6f654bc2dbf6b75d864805))
+
+
+### Features
+
+* **PrintCommand:** change value to values array for handling multiple inputs ([654730e](https://github.com/Billos/Broadcastarr/commit/654730ede21304023e0c7ef6a146603e93ded0be))
+
 # [1.6.0](https://github.com/Billos/Broadcastarr/compare/1.5.0...1.6.0) (2025-03-02)
 
 
