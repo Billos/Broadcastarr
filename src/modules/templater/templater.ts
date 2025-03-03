@@ -50,7 +50,7 @@ export class TemplateRenderer extends Environment {
       if (!outputFormat) {
         throw new Error("outputFormat is required")
       }
-      return DateTime.local().toFormat(outputFormat)
+      return DateTime.now().toFormat(outputFormat)
     })
   }
 
