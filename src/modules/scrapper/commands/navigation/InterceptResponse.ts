@@ -49,21 +49,15 @@ export class InterceptResponseCommand extends CommandClass<InterceptResponseComm
     })
   }
 
-  private async extractValue(
-    page: Page,
-    context: Context,
-    response: HTTPResponse,
-    extract: ExtractValue,
-  ): Promise<void> {
-    switch (extract.source) {
-      case "query":
-        await this.extractQueryParams(page, context, response, extract)
-      case "headers":
-        await this.extractHeaders(page, context, response, extract)
-      case "url":
-        await this.extractURL(page, context, response, extract)
-      case "urlRegex":
-        throw new Error("Not implemented")
+  private async extractValue(page: Page, context: Context, response: HTTPResponse, extract: ExtractValue): Promise<void> {
+    if (extract.source === "query") {
+      await this.extractQueryParams(page, context, response, extract)
+    } else if (extract.source === "headers") {
+      await this.extractHeaders(page, context, response, extract)
+    } else if (extract.source === "url") {
+      await this.extractURL(page, context, response, extract)
+    } else if (extract.source === "urlRegex") {
+      throw new Error("Not implemented")
     }
   }
 
