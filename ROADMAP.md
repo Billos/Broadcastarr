@@ -6,7 +6,7 @@
 - [x] Configuration to activate / deactivate releasers
 - [x] Discord bot commands to activate / deactivate releasers
 - [x] Improve doc with screenshots
-- [ ] Better doc for the configuration
+- [x] Better doc for the configuration
 - [x] Use Prettier for code formatting
 - [x] Script for versioning & automated changelog generation with the releases
 - [x] Create docker image that does not mount the src folder
@@ -14,12 +14,12 @@
 - [ ] Unit tests
 - [x] Tester that uses 0s delays
 - [x] Implement an optional authentication for Indexers and Interceptors
-- [ ] Implement a generic engine for Puppeteer, and review the indexers and interceptors to use it
+- [x] Implement a generic engine for Puppeteer, and review the indexers and interceptors to use it
 - [ ] Option to reload a stream when proxying has been requested
 - [ ] Working API for TheSportsDB
 - [ ] Refactor the publishers configuration to store everything in the database
 - [ ] Refactor the releasers configuration to store everything in the database
-- [ ] Use node in start script
+- [x] Use node in start script
 - [ ] Implement a Plex releaser
 - [ ] Implement a Emby releaser
 - [ ] Ensure Jellyfin collection does not need to be created manually
