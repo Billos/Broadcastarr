@@ -38,8 +38,8 @@ export class InterceptResponseCommand extends CommandClass<InterceptResponseComm
         for (const extract of this.args.extracts) {
           await this.extractValue(page, context, response, extract)
         }
+        resolve()
       })
-      resolve()
     })
   }
 
@@ -61,23 +61,13 @@ export class InterceptResponseCommand extends CommandClass<InterceptResponseComm
     }
   }
 
-  private async extractQueryParams(
-    page: Page,
-    context: Context,
-    response: HTTPResponse,
-    extract: ExtractValue,
-  ): Promise<void> {
+  private async extractQueryParams(page: Page, context: Context, response: HTTPResponse, extract: ExtractValue): Promise<void> {
     const url = new URL(response.url())
     const value = url.searchParams.get(extract.key)
     await this.storeValue(page, context, extract.replacements, extract.store, value)
   }
 
-  private async extractHeaders(
-    page: Page,
-    context: Context,
-    response: HTTPResponse,
-    extract: ExtractValue,
-  ): Promise<void> {
+  private async extractHeaders(page: Page, context: Context, response: HTTPResponse, extract: ExtractValue): Promise<void> {
     const value = response.headers()[extract.key]
     await this.storeValue(page, context, extract.replacements, extract.store, value)
   }
