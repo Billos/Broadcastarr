@@ -22,7 +22,6 @@ type Item = {
   Name: string
 }
 
-type CollectionFolder = Item
 type Collection = Item & {
   ImageTags: {
     Primary: string
@@ -110,15 +109,6 @@ async function addItemToCollection(collectionId: string, itemId: string): Promis
   await instance.post(`/Collections/${collectionId}/Items?Ids=${itemId}`)
 }
 
-async function getCollectionsCollectionFolders(): Promise<CollectionFolder> {
-  const logger = mainLogger.child({ name: "Jellyfin", func: "getCollectionsCollectionFolders" })
-  logger.silly("getCollectionsCollectionFolders")
-  const {
-    data: { Items: collectionFolders },
-  } = await instance.get<ItemSearch<CollectionFolder>>("/Items?Recursive=true&IncludeItemTypes=CollectionFolder")
-  return collectionFolders.find((folder) => folder.Name === "Collections")
-}
-
 async function getCollection(collectionName: string): Promise<Collection> {
   const logger = mainLogger.child({
     name: "Jellyfin",
@@ -126,11 +116,10 @@ async function getCollection(collectionName: string): Promise<Collection> {
     data: { collectionName },
   })
   logger.silly("getCollection")
-  const { Id } = await getCollectionsCollectionFolders()
   const name = `Broadcastarr ${collectionName}`
   const {
     data: { Items },
-  } = await instance.get<ItemSearch<Collection>>(`/Items?ParentId=${Id}&searchTerm=${name}&Recursive=true`)
+  } = await instance.get<ItemSearch<Collection>>(`/Items?searchTerm=${name}&Recursive=true`)
   return Items[0]
 }
 
@@ -142,8 +131,7 @@ async function createCollection(collectionName: string): Promise<void> {
   })
   logger.info("createCollection")
   const name = `Broadcastarr ${collectionName}`
-  const { Id: parentId } = await getCollectionsCollectionFolders()
-  await instance.post<Item>(`/Collections?ParentId=${parentId}&Name=${name}`)
+  await instance.post<Item>(`/Collections?Name=${name}`)
 }
 
 async function setItemImage(collectionName: string): Promise<void> {
