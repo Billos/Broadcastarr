@@ -1,3 +1,11 @@
+## [1.7.1](https://github.com/Billos/Broadcastarr/compare/1.7.0...1.7.1) (2025-08-31)
+
+
+### Bug Fixes
+
+* **InterceptResponse:** resolve promise correctly in extract loop and simplify method signatures ([e8b5cbf](https://github.com/Billos/Broadcastarr/commit/e8b5cbfd889f67d8ce2e8b369991b27fd6558a7e))
+* **ROADMAP:** mark configuration documentation and Puppeteer engine implementation as complete ([76e72e4](https://github.com/Billos/Broadcastarr/commit/76e72e471b69be1806ba9ac79cf632a6767085a1))
+
 # [1.7.0](https://github.com/Billos/Broadcastarr/compare/1.6.0...1.7.0) (2025-03-03)
 
 
