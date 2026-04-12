@@ -1,0 +1,143 @@
+{
+  // Name used to identify this indexer internally
+  name: "ntvstream",
+
+  // Base URL of the website
+  url: "https://ntvstream.cx/",
+
+  // Set to true to activate this indexer
+  active: false,
+
+  // Indexing configuration — defines how to scrape the schedule page
+  data: {
+    // Category navigation: how to find the URL for a given category (e.g. Football, Tennis…)
+    category: {
+      // CSS selectors for navigation links leading to a category schedule page.
+      // Each anchor's textContent is matched against the category name (or its lookup below).
+      links: [
+        { path: "nav a, .menu a, .nav-link" },
+      ],
+
+      // Optional: map a Broadcastarr category name to keywords to look for in the link text.
+      // Example: { "Football": ["football", "soccer"], "Basketball": ["basketball"] }
+      // If omitted, the category name itself is used as the keyword.
+      lookups: {
+        Football: ["football", "soccer", "foot"],
+        Tennis: ["tennis"],
+        Basketball: ["basketball"],
+        Rugby: ["rugby"],
+      },
+    },
+
+    // CSS selector of an element to wait for before parsing the schedule page.
+    // Adjust to a stable element that signals the page content is loaded.
+    loadPageElement: ".schedule, .event-list, table, .matches",
+
+    // Some sites group broadcasts by day.  Fill in this block if the schedule
+    // is split into day-labelled sections; leave it out (or set to null) otherwise.
+    broadcastSets: {
+      // CSS selector for each day-block container element
+      selector: [
+        { path: ".day-block, .schedule-day, .events-group" },
+      ],
+      // How to extract the date from within each day-block
+      day: [
+        {
+          path: ".day-title, .date-header, h2, h3",
+          // Luxon format string matching what the site displays, e.g. "dd/MM/yyyy" or "EEEE d MMMM"
+          format: "dd/MM/yyyy",
+        },
+      ],
+      // If the site writes "Today" or "Aujourd'hui" instead of the actual date,
+      // replace it before parsing.  Comment out if not needed.
+      // today: {
+      //   regex: "Today|Aujourd'hui",
+      //   format: "dd/MM/yyyy",
+      // },
+    },
+
+    // How to parse each individual broadcast inside a day-block (or directly on the page)
+    broadcast: {
+      // CSS selector for each broadcast row / card within its container
+      selector: [
+        { path: ".event, .match, tr.broadcast, .stream-item" },
+      ],
+
+      // Start time of the broadcast (within the broadcast element)
+      startTime: [
+        {
+          path: ".time, .start-time, td.time, .hour",
+          // Luxon format matching the site's time string, e.g. "HH:mm" or "h:mm a"
+          format: "HH:mm",
+        },
+      ],
+
+      // The URL of the broadcast detail/stream page
+      link: [
+        {
+          path: "a.watch, a.stream-link, a[href*='stream'], a",
+          attribute: "href",
+        },
+      ],
+
+      // The display name / title of the broadcast
+      name: [
+        { path: ".event-name, .match-title, td.title, .title" },
+      ],
+
+      // Named-capture regex to extract { country, name } from the broadcast title.
+      // Adjust the regex to match the site's league/competition naming convention.
+      // The "default" block is used when the regex does not match.
+      group: [
+        {
+          path: ".event-name, .match-title, td.title, .title",
+          // Example pattern: "League Name - Team A vs Team B"
+          // Capturing group "name" becomes the league/group name; "country" the country.
+          regex: "^(?<country>[A-Z]{2,3})[^a-zA-Z]*(?<name>.+)$",
+          default: {
+            country: "World",
+            name: "Ungrouped",
+          },
+        },
+      ],
+    },
+
+    // Selector for the "next page" button.  Remove this key if the site shows
+    // all events on a single page.
+    // nextPage: [
+    //   { path: "a.next-page, .pagination .next, a[rel='next']" },
+    // ],
+  },
+
+  // Interception configuration — defines how to extract the actual stream URL
+  // from the broadcast detail page.
+  interceptorData: {
+    // Element to wait for on the broadcast detail page before looking for streams
+    loadPageElement: ".player, video, .stream-container, #player",
+
+    // Each stream "item" on the detail page (one per stream source / quality)
+    streamItems: [
+      { path: ".stream-link, .source-link, .player-link, a[href*='.m3u8'], a[href*='stream']" },
+    ],
+
+    // Optional: elements that indicate a "better" stream (e.g. HD badge, star icon).
+    // Streams whose item contains more of these elements are preferred.
+    positiveScores: [
+      { path: ".hd, .quality-hd, .badge-hd" },
+    ],
+
+    // How to extract the stream URL from within the stream item
+    link: [
+      { path: "a", attribute: "href" },
+    ],
+
+    // Optional: a Referer header to send when accessing the stream URL
+    // referer: "https://ntvstream.cx/",
+
+    // Optional: a button to click on the detail page to trigger stream loading
+    // (e.g. a play button that reveals the iframe / m3u8 URL)
+    // clickButton: [
+    //   { path: ".play-button, #play-btn, button.start" },
+    // ],
+  },
+}

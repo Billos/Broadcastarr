@@ -66,3 +66,4 @@ jspm_packages/
 # Ignore the data files
 data/*.json
 data/*.json5
+!data/ntvstream.json5
