@@ -13,7 +13,7 @@ export class InterceptResponseCommand extends CommandClass<InterceptResponseComm
     await page.setRequestInterception(true)
 
     const { method } = filters
-    const urlRegex = filters.urlRegex ? new RegExp(templater.renderString(filters.urlRegex, context)) : null
+    const urlRegex = filters.urlRegex ? new RegExp(templater.renderString(filters.urlRegex, context)) : undefined
 
     const promises = [
       this.timeoutPromise(),
@@ -24,9 +24,10 @@ export class InterceptResponseCommand extends CommandClass<InterceptResponseComm
     await page.setRequestInterception(false)
   }
 
-  private async interceptPromise(page: Page, context: Context, method: string, urlRegex: RegExp): Promise<void> {
+  private async interceptPromise(page: Page, context: Context, method: string, urlRegex?: RegExp): Promise<void> {
     return new Promise((resolve) => {
       page.on("response", async (response) => {
+        console.log(`Received response: ${response.url()}`)
         if (method && response.request().method() !== method) {
           return
         }
@@ -63,11 +64,20 @@ export class InterceptResponseCommand extends CommandClass<InterceptResponseComm
 
   private async extractQueryParams(page: Page, context: Context, response: HTTPResponse, extract: ExtractValue): Promise<void> {
     const url = new URL(response.url())
+    if (!extract.key) {
+      throw new Error("Key is required for query extraction")
+    }
     const value = url.searchParams.get(extract.key)
+    if (!value) {
+      throw new Error(`Key ${extract.key} not found in query parameters`)
+    }
     await this.storeValue(page, context, extract.replacements, extract.store, value)
   }
 
   private async extractHeaders(page: Page, context: Context, response: HTTPResponse, extract: ExtractValue): Promise<void> {
+    if (!extract.key) {
+      throw new Error("Key is required for headers extraction")
+    }
     const value = response.headers()[extract.key]
     await this.storeValue(page, context, extract.replacements, extract.store, value)
   }

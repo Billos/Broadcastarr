@@ -7,7 +7,7 @@ import mainLogger from "../utils/logger"
 import { commandGenerators, commands } from "./commands"
 import { Command } from "./type"
 
-const rest = new REST({ version: "10" }).setToken(env.discordBot.token)
+const rest = new REST({ version: "10" }).setToken(env.discordBot.token!)
 
 class DiscordBot {
   private client: Client
@@ -61,7 +61,7 @@ class DiscordBot {
     const body = this.commands.map(({ data }) => data.toJSON())
     try {
       logger.info("Started refreshing application (/) commands.")
-      await rest.put(Routes.applicationGuildCommands(env.discordBot.clientId, guildId), { body })
+      await rest.put(Routes.applicationGuildCommands(env.discordBot.clientId!, guildId), { body })
 
       logger.debug("Successfully reloaded application (/) commands.")
     } catch (error) {
@@ -99,7 +99,7 @@ class DiscordBot {
       return true
     }
 
-    const idsToCheck = [interaction.user.id, interaction.channelId]
+    const idsToCheck = [interaction.user.id!, interaction.channelId!]
     const queryRoles = []
     for (const id of idsToCheck) {
       try {
@@ -142,7 +142,7 @@ class DiscordBot {
         await command.execute(interaction)
         logger.info(`Command ${commandName} executed`)
         logger.info(`Redeploying commands for guild ${interaction.guildId}`)
-        await this.deployCommands(interaction.guildId)
+        await this.deployCommands(interaction.guildId!)
       } catch (error) {
         interaction.reply({ content: `Operation failed due to ${error}`, ephemeral: true })
       }

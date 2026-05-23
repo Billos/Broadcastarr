@@ -20,26 +20,26 @@ export async function createIndexer(name: string, url: string): Promise<IndexerD
 }
 
 export async function updateLogin(name: string, data: Partial<LoginData>): Promise<IndexerDocument> {
-  return IndexerModel.findOneAndUpdate({ name }, { $set: { login: data } }, { new: true, runValidators: true })
+  return IndexerModel.findOneAndUpdate({ name }, { $set: { login: data } }, { returnDocument: "after", runValidators: true })
 }
 
 export async function updateActive(name: string, active: boolean): Promise<IndexerDocument> {
-  return IndexerModel.findOneAndUpdate({ name }, { active }, { new: true, runValidators: true })
+  return IndexerModel.findOneAndUpdate({ name }, { active }, { returnDocument: "after", runValidators: true })
 }
 
 export async function updateIndexer(name: string, url: string): Promise<IndexerDocument> {
-  return IndexerModel.findOneAndUpdate({ name }, { url }, { new: true, runValidators: true })
+  return IndexerModel.findOneAndUpdate({ name }, { url }, { returnDocument: "after", runValidators: true })
 }
 
 export async function updateIndexerData(name: string, data: Partial<IndexerData>): Promise<IndexerDocument> {
-  return IndexerModel.findOneAndUpdate({ name }, { $set: { data } }, { new: true, runValidators: true })
+  return IndexerModel.findOneAndUpdate({ name }, { $set: { data } }, { returnDocument: "after", runValidators: true })
 }
 
 export async function updateIndexerInterceptorData(
   name: string,
   interceptorData: Partial<IndexerInterceptorData>,
 ): Promise<IndexerDocument> {
-  return IndexerModel.findOneAndUpdate({ name }, { $set: { interceptorData } }, { new: true, runValidators: true })
+  return IndexerModel.findOneAndUpdate({ name }, { $set: { interceptorData } }, { returnDocument: "after", runValidators: true })
 }
 
 export async function validateIndexer(name: string): Promise<void> {
@@ -48,7 +48,7 @@ export async function validateIndexer(name: string): Promise<void> {
 }
 
 export async function updateScenarios(name: string, scenarios: any): Promise<IndexerDocument> {
-  return IndexerModel.findOneAndUpdate({ name }, { $set: { scenarios } }, { new: true, runValidators: true })
+  return IndexerModel.findOneAndUpdate({ name }, { $set: { scenarios } }, { returnDocument: "after", runValidators: true })
 }
 
 export async function deleteIndexer(name: string): Promise<void> {

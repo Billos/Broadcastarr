@@ -21,7 +21,11 @@ export class CounterCommand extends CommandClass<CounterCommandArgs> {
     if (root) {
       const rootSelector = templater.renderString(root, context)
       await page.waitForSelector(rootSelector)
-      rootElt = await page.$(rootSelector)
+      const elt = await page.$(rootSelector)
+      if (!elt) {
+        throw new Error(`Root element not found for selector: ${rootSelector}`)
+      }
+      rootElt = elt
     }
     const selectorValue = templater.renderString(selector, context)
 

@@ -9,7 +9,7 @@ export default class DynamicBroadcastsIndexer extends GenericBroadcastsIndexer {
 
   protected override categoryDetails: CategoryDetails
 
-  protected override broadcastSets: BroadcastSetDetails
+  protected override broadcastSets: BroadcastSetDetails | null
 
   protected override broadcast: BroadcastDetails
 
@@ -21,8 +21,8 @@ export default class DynamicBroadcastsIndexer extends GenericBroadcastsIndexer {
     private indexer: IndexerDocument,
     category: string,
   ) {
-    super(indexer.url, indexer.name, category)
-    this.loadPageElement = this.indexer.data.loadPageElement
+    super(indexer.url!, indexer.name, category)
+    this.loadPageElement = this.indexer.data.loadPageElement!
 
     if (this.indexer.data.broadcastSets) {
       this.broadcastSets = {
@@ -43,9 +43,9 @@ export default class DynamicBroadcastsIndexer extends GenericBroadcastsIndexer {
     this.nextPage = this.indexer.data.nextPage
 
     this.categoryDetails = {
-      links: this.indexer.data.category.links,
-      clicks: this.indexer.data.category.clicks,
-      lookups: this.indexer.data.category.lookups,
+      links: this.indexer.data.category!.links!,
+      clicks: this.indexer.data.category!.clicks!,
+      lookups: this.indexer.data.category!.lookups!,
     }
 
     this.loginDetails = this.indexer.login

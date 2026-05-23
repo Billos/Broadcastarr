@@ -9,7 +9,7 @@ export default {
   dev: process.env.NODE_ENV === "development",
   devIndexer: process.env.DEV_INDEXER,
   devCategory: process.env.DEV_CATEGORY,
-  port: parseInt(process.env.PORT, 10),
+  port: parseInt(process.env.PORT || "3000", 10),
   mongo: {
     url: process.env.MONGO_URL,
     db: process.env.MONGO_DB,
@@ -34,7 +34,7 @@ export default {
       user: process.env.MATRIX_USER,
       serverName: process.env.MATRIX_SERVER_NAME,
       accessToken: process.env.MATRIX_ACCESS_TOKEN,
-      additionalAdmins: process.env.MATRIX_ADDITIONAL_ADMINS.split(","),
+      additionalAdmins: (process.env.MATRIX_ADDITIONAL_ADMINS || "").split(","),
     },
     gotify: {
       url: process.env.GOTIFY_URL,

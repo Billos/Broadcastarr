@@ -4,7 +4,7 @@ import env from "../../config/env"
 import mainLogger from "../../utils/logger"
 
 export abstract class Scrapper {
-  private browser: Browser = null
+  private browser: Browser | null = null
 
   protected async getBrowser(): Promise<Browser> {
     const logger = mainLogger.child({ name: "Scrapper", func: "getBrowser" })

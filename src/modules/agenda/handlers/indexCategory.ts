@@ -6,7 +6,6 @@ import { BroadcastController, BroadcastDocument } from "../../broadcast"
 import { ConfigController } from "../../config"
 import { GroupController } from "../../group"
 import { IndexerController } from "../../indexer"
-import { DynamicBroadcastsIndexer } from "../../indexers"
 import { Orchestrator } from "../../scrapper/Orchestrator"
 import { IndexCategoryOptions } from "../options"
 import { Triggers } from "../triggers"
@@ -30,10 +29,6 @@ export async function handler(job: Job<IndexCategoryOptions>): Promise<void> {
     const orchestrator = new Orchestrator(scenarios, { category, indexer: indexerName })
     const result = await orchestrator.run("index")
     allBroadcasts = result.broadcasts
-  } else {
-    logger.info("LEGACY - Indexing the category")
-    const indexer = new DynamicBroadcastsIndexer(indexerDocument, category)
-    allBroadcasts = await indexer.generate()
   }
 
   logger.info(`${allBroadcasts.length} broadcasts found`)

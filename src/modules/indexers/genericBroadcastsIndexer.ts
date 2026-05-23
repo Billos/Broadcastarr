@@ -31,9 +31,9 @@ export type BroadcastDetails = {
 }
 
 export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer {
-  private latestDate: DateTime
+  private latestDate: DateTime | undefined
 
-  protected abstract broadcastSets: BroadcastSetDetails
+  protected abstract broadcastSets: BroadcastSetDetails | null
 
   protected abstract broadcast: BroadcastDetails
 
@@ -101,7 +101,7 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
         const broadcastData = await this.parseBroadcastSet(container, activeGroups, inactiveGroups)
         data.push(...broadcastData)
       } catch (error) {
-        logger.warn(`Could not parse broadcast set ${error.message}`)
+        logger.warn(`Could not parse broadcast set ${(error as Error).message}`)
       }
     }
 
@@ -191,11 +191,7 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     await page.waitForNavigation({ waitUntil: "domcontentloaded" })
   }
 
-  private async getGroup(
-    broadcastBlock: ElementHandle,
-    activeGroups: GroupDocument[],
-    inactiveGroups: GroupDocument[],
-  ): Promise<Group> {
+  private async getGroup(broadcastBlock: ElementHandle, activeGroups: GroupDocument[], inactiveGroups: GroupDocument[]): Promise<Group> {
     const logger = mainLogger.child({
       name: "GenericBroadcastsIndexer",
       func: "getGroup",
@@ -211,8 +207,7 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
     const group = await this.getRegexContent(broadcastBlock, this.broadcast.group)
     logger.debug("Checking if group is active")
     const inactiveGroup = inactiveGroups.find(
-      ({ country, name }) =>
-        name.toLowerCase() === group.name.toLowerCase() && group.country.toLowerCase() === country.toLowerCase(),
+      ({ country, name }) => name.toLowerCase() === group.name.toLowerCase() && group.country.toLowerCase() === country.toLowerCase(),
     )
     if (inactiveGroup) {
       throw new SilentError(`Group ${group.name} of Country ${group.country} is inactive`)
@@ -221,8 +216,7 @@ export default abstract class GenericBroadcastsIndexer extends BroadcastsIndexer
 
     // If group is not in the filters, we don't need to parse the Broadcast, and we save time
     const activeGroup = activeGroups.find(
-      ({ country, name }) =>
-        name.toLowerCase() === group.name.toLowerCase() && group.country.toLowerCase() === country.toLowerCase(),
+      ({ country, name }) => name.toLowerCase() === group.name.toLowerCase() && group.country.toLowerCase() === country.toLowerCase(),
     )
     if (!activeGroup) {
       logger.debug("Group is not in filters")

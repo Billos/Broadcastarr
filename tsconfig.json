@@ -9,7 +9,7 @@
     "esModuleInterop": true,
     // "strict": true,
     "allowJs": true,
-    "lib": ["ES2023", "DOM"],
+    "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,

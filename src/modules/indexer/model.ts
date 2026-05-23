@@ -148,11 +148,14 @@ const indexerSchema = new mongoose.Schema({
     required: false,
   },
   data: {
-    category: { type: categorySchema },
-    loadPageElement: { type: String },
-    broadcastSets: { type: broadcastSetSchema },
-    broadcast: { type: broadcastSchema },
-    nextPage: { type: [selectorSchema] },
+    type: {
+      category: { type: categorySchema },
+      loadPageElement: { type: String },
+      broadcastSets: { type: broadcastSetSchema },
+      broadcast: { type: broadcastSchema, required: true },
+      nextPage: { type: [selectorSchema] },
+    },
+    required: true,
   },
   interceptorData: {
     loadPageElement: { type: String },

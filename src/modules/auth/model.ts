@@ -2,8 +2,13 @@
 
 import mongoose, { InferSchemaType } from "mongoose"
 
+export enum AuthType {
+  User = "user",
+  Channel = "channel",
+}
+
 const authSchema = new mongoose.Schema({
-  type: {
+  authType: {
     type: String,
     enum: ["user", "channel"],
     required: true,

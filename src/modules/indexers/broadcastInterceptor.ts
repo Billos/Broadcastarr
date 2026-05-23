@@ -27,8 +27,8 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
     link: string,
     search: string,
     timeout: number = 0,
-    accessReferer?: string,
-    cb?: (page: Page, index: number) => Promise<void>,
+    accessReferer: string,
+    cb: (page: Page, index: number) => Promise<void>,
   ): Promise<HTTPResponse> {
     const logger = mainLogger.child({
       name: "BroadcastInterceptor",
@@ -90,12 +90,12 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
       })
     })
 
-    this.asyncGoto(browser, page, link, cb ? async (streamPage) => cb(streamPage, this.streamIndex) : null, 0)
+    this.asyncGoto(browser, page, link, async (streamPage) => cb(streamPage, this.streamIndex), 0)
 
     return promise
   }
 
-  private async interceptM3U8(link: string, accessReferer?: string, cb?: StreamDataCallback): Promise<StreamData> {
+  private async interceptM3U8(link: string, accessReferer: string, cb: StreamDataCallback): Promise<StreamData> {
     const logger = mainLogger.child({
       name: "BroadcastInterceptor",
       func: "interceptM3U8",
@@ -128,7 +128,7 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
         expiresAt: DateTime.now().plus({ hours: 1 }).toJSDate(),
       }
     }
-    const expiresTimestamp = parseInt(response.url().match(matchingRegex)?.[1], 10) * 1000
+    const expiresTimestamp = parseInt(response.url().match(matchingRegex)?.[1]!, 10) * 1000
     const expiresAt = new Date(expiresTimestamp)
 
     logger.debug(`Found stream ${url} for ${this.broadcastName} with referer ${referer} and expiresAt ${expiresAt}`)
@@ -142,8 +142,8 @@ export default abstract class BroadcastInterceptor extends PageScrapper {
 
   protected async getStreamData(
     allStreamsLinks: string[],
-    accessReferer?: string,
-    cb?: (page: Page, index: number) => Promise<void>,
+    accessReferer: string,
+    cb: (page: Page, index: number) => Promise<void>,
   ): Promise<StreamData> {
     const logger = mainLogger.child({
       name: "BroadcastInterceptor",

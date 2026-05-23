@@ -11,6 +11,9 @@ export class FillInputCommand extends CommandClass<FillInputCommandArgs> {
     await page.waitForSelector(selector, { timeout: 5000 })
 
     const input = await page.$(selector)
+    if (!input) {
+      throw new Error(`Element not found for selector: ${selector}`)
+    }
     await input.click()
     await input.type(values, { delay: 150 })
   }

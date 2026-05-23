@@ -19,7 +19,10 @@ export const CommandSchema = new mongoose.Schema(
 const GoToPageCommandSchema = new mongoose.Schema(
   {
     args: {
-      url: { type: String, required: true },
+      type: {
+        url: { type: String, required: true },
+      },
+      required: true,
     },
   },
   { _id: false },
@@ -28,8 +31,11 @@ const GoToPageCommandSchema = new mongoose.Schema(
 const ClickCommandSchema = new mongoose.Schema(
   {
     args: {
-      selector: { type: String, required: true },
-      safe: { type: Boolean, required: false },
+      type: {
+        selector: { type: String, required: true },
+        safe: { type: Boolean, required: false },
+      },
+      required: true,
     },
   },
   { _id: false },
@@ -38,8 +44,11 @@ const ClickCommandSchema = new mongoose.Schema(
 const FillInputCommandSchema = new mongoose.Schema(
   {
     args: {
-      selector: { type: String, required: true },
-      value: { type: String, required: true },
+      type: {
+        selector: { type: String, required: true },
+        value: { type: String, required: true },
+      },
+      required: true,
     },
   },
   { _id: false },
@@ -48,7 +57,10 @@ const FillInputCommandSchema = new mongoose.Schema(
 const SleepCommandSchema = new mongoose.Schema(
   {
     args: {
-      duration: { type: String, required: true },
+      type: {
+        duration: { type: String, required: true },
+      },
+      required: true,
     },
   },
   { _id: false },
@@ -57,7 +69,10 @@ const SleepCommandSchema = new mongoose.Schema(
 const RunScenarioCommandSchema = new mongoose.Schema(
   {
     args: {
-      scenario: { type: String, required: true },
+      type: {
+        scenario: { type: String, required: true },
+      },
+      required: true,
     },
   },
   { _id: false },
@@ -66,40 +81,43 @@ const RunScenarioCommandSchema = new mongoose.Schema(
 const GetValuesCommandSchema = new mongoose.Schema(
   {
     args: {
-      root: { type: String, required: false },
-      values: {
-        type: [
-          {
-            selector: { type: String, required: true },
-            attribute: { type: String, required: false },
-            replacements: {
-              type: Array,
-              of: {
-                from: { type: String, required: true },
-                to: { type: String, required: true },
+      type: {
+        root: { type: String, required: false },
+        values: {
+          type: [
+            {
+              selector: { type: String, required: true },
+              attribute: { type: String, required: false },
+              replacements: {
+                type: Array,
+                of: {
+                  from: { type: String, required: true },
+                  to: { type: String, required: true },
+                },
+                required: false,
               },
-              required: false,
+              store: {
+                type: String,
+                required: false,
+              },
+              canFail: {
+                type: Boolean,
+                required: false,
+                default: false,
+              },
+              elementExists: {
+                type: Boolean,
+                required: false,
+              },
+              valueIfFailed: {
+                type: String,
+                required: false,
+              },
             },
-            store: {
-              type: String,
-              required: false,
-            },
-            canFail: {
-              type: Boolean,
-              required: false,
-              default: false,
-            },
-            elementExists: {
-              type: Boolean,
-              required: false,
-            },
-            valueIfFailed: {
-              type: String,
-              required: false,
-            },
-          },
-        ],
+          ],
+        },
       },
+      required: true,
     },
   },
   { _id: false },
@@ -108,12 +126,15 @@ const GetValuesCommandSchema = new mongoose.Schema(
 const CounterCommandSchema = new mongoose.Schema(
   {
     args: {
-      root: { type: String, required: false },
-      selector: { type: String, required: true },
-      store: {
-        type: String,
-        required: false,
+      type: {
+        root: { type: String, required: false },
+        selector: { type: String, required: true },
+        store: {
+          type: String,
+          required: false,
+        },
       },
+      required: true,
     },
   },
   { _id: false },
@@ -121,26 +142,32 @@ const CounterCommandSchema = new mongoose.Schema(
 
 const SetValuesCommandSchema = new mongoose.Schema({
   args: {
-    values: {
-      type: [
-        {
-          store: { type: String, required: true },
-          value: { type: String, required: true },
-          isDate: { type: Boolean, required: false, default: false },
-          isEmptyArray: { type: Boolean, required: false, default: false },
-          dateFormat: { type: String, required: false },
-        },
-      ],
+    type: {
+      values: {
+        type: [
+          {
+            store: { type: String, required: true },
+            value: { type: String, required: true },
+            isDate: { type: Boolean, required: false, default: false },
+            isEmptyArray: { type: Boolean, required: false, default: false },
+            dateFormat: { type: String, required: false },
+          },
+        ],
+      },
     },
+    required: true,
   },
 })
 
 const AssertGroupCommandSchema = new mongoose.Schema(
   {
     args: {
-      category: { type: String, required: true },
-      country: { type: String, required: true },
-      name: { type: String, required: true },
+      type: {
+        category: { type: String, required: true },
+        country: { type: String, required: true },
+        name: { type: String, required: true },
+      },
+      required: true,
     },
   },
   { _id: false },
@@ -199,28 +226,31 @@ const ExtractValueSchema = new mongoose.Schema(
 const InterceptResponseCommandSchema = new mongoose.Schema(
   {
     args: {
-      filters: {
-        type: {
-          urlRegex: { type: String, required: false },
-          method: {
-            type: String,
-            required: false,
-            enum: [
-              "GET",
-              "POST",
-              "PUT",
-              "DELETE",
-            ],
+      type: {
+        filters: {
+          type: {
+            urlRegex: { type: String, required: false },
+            method: {
+              type: String,
+              required: true,
+              enum: [
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+              ],
+            },
           },
+          required: true,
         },
-        required: true,
-      },
 
-      timeout: { type: Number, required: true },
-      extracts: {
-        type: [ExtractValueSchema],
-        required: true,
+        timeout: { type: Number, required: true },
+        extracts: {
+          type: [ExtractValueSchema],
+          required: true,
+        },
       },
+      required: true,
     },
   },
   { _id: false },
@@ -229,7 +259,10 @@ const InterceptResponseCommandSchema = new mongoose.Schema(
 const PrintCommandSchema = new mongoose.Schema(
   {
     args: {
-      values: [{ type: String, required: true }],
+      type: {
+        values: [{ type: String, required: true }],
+      },
+      required: true,
     },
   },
   { _id: false },
