@@ -22,8 +22,11 @@ export class SetValuesCommand extends CommandClass<SetValueCommandArgs> {
         throw new Error("Scope 'global' cannot be modified by a command")
       }
 
-      let finaleValue: string | Date | Array<unknown> = null
+      let finaleValue: string | Date | Array<unknown>
       if (isDate) {
+        if (!dateFormat) {
+          throw new Error("dateFormat is required when isDate is true")
+        }
         const renderedValue = templater.renderString(value, context)
 
         let date: DateTime

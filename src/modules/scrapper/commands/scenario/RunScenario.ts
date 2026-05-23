@@ -17,7 +17,7 @@ export class RunScenarioCommand extends CommandClass<RunScenarioCommandArgs> {
     })
     const newPage = await page.browser().newPage()
     await page.setCacheEnabled(false)
-    await page.setUserAgent(env.browser.userAgent)
+    await page.setUserAgent({ userAgent: env.browser.userAgent })
 
     const innerContext: Context = {
       ...context,
@@ -30,7 +30,7 @@ export class RunScenarioCommand extends CommandClass<RunScenarioCommandArgs> {
       await this.takeScreenshot(page, scrapper, "success")
     } catch (error) {
       logger.error(`Error running scenario ${this.args.scenario}: ${error}`)
-      console.error(error.stack)
+      console.error((error as Error).stack)
 
       await this.takeScreenshot(page, scrapper, "error")
     }
@@ -44,7 +44,7 @@ export class RunScenarioCommand extends CommandClass<RunScenarioCommandArgs> {
     logger.info(`Running scenario ${this.args.scenario}`)
     const scenario = scrapper.getScenario(this.args.scenario)
     let index = 0
-    let commandName = "start"
+    let commandName: string | null = "start"
     do {
       context.command = {}
       const command = scenario.get(commandName)

@@ -16,13 +16,17 @@ export class GetValuesCommand extends CommandClass<GetValueCommandArgs> {
     if (root) {
       const selector = templater.renderString(root, context)
       logger.debug(`Waiting for root element: ${selector}`)
-      rootElt = await page.$(selector)
+      const elt = await page.$(selector)
+      if (!elt) {
+        throw new Error(`Root element not found for selector: ${selector}`)
+      }
+      rootElt = elt
     }
 
     for (const { selector, attribute, replacements, store, canFail, valueIfFailed, elementExists } of values) {
       // Render the selector and attribute
       const selectorValue = templater.renderString(selector, context)
-      const attributeValue = attribute ? templater.renderString(attribute, context) : null
+      const attributeValue = attribute ? templater.renderString(attribute, context) : undefined
       // logger.debug(`Getting value for selector: ${selectorValue}`)
 
       if (elementExists) {
@@ -41,7 +45,7 @@ export class GetValuesCommand extends CommandClass<GetValueCommandArgs> {
         try {
           value = await this.getValue(rootElt, selectorValue, attributeValue)
         } catch (error) {
-          logger.error(`Error while getting value: ${error.message}`)
+          logger.error(`Error while getting value: ${(error as Error).message}`)
           if (!valueIfFailed) {
             return
           }
@@ -92,6 +96,7 @@ export class GetValuesCommand extends CommandClass<GetValueCommandArgs> {
     if (attribute === "href") {
       return root.$eval(selector, (item) => (item as HTMLAnchorElement).href)
     }
-    return root.$eval(selector, (item, attr) => item.getAttribute(attr), attribute)
+    const value = await root.$eval(selector, (item, attr) => item.getAttribute(attr), attribute)
+    return value || ""
   }
 }
