@@ -30,13 +30,25 @@ services:
     image: docker.io/library/mongo:7.0
     container_name: mongo
     restart: unless-stopped
-    volumes:
-      - broadcastarr_data:/data/db
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh mongo/test --quiet
       interval: 5s
       timeout: 5s
       retries: 5
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_BASICAUTH_USERNAME: root
+      ME_CONFIG_BASICAUTH_PASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+      ME_CONFIG_DOCUMENTS_PER_PAGE: 100
 
 volumes:
   broadcastarr_data:
