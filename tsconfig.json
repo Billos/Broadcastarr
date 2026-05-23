@@ -2,7 +2,7 @@
   "compilerOptions": {
     "sourceMap": true,
     "outDir": "build",
-    "target": "ESNext",
+    "target": "es2023",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "moduleDetection": "force",

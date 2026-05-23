@@ -27,6 +27,7 @@ export class InterceptResponseCommand extends CommandClass<InterceptResponseComm
   private async interceptPromise(page: Page, context: Context, method: string, urlRegex?: RegExp): Promise<void> {
     return new Promise((resolve) => {
       page.on("response", async (response) => {
+        console.log(`Received response: ${response.url()}`)
         if (method && response.request().method() !== method) {
           return
         }
