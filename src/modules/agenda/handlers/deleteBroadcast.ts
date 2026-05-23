@@ -21,7 +21,7 @@ export async function handler(job: Job<DeleteBroadcastOptions>): Promise<void> {
   const { category, group, country } = broadcast
 
   // Delete M3U8
-  const path = await BroadcastController.getM3U8Path(broadcast.id)
+  const path = await BroadcastController.getM3U8Path(broadcast.id!)
   logger.debug(`Deleting M3U8 file at ${path}`)
   try {
     await removeFile(path)
@@ -31,8 +31,8 @@ export async function handler(job: Job<DeleteBroadcastOptions>): Promise<void> {
 
   // Cancel GrabBroadcastStream task
   logger.debug("Canceling task that may concern the broadcast")
-  await Triggers.cancelGrabBroadcastStream(broadcast.id)
-  await Triggers.cancelReleaseBroadcast(broadcast.id)
+  await Triggers.cancelGrabBroadcastStream(broadcast.id!)
+  await Triggers.cancelReleaseBroadcast(broadcast.id!)
 
   // Unrelease the broadcast
   await ReleasersController.unreleaseBroadcast(broadcast)

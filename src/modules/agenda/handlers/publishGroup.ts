@@ -28,7 +28,7 @@ export async function handler(job: Job<PublishGroupOptions>): Promise<void> {
   for (const broadcast of broadcasts) {
     if (broadcast.streams?.length > 0 && !broadcast.jellyfinId) {
       logger.warn(`Broadcast ${broadcast.name} has streams but no jellyfinId, releasing it`)
-      await Triggers.releaseBroadcast(broadcast.id)
+      await Triggers.releaseBroadcast(broadcast.id!)
     }
   }
   // Publish the group

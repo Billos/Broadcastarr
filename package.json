@@ -10,7 +10,6 @@
   "repository": "git@github.com:Billos/Broadcastarr.git",
   "license": "BSD-2-Clause",
   "author": "Billos",
-  "type": "commonjs",
   "main": "./src/server.ts",
   "scripts": {
     "bootstrap": "yarn start src/bootstrap.js",

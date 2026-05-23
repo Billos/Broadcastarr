@@ -60,7 +60,7 @@ export default abstract class GenericBroadcastInterceptor extends BroadcastInter
     }
 
     // Sort the links by the number of stars
-    const allStreamsLinks = ratedStreamsLinks.sort((itemA, itemB) => itemB.score - itemA.score).map((link) => link.link)
+    const allStreamsLinks = ratedStreamsLinks.sort((itemA, itemB) => (itemB.score || 0) - (itemA.score || 0)).map((link) => link.link)
 
     // Define callback if the clickButtonSelector is defined
     const clickButtonCallback: StreamDataCallback = this.clickButton

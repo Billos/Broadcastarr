@@ -3,7 +3,6 @@ import { Job } from "@hokify/agenda"
 import mainLogger from "../../../utils/logger"
 import { BroadcastController } from "../../broadcast"
 import { IndexerController } from "../../indexer"
-import { DynamicBroadcastInterceptor } from "../../indexers"
 import { StreamData } from "../../indexers/broadcastInterceptor"
 import { Orchestrator } from "../../scrapper/Orchestrator"
 import { GrabBroadcastStreamOptions } from "../options"
@@ -21,8 +20,8 @@ export async function handler(job: Job<GrabBroadcastStreamOptions>): Promise<voi
     },
   })
 
-  let stream: StreamData
-  let streamIndex: number
+  let stream: StreamData | undefined
+  let streamIndex: number | undefined
 
   const indexerDocument = await IndexerController.getIndexer(broadcast.indexer)
 
@@ -31,16 +30,8 @@ export async function handler(job: Job<GrabBroadcastStreamOptions>): Promise<voi
     const { scenarios } = indexerDocument
     const orchestrator = new Orchestrator(scenarios, broadcast)
     const result = await orchestrator.run("intercept")
-    // eslint-disable-next-line prefer-destructuring
     stream = result.stream
-    // eslint-disable-next-line prefer-destructuring
     streamIndex = result.streamIndex
-  } else {
-    logger.info("LEGACY - Grabbing the broadcast stream")
-    const interceptor = new DynamicBroadcastInterceptor(indexerDocument, broadcast)
-    stream = await interceptor.getStream()
-    // Saving the current stream index
-    streamIndex = interceptor.getStreamIndex()
   }
   await BroadcastController.setStreamIndex(broadcast.id, streamIndex)
 
